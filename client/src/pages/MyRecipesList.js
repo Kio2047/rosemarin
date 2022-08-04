@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import TopSection from "../components/TopSection";
 import SearchForm from "../components/SearchForm";
 import Recipe from "../components/Recipe";
-import {getMyRecipes} from "../Utils/apiDBService";
+import {getMyRecipes} from "../Utils/apiDBRecipeService";
 import recipe from "../components/Recipe";
 
 const MyRecipesList = ({myRecipes, setMyRecipes, setIds, ids, setRecipes}) => {

@@ -3,7 +3,7 @@ import TopSection from "../components/TopSection";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Instruction from "../components/Instruction";
 import Ingredient from "../components/Ingredient";
-import {postRecipe} from "../Utils/apiDBService";
+import {postRecipe} from "../Utils/apiDBRecipeService";
 
 
 function CreateRecipe() {
