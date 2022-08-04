@@ -1,8 +1,8 @@
 import React, {useRef, useState} from "react";
-import TopSection from "./TopSection";
+import TopSection from "../components/TopSection";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import Instruction from "./Instruction";
-import Ingredient from "./Ingredient";
+import Instruction from "../components/Instruction";
+import Ingredient from "../components/Ingredient";
 import {postRecipe} from "../Utils/apiDBService";
 
 
