@@ -16,8 +16,6 @@ import WeeklyMenu from "./pages/WeeklyMenu";
 import RecipeDetails from "./components/RecipeDetails";
 import {getMyRecipes} from "./Utils/apiDBRecipeService";
 import {getMyShoppingList} from "./Utils/apiDBServiceShoppingList";
-import Login from "./pages/Login";
-import SignUp from "./pages/Signup";
 import auth from "./Utils/Auth";
 import Logout from "./pages/Logout";
 import Signin from './pages/SignIn';

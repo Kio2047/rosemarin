@@ -12,7 +12,7 @@ let fieldsState={};
 
 fields.forEach(field => fieldsState[field.id]='');
 
-function SignupComponent(props){
+function SignupComponent({ setIsAuthenticated }){
     const [signupState,setSignupState]=useState(fieldsState);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -27,18 +27,21 @@ function SignupComponent(props){
     }
 
     //handle Signup API Integration here
-    const createAccount=()=>{
-        apiUserService.register(signupState)
-            .then(res => {
-                if(!res) {
-                    setErrorMessage('Account already exists. Please try again.');
-                } else {
-                    // This sets isAuthenticated = true and redirects to profile
-                    props.setIsAuthenticated(true);
-                    auth.login(() => navigate("../home", { replace: true }));
-                }
-            })
-            .catch(err => console.log(err))
+    const createAccount = async function () {
+        try {
+            const response = await apiUserService.register(signupState);
+            if (!response) {
+                setErrorMessage('Account already exists. Please try again.');
+            }
+            else {
+                // This sets isAuthenticated = true and redirects to profile
+                setIsAuthenticated(true);
+                auth.login(() => navigate("../home", { replace: true }));
+            };
+        }
+        catch (error) {
+            console.log(error);
+        }
     };
 
     const validateForm = () => {
