@@ -12,8 +12,8 @@ const apiUserService = {};
             },
             credentials: 'include'
         });
-        const data = await response.json();
-        return data;
+        return response.ok;
+      
     } catch (err) {
         console.log(err);
     }
@@ -29,8 +29,8 @@ apiUserService.login = async (user) => {
             },
             credentials: 'include'
         });
-        const data = await response.json();
-        return data;
+        return await response.json();
+        
     } catch (err) {
         console.log(err);
     }
@@ -42,8 +42,8 @@ apiUserService.profile = async () => {
             method: 'GET',
             credentials: 'include'
         })
-        const data = await response.json();
-        return data;
+        return await response.json();
+      
         
     } catch (err) {
         console.log(err);
@@ -56,8 +56,8 @@ apiUserService.logout = async () => {
             method: 'GET',
             credentials: 'include'
         })
-        const data = await response.json();
-        return data;
+        return await response.json();
+       
     } catch (err) {
         console.log(err);
     }

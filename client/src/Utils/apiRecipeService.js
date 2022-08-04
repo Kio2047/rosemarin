@@ -15,8 +15,8 @@ export const getRandomRecipe = async (tag) => {
 			method: 'GET',
 			headers: headers
 		})
-		const data = await response.json();
-		return data;
+		return await response.json();
+		
 	} catch (err) {
 		console.log(err)
 	}

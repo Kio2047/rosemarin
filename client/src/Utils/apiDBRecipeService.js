@@ -3,8 +3,8 @@ const baseDBUrl = 'http://localhost:3001/recipes';
 export const getMyRecipes = async () => {
 	try {
 		const response = await fetch(baseDBUrl)
-		const data = await response.json();
-		return data;
+		return await response.json();
+		
 	} catch (err) {
 		console.log(err);
 	}
@@ -17,8 +17,8 @@ export const postRecipe = async (recipe) => {
 			headers: { 'Content-type': 'application/json' },
 			body: JSON.stringify(recipe)
 		});
-		const data = await response.json();
-		return data;
+		return await response.json();
+		
 	} catch (err) {
 		console.log(err);
 	}
@@ -32,8 +32,8 @@ export const deleteRecipe = async (id) => {
 			headers: { 'Content-type': 'application/json' },
 			body: JSON.stringify(id)
 		})
-		const data = await response.json()
-		return data;
+		return await response.json()
+		
 	} catch (err) {
 		console.log(err)
 	}
