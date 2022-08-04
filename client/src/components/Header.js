@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import Rosemary from '../images/rosemary.png'
+import Rosemary from '../assets/images/rosemary.png'
 
 function Header({
                     heading,

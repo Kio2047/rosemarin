@@ -2,7 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar";
 import RecipesList from "./pages/RecipesList";
-import {getCategory, getRandomRecipe} from './Utils/apiService';
+import {getCategory, getRandomRecipe} from './Utils/apiRecipeService';
 import {
     BrowserRouter,
     Routes,
@@ -14,7 +14,7 @@ import ShoppingList from "./pages/ShoppingList";
 import Menu from "./pages/Menu";
 import WeeklyMenu from "./pages/WeeklyMenu";
 import RecipeDetails from "./components/RecipeDetails";
-import {getMyRecipes} from "./Utils/apiDBService";
+import {getMyRecipes} from "./Utils/apiDBRecipeService";
 import {getMyShoppingList} from "./Utils/apiDBServiceShoppingList";
 import Login from "./pages/Login";
 import SignUp from "./pages/Signup";

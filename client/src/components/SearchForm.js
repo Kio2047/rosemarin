@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {getRandomRecipe} from "../Utils/apiService";
+import {getRandomRecipe} from "../Utils/apiRecipeService";
 import {options} from '../data';
 import { useNavigate } from 'react-router-dom';
 
