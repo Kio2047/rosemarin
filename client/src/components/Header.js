@@ -5,7 +5,7 @@ function Header({
                     heading,
                     paragraph,
                     linkName,
-                    linkUrl = "#"
+                    switchHasAccount
                 }) {
     return (
         // <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -22,9 +22,9 @@ function Header({
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600 mt-5">
                         {paragraph} {' '}
-                        <Link to={linkUrl} className="font-medium text-purple-600 hover:text-purple-500">
+                        <a onClick={switchHasAccount} className="font-medium text-purple-600 hover:text-purple-500">
                             {linkName}
-                        </Link>
+                        </a>
                     </p>
                 </div>
         //     </div>
