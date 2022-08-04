@@ -16,9 +16,9 @@ module.exports = {
         'alex-brush': ['AlexBrush-Regular', 'sans-serif'],
       },
       backgroundImage: {
-        'top-img': "url('./images/dishes.jpg')",
-        'top-img2': "url('./images/orange.jpg')",
-        'top-img3': "url('./images/rosemary.jpg')",
+        'top-img': "url('./assets/images/dishes.jpg')",
+        'top-img2': "url('./assets/images/orange.jpg')",
+        'top-img3': "url('./assets/images/rosemary.jpg')",
       },
     },
   },

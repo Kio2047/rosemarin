@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {faHeart} from "@fortawesome/fontawesome-free-solid";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {deleteRecipe, getMyRecipes, postRecipe} from "../Utils/apiDBService";
+import {deleteRecipe, getMyRecipes, postRecipe} from "../Utils/apiDBRecipeService";
 
 
 const Heart = ({recipe, setIds, ids}) => {
