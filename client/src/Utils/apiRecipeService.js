@@ -1,11 +1,13 @@
-import {recipeCache} from "../data";
+
+import { recipeCache } from "../data";
+
+const API_KEY_TASTY = process.env.REACT_APP_API_KEY_TASTY;
 
 const headers = {
-	'X-RapidAPI-Key': '20d2d622c5mshefaea8f4fc1579fp145ccbjsn1662f35c8e98',
-	'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
+  "X-RapidAPI-Key": API_KEY_TASTY,
+  "X-RapidAPI-Host": "tasty.p.rapidapi.com",
 };
-const baseURL = 'https://tasty.p.rapidapi.com/recipes/list?from=0&size=20'
-
+const baseURL = "https://tasty.p.rapidapi.com/recipes/list?from=0&size=20";
 
 export const getRandomRecipe = async (tag) => {
 	try {
