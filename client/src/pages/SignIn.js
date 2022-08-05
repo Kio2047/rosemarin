@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import LoginComponent from "../components/LoginComponent"
-import SignupComponent from "../components/SignupComponent";
 import Rosemary from '../assets/images/rosemary.png'
+import SignInForm from "../components/SignInForm";
 
-export default function Signin ({ setIsAuthenticated, login }) {
+export default function Signin ({ setIsAuthenticated }) {
 
     const [hasAccount, setHasAccount] = useState(true);
     const switchHasAccount = function () {
@@ -22,17 +21,16 @@ export default function Signin ({ setIsAuthenticated, login }) {
                             src={Rosemary}/>
                     </div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        {login ? "Login to your account" : "Sign up to create an account"}
+                        {hasAccount ? "Login to your account" : "Sign up to create an account"}
                     </h2>
-                    <p className="mt-2 text-center text-sm text-gray-600 mt-5">
-                        {login ? "Don't have an account yet?" : "Already have an account?"} {' '}
+                    <p className="text-center text-sm text-gray-600 mt-5">
+                        {hasAccount ? "Don't have an account yet?" : "Already have an account?"} {' '}
                         <button onClick={switchHasAccount} className="font-medium text-purple-600 hover:text-purple-500 cursor-pointer">
-                            {login ? "Sign up" : "Log in"}
+                            {hasAccount ? "Sign up" : "Log in"}
                         </button>
                     </p>
                 </div>
-
-                {hasAccount ? <LoginComponent setIsAuthenticated={setIsAuthenticated}/> : <SignupComponent setIsAuthenticated={setIsAuthenticated}/>}
+                <SignInForm setIsAuthenticated={setIsAuthenticated} hasAccount={hasAccount}></SignInForm>
             </div>
         </div>
     )

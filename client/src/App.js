@@ -71,8 +71,6 @@ function App() {
                 <Navbar isAuthenticated={isAuthenticated}></Navbar>
                 <Routes>
                     <Route exact path="/" element={<Signin setIsAuthenticated={setIsAuthenticated}/>}></Route>
-                    {/* <Route exact path="/" element={<Login setIsAuthenticated={setIsAuthenticated}/>}></Route>
-                    <Route exact path="/signup" element={<SignUp setIsAuthenticated={setIsAuthenticated}/>}></Route> */}
                     <Route
                         path="/logout"
                         element={<Logout setIsAuthenticated={setIsAuthenticated} />}

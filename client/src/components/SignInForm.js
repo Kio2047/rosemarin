@@ -1,29 +1,48 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+
 import { loginFields, signupFields } from "../constants/formFields";
-import { useState, useEffect, useNavigate } from "react";
+import apiUserService from "../Utils/apiUserService";
+import FormAction from "./FormAction";
+import FormExtra from "./FormExtra";
+import auth from "../Utils/Auth";
+import Input from "./Input";
 
 export default function SignInForm({ setIsAuthenticated, hasAccount }) {
 
-  useEffect(() => {
-    const fields = hasAccount ? loginFields : signupFields;
-    const initialFormState = {};
-    fields.forEach((field) => initialFormState[field.id] = "");
-    const [formState, setFormState] = useState({...initialFormState});
-    const [errorMessage, setErrorMessage] = useState('');
-  }, [hasAccount]);
-
-  // this should also be fine without the spread - check
-
   const navigate = useNavigate();
 
-  const handleChange= function(event) {
+  const [formState, setFormState] = useState({});
+  const [formFields, setFormFields] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // Whenever user switches between login and register, update the states for form fields
+  //  and reinitialize form values and error message
+  useEffect(() => {
+    const importedFormFields = hasAccount ? loginFields : signupFields
+    setFormFields(importedFormFields);
+
+    const initialFormState = {};
+    importedFormFields.forEach((field) => initialFormState[field.id] = "");
+    setFormState(initialFormState);
+
+    setErrorMessage("");
+
+  }, [hasAccount]);
+
+  const handleChange = function(event) {
     setFormState({
       ...formState,
-      [e.target.id]:e.target.value
+      [event.target.id]: event.target.value
     });
   };
 
-  const handleSubmit=(e)=>{
-    e.preventDefault();
+  const handleSubmit = function (event) {
+    event.preventDefault();
+    if (!hasAccount && formState.password !== formState["confirm-password"]) {
+      setErrorMessage("Passwords don't match");
+      return;
+    }
     checkCredentials();
   }
 
@@ -31,8 +50,6 @@ export default function SignInForm({ setIsAuthenticated, hasAccount }) {
   const checkCredentials = async function () {
     try {
       let response = hasAccount ? await apiUserService.login(formState) : await apiUserService.register(formState);
-      // Temporary line to make login and register login consistent - to remove after modifying response returned by login API
-      response = hasAccount ? !Boolean(response) : response
 
       if (!response) {
         hasAccount ? setErrorMessage('Incorrect login information.') : setErrorMessage('Account already exists. Please try again.');
@@ -59,7 +76,7 @@ export default function SignInForm({ setIsAuthenticated, hasAccount }) {
     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
         <div className="">
             {
-                fields.map(field=>
+                formFields.map((field)=>
                     <Input
                         key={field.id}
                         handleChange={handleChange}
