@@ -25,7 +25,7 @@ function App() {
     const [myRecipes, setMyRecipes] = useState([]);
     const [ids, setIds] = useState([])
     const [items, setItems] = useState([]);
-
+    const [hasAccount, setHasAccount] = useState(true);
 
     const initialState = auth.isAuthenticated();
     const [isAuthenticated, setIsAuthenticated] = useState(initialState);
@@ -73,9 +73,9 @@ function App() {
     return (
         <div className="font-oxy-regular">
             <BrowserRouter>
-                <Navbar isAuthenticated={isAuthenticated}></Navbar>
+                <Navbar isAuthenticated={isAuthenticated} setHasAccount={setHasAccount}></Navbar>
                 <Routes>
-                    <Route exact path="/" element={<Signin setIsAuthenticated={setIsAuthenticated}/>}></Route>
+                    <Route exact path="/" element={<Signin setIsAuthenticated={setIsAuthenticated} hasAccount={hasAccount} setHasAccount={setHasAccount}/>}></Route>
                     <Route
                         path="/logout"
                         element={<Logout setIsAuthenticated={setIsAuthenticated} />}

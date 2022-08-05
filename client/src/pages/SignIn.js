@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import Rosemary from '../assets/images/rosemary.png'
 import SignInForm from "../components/SignInForm";
 
-export default function Signin ({ setIsAuthenticated }) {
+export default function Signin ({ setIsAuthenticated, hasAccount, setHasAccount }) {
 
-    const [hasAccount, setHasAccount] = useState(true);
     const switchHasAccount = function () {
         setHasAccount(!hasAccount);
     };

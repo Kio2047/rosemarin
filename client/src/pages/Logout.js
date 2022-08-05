@@ -5,18 +5,27 @@ import apiUserService from "../Utils/apiUserService";
 import auth from "../Utils/Auth";
 
 const Logout = (props) => {
+
     let navigate = useNavigate();
+
     const handleClick = () => {
+        console.log('penne2')
         apiUserService.logout()
             .then(res => console.log(res))
             .catch(err => console.log(err));
-        handleAuth();
+        handleLogout();
     };
 
-    const handleAuth = () => {
-        props.setIsAuthenticated(false);
-        auth.logout(() => navigate("../", {replace: true}));
+    const handleLogout = (shouldLogout) => {
+        if (shouldLogout) {
+            console.log("penne")
+            props.setIsAuthenticated(false);
+            auth.logout(() => navigate("../", {replace: true}));
+        } else {
+            navigate(-1, {replace: true})
+        }
     };
+
 
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -24,9 +33,9 @@ const Logout = (props) => {
                 <div className="max-w-md">
                     <h2 className="text-2xl font-bold">Are you sure you want to log out?</h2>
                     <Link to="/">
-                        <button className="group relative w-full  py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mt-10 w-[150px] mr-10">Yes</button>
+                        <button className="group relative w-full  py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mt-10 w-[150px] mr-10" onClick={() => handleLogout(true)}>Yes</button>
                     </Link>
-                    <button className="group relative w-full  py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mt-10 w-[150px]" onClick={() => handleClick()}>
+                    <button onClick={() => handleLogout(false)} className="group relative w-full  py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mt-10 w-[150px]">
                         No
                     </button>
                 </div>

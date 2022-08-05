@@ -8,25 +8,19 @@ import {faUserCheck} from "@fortawesome/fontawesome-free-solid";
 
 library.add(faUser);
 
-const Navbar = ({isAuthenticated}) => {
+const Navbar = ({isAuthenticated, setHasAccount}) => {
 
     return (
         <div className="relative">
             <div
                 className="flex justify-center items-center h-20 bg-base-100 shadow-md fixed top-0 left-0 right-0 z-10">
-                <div className="">
                     {
-                        isAuthenticated ?
-                            <Link className="menu-item cursor-pointer " to="/my_recipes">My Recipes</Link> :
-                            <span className="menu-item cursor-pointer">My Recipes</span>
-
+                        isAuthenticated &&
+                    <div className="">
+                            <Link className="menu-item cursor-pointer " to="/my_recipes">My Recipes</Link>
+                            <Link className="menu-item ml-10 cursor-pointer" to="/create">Create Recipe</Link>
+                    </div>
                     }
-                    {
-                        isAuthenticated ?
-                            <Link className="menu-item ml-10 cursor-pointer" to="/create">Create Recipe</Link> :
-                            <span className="menu-item ml-10 cursor-pointer">Create Recipe</span>
-                    }
-                </div>
                 <div className="">
                     {
                         isAuthenticated ?
@@ -36,16 +30,13 @@ const Navbar = ({isAuthenticated}) => {
                 </div>
                 <div className="justify-start">
                     {
-                        isAuthenticated ?
+                        isAuthenticated &&
                             <label htmlFor="my-modal" className="menu-item mr-10 cursor-pointer modal-button">Shopping
-                                List</label> :
-                            <label className="menu-item mr-10 cursor-pointer modal-button">Shopping
                                 List</label>
                     }
                     {
-                        isAuthenticated ?
-                            <Link className="menu-item cursor-pointer" to="/menu">Menu</Link> :
-                            <span className="menu-item cursor-pointer" >Menu</span>
+                        isAuthenticated &&
+                            <Link className="menu-item cursor-pointer" to="/menu">Menu</Link>
                     }
                 </div>
                 <div className="absolute right-20">
@@ -53,9 +44,9 @@ const Navbar = ({isAuthenticated}) => {
                         isAuthenticated ?
                             <Link className="menu-item cursor-pointer" to="/logout">
                                 <FontAwesomeIcon icon={faUserCheck} className="text-2xl cursor-pointer mr-3"/>Logout
-                            </Link> :
-                            <Link className="menu-item cursor-pointer" to="/"><FontAwesomeIcon icon={faUser}
-                                                                                               className="text-2xl cursor-pointer mr-3"/>
+                            </Link> : 
+                            <Link className="menu-item cursor-pointer" to="/" onClick={() => setHasAccount((prev) => true)}><FontAwesomeIcon icon={faUser}
+                            className="text-2xl cursor-pointer mr-3"/>
                                 Login</Link>
                     }
                 </div>
