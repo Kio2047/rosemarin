@@ -11,7 +11,7 @@ const fields=loginFields;
 let fieldsState = {};
 fields.forEach(field=>fieldsState[field.id]='');
 
-function LoginComponent(props){
+function LoginComponent({ setIsAuthenticated }){
     const [loginState,setLoginState]=useState(fieldsState);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -27,18 +27,21 @@ function LoginComponent(props){
     }
 
     //Handle Login API Integration here
-    const authenticateUser = () =>{
-        apiUserService.login(loginState)
-            .then(res => {
-                if(!res) {
-                    setErrorMessage('Incorrect login information.')
-                } else {
-                    // This sets isAuthenticated = true and redirects to profile
-                    props.setIsAuthenticated(true);
-                    auth.login(() => navigate("../home", { replace: true }));
-                }
-            })
-            .catch(err => console.log(err))
+    const authenticateUser = async function () {
+        try {
+            const response = await apiUserService.login(loginState);
+            if (response) {
+                setErrorMessage('Incorrect login information.')
+            }
+            else {
+                // This sets isAuthenticated = true and redirects to profile
+                setIsAuthenticated(true);
+                auth.login(() => navigate("../home", { replace: true }));
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     const validateForm = () => {

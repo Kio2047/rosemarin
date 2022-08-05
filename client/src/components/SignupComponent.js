@@ -13,7 +13,7 @@ let fieldsState={};
 fields.forEach(field => fieldsState[field.id]='');
 
 function SignupComponent({ setIsAuthenticated }){
-    const [signupState,setSignupState]=useState(fieldsState);
+    const [signupState,setSignupState] = useState(fieldsState);
     const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
@@ -72,8 +72,8 @@ function SignupComponent({ setIsAuthenticated }){
 
                     )
                 }
-                <FormAction handleSubmit={handleSubmit} text="Signup" validateForm={validateForm}/>
             </div>
+                <FormAction handleSubmit={handleSubmit} text="Signup" validateForm={validateForm}/>
             <div className="alert-error">{errorMessage}</div>
         </form>
     )
