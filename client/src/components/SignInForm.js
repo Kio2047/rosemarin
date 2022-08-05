@@ -46,16 +46,14 @@ export default function SignInForm({ setIsAuthenticated, hasAccount }) {
     checkCredentials();
   }
 
-  //Handle Login / Register API Integration here
+  // Handle login / registration
   const checkCredentials = async function () {
     try {
       let response = hasAccount ? await apiUserService.login(formState) : await apiUserService.register(formState);
-
       if (!response) {
         hasAccount ? setErrorMessage('Incorrect login information.') : setErrorMessage('Account already exists. Please try again.');
       }
       else {
-        // This sets isAuthenticated = true and redirects to profile
         setIsAuthenticated(true);
         auth.login(() => navigate("../home", { replace: true }));
       };
@@ -65,6 +63,7 @@ export default function SignInForm({ setIsAuthenticated, hasAccount }) {
     }
   }
 
+  // Form is only valid if all fields are populated
   const validateForm = () => {
     for (let formField in formState) {
       if (!formState[formField]) return false;
@@ -97,5 +96,4 @@ export default function SignInForm({ setIsAuthenticated, hasAccount }) {
         <div className="alert-error">{errorMessage}</div>
     </form>
   )
-
 };
