@@ -16,10 +16,9 @@ import WeeklyMenu from "./pages/WeeklyMenu";
 import RecipeDetails from "./components/RecipeDetails";
 import {getMyRecipes} from "./Utils/apiDBRecipeService";
 import {getMyShoppingList} from "./Utils/apiDBServiceShoppingList";
-import Login from "./pages/Login";
-import SignUp from "./pages/Signup";
 import auth from "./Utils/Auth";
 import Logout from "./pages/Logout";
+import Signin from './pages/SignIn';
 
 function App() {
     const [recipes, setRecipes] = useState([]);
@@ -71,8 +70,7 @@ function App() {
             <BrowserRouter>
                 <Navbar isAuthenticated={isAuthenticated}></Navbar>
                 <Routes>
-                    <Route exact path="/" element={<Login setIsAuthenticated={setIsAuthenticated}/>}></Route>
-                    <Route exact path="/signup" element={<SignUp setIsAuthenticated={setIsAuthenticated}/>}></Route>
+                    <Route exact path="/" element={<Signin setIsAuthenticated={setIsAuthenticated}/>}></Route>
                     <Route
                         path="/logout"
                         element={<Logout setIsAuthenticated={setIsAuthenticated} />}

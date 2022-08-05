@@ -29,7 +29,7 @@ const loginUser = async (req, res) => {
     try {
         const pass = req.body.password;
         const user = await User.findAll({ where: { email: req.body.email } });
-        console.log(user[0].password);
+        // console.log(user[0].password);
         if(user[0]) {
             if(bcrypt.compareSync(pass, user[0].password)) {
                 req.session.sid = user.id;
