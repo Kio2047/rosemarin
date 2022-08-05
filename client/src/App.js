@@ -25,6 +25,8 @@ function App() {
     const [myRecipes, setMyRecipes] = useState([]);
     const [ids, setIds] = useState([])
     const [items, setItems] = useState([]);
+
+
     const initialState = auth.isAuthenticated();
     const [isAuthenticated, setIsAuthenticated] = useState(initialState);
 
@@ -60,7 +62,10 @@ function App() {
     useEffect(() => {
         getMyRecipes()
             // .then(recipes => console.log(recipes))
-            .then(recipes => setMyRecipes(recipes))
+            .then(recipes => {
+                setIsAuthenticated(true)
+                setMyRecipes(recipes)
+            })
             .catch(err => console.log.bind(err))
     }, [ids])
 

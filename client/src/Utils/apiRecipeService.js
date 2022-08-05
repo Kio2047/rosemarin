@@ -15,7 +15,7 @@ export const getRandomRecipe = async (tag) => {
 		if (tag) tagURL = `&tags=${tag}`;
 		const response = await fetch(`${baseURL}${tagURL}`, {
 			method: 'GET',
-			headers: headers
+			headers: headers,
 		})
 		return await response.json();
 		

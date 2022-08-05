@@ -45,10 +45,12 @@ function CreateRecipe() {
 
         tmpIngredients.shift();
 
+        console.log(e.target)
+
         const newRecipe = {
             title: e.target.title.value,
             description: e.target.description.value,
-            img_url: e.target.url.value || null,
+            img_url: e.target.url.value || URL.createObjectURL(e.target.file.files[0]),
             // files: e.target[7].files[0] || null,
             img_alt_text: e.target.title.value,
             ingredients: tmpIngredients,
@@ -180,7 +182,10 @@ function CreateRecipe() {
                        file:text-sm file:font-semibold
                        file:bg-fuchsia-50 file:text-accent-700
                        hover:file:bg-base-300 mb-10"
-                    />
+                       onChange={(e) => {
+
+                       }}
+                   />
                 </div>
 
                 <button type="submit" className="btn btn-neutral font-rufina-regular">Submit</button>
