@@ -12,45 +12,36 @@ const Navbar = ({isAuthenticated, setHasAccount}) => {
 
     return (
         <div className="relative">
-            <div
-                className="flex justify-center items-center h-20 bg-base-100 shadow-md fixed top-0 left-0 right-0 z-10">
-                    {
-                        isAuthenticated &&
+            {isAuthenticated ?
+                <div className="flex justify-center items-center h-20 bg-base-100 shadow-md fixed top-0 left-0 right-0 z-10">
                     <div className="">
-                            <Link className="menu-item cursor-pointer " to="/my_recipes">My Recipes</Link>
-                            <Link className="menu-item ml-10 cursor-pointer" to="/create">Create Recipe</Link>
+                        <Link className="menu-item cursor-pointer " to="/my_recipes">My Recipes</Link>
+                        <Link className="menu-item ml-10 cursor-pointer" to="/create">Create Recipe</Link>
                     </div>
-                    }
-                <div className="">
-                    {
-                        isAuthenticated ?
-                            <Link to="/home" className="btn btn-ghost normal-case text-3xl font-PoiretOne mr-4 ml-4">ROSEMARY</Link> :
-                            <span className="btn btn-ghost normal-case text-3xl font-PoiretOne mr-4 ml-4">ROSEMARY</span>
-                    }
+                    <div className="">
+                        <Link to="/home" className="btn btn-ghost normal-case text-3xl font-PoiretOne mr-4 ml-4">ROSEMARY</Link>
+                    </div>
+                    <div className="justify-start">
+                        <label htmlFor="my-modal" className="menu-item mr-10 cursor-pointer modal-button">Shopping List</label>
+                        <Link className="menu-item cursor-pointer" to="/menu">Menu</Link>
+                    </div>
+                    <div className="absolute right-20">
+                        <Link className="menu-item cursor-pointer" to="/logout">
+                            <FontAwesomeIcon icon={faUserCheck} className="text-2xl cursor-pointer mr-3"/>Logout
+                        </Link>
+                    </div>
+                </div> : 
+                <div className="flex justify-center items-center h-20 bg-base-100 shadow-md fixed top-0 left-0 right-0 z-10">
+                   <div className="">
+                        <span to="/home" className="btn btn-ghost normal-case text-3xl font-PoiretOne mr-4 ml-4">ROSEMARY</span>
+                    </div>
+                    <div className='absolute right-20'>
+                        <Link className="menu-item cursor-pointer" to="/" onClick={() => setHasAccount((prev) => true)}>
+                            <FontAwesomeIcon icon={faUser}className="text-2xl cursor-pointer mr-3"/>Login
+                        </Link> 
+                    </div>
                 </div>
-                <div className="justify-start">
-                    {
-                        isAuthenticated &&
-                            <label htmlFor="my-modal" className="menu-item mr-10 cursor-pointer modal-button">Shopping
-                                List</label>
-                    }
-                    {
-                        isAuthenticated &&
-                            <Link className="menu-item cursor-pointer" to="/menu">Menu</Link>
-                    }
-                </div>
-                <div className="absolute right-20">
-                    {
-                        isAuthenticated ?
-                            <Link className="menu-item cursor-pointer" to="/logout">
-                                <FontAwesomeIcon icon={faUserCheck} className="text-2xl cursor-pointer mr-3"/>Logout
-                            </Link> : 
-                            <Link className="menu-item cursor-pointer" to="/" onClick={() => setHasAccount((prev) => true)}><FontAwesomeIcon icon={faUser}
-                            className="text-2xl cursor-pointer mr-3"/>
-                                Login</Link>
-                    }
-                </div>
-            </div>
+                }
         </div>
     );
 };
