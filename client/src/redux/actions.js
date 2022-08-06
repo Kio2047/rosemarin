@@ -20,3 +20,19 @@ export const setRecipes = (payload) => ({
   type: 'SET_RECIPES',
   payload
 })
+
+export const setMyRecipes = (payload) => ({
+  type: 'SET_MY_RECIPES',
+  payload
+})
+
+export const setIds = (payload) => ({
+  type: 'SET_IDS',
+  payload
+})
+
+export const setItems = (payload) => ({
+  type: 'SET_ITEMS',
+  payload
+})
+

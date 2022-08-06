@@ -6,7 +6,7 @@ import {library} from "@fortawesome/fontawesome-svg-core";
 import {faUser} from "@fortawesome/fontawesome-free-regular";
 import {faUserCheck} from "@fortawesome/fontawesome-free-solid";
 import { useSelector, useDispatch} from 'react-redux'
-import { setHasAccount } from '../redux/actions.tsx';
+import { setHasAccount } from '../redux/actions.js';
 
 library.add(faUser);
 

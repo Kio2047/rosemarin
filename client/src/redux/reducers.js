@@ -26,10 +26,34 @@ const recipes = (state = [], action) => {
   return state;
 }
 
+const myRecipes = (state = [], action) => {
+  if (action.type === 'SET_MY_RECIPES') {
+    return action.payload
+  }
+  return state;
+}
+
+const ids = (state = [], action) => {
+  if (action.type === 'SET_IDS') {
+    return action.payload
+  }
+  return state;
+}
+
+const items = (state = [], action) => {
+  if (action.type === 'SET_ITEMS') {
+    return action.payload
+  }
+  return state;
+}
+
 const reducer = combineReducers({
   isAuthenticated, 
   hasAccount,
-  recipes
+  recipes,
+  myRecipes,
+  ids,
+  items
 })
 
 export default reducer;

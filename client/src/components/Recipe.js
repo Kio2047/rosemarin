@@ -3,7 +3,8 @@ import {Link} from "react-router-dom";
 import Heart from "./Heart";
 
 
-const Recipe = ({ recipe, className, setIds, ids }) => {
+
+const Recipe = ({ recipe, className, ids, setIds }) => {
     return (
         <li className={className}>
             <figure><img  src={ recipe.thumbnail_url || recipe.img_url || recipe.img_data } alt={ recipe.name || recipe.title }/></figure>
@@ -12,7 +13,7 @@ const Recipe = ({ recipe, className, setIds, ids }) => {
 
                 <div className="card-actions justify-end flex justify-between">
                     {
-                        (recipe.instructions || recipe.Instructions) ? <Heart recipe={recipe} setIds={setIds} ids={ids}/> : <div className="text-2xl self-center mr-3">&#127910;</div>
+                        (recipe.instructions || recipe.Instructions) ? <Heart ids={ids} setIds={setIds} recipe={recipe} /> : <div className="text-2xl self-center mr-3">&#127910;</div>
                     }
 
                     <Link to={/recipes/ + (recipe.id_tasty || recipe.id)} className="btn btn-warning font-rufina-regular">Details</Link>

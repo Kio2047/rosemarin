@@ -1,13 +1,16 @@
 import React, {useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {deleteItem, getMyShoppingList} from "../Utils/apiDBServiceShoppingList";
+import { setItems } from '../redux/actions';
 
-
-const ShoppingList = ({items, setItems}) => {
+const ShoppingList = () => {
+    const dispatch = useDispatch();
+    const items = useSelector(state => state.items)
 
     useEffect(() => {
         getMyShoppingList()
             // .then(recipes => console.log(recipes))
-            .then(itemsSL => setItems(itemsSL))
+            .then(itemsSL => dispatch(setItems(itemsSL)))
             .catch(err => console.log.bind(err))
     }, [])
 
@@ -15,10 +18,10 @@ const ShoppingList = ({items, setItems}) => {
         deleteItem({id})
             .then(res => console.log(res))
             .catch(err => console.log.bind(err))
-        setItems(prev => {
+        dispatch(setItems(prev => {
             const filtered = prev.filter(item => item.id !== id);
             return [...filtered]
-        })
+        }))
     }
 
     return (

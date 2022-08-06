@@ -19,20 +19,26 @@ import { getMyShoppingList } from "./Utils/apiDBServiceShoppingList";
 import Logout from "./pages/Logout";
 import Signin from './pages/SignIn';
 import { useSelector, useDispatch } from 'react-redux'
-import { toggleAuthenticate, setAuthenticate } from './redux/actions.tsx';
-import { setRecipes } from './redux/actions.tsx'
+import { toggleAuthenticate, setAuthenticate } from './redux/actions.js';
+import { 
+    setRecipes, 
+    setMyRecipes, 
+    setIds,
+    setItems } from './redux/actions.js'
+
+
 
 function App() {
 
     const dispatch = useDispatch();
-    const [myRecipes, setMyRecipes] = useState([]);
-    const [ids, setIds] = useState([])
-    const [items, setItems] = useState([]);
+    const ids = useSelector(state => state.ids);
+    
+    
 
     useEffect(() => {
       (async () => {
           const data = await getMyShoppingList()
-          setItems(data)
+          dispatch(setItems(data))
       })();   
     }, [])
 
@@ -50,13 +56,13 @@ function App() {
 
     useEffect(() => {
         getMyRecipes()
-            .then(recipes => recipes.map(el => setIds(prev => {
+            .then(recipes => recipes.map(el => dispatch(setIds(prev => {
 
                 let id = el.id;
                 let id_tasty = el.id_tasty;
                 const filtered = prev.filter(e => e.id_tasty !== el.id_tasty);
                 return [...filtered, {id, id_tasty}]
-            })))
+            }))))
             .catch(err => console.log.bind(err))
     }, []);
 
@@ -72,7 +78,7 @@ function App() {
                    dispatch(toggleAuthenticate())
                 } */
                 console.log('Am i being called? ', recipes)
-                setMyRecipes(recipes)
+                dispatch(setMyRecipes(recipes))
             })
             .catch(err => console.log.bind(err))
     }, [ids])
@@ -90,17 +96,16 @@ function App() {
                     />
 
                     <Route exact path="/home"
-                           element={<RecipesList setIds={setIds}ids={ids}/>}></Route>
+                           element={<RecipesList />}></Route>
                     <Route exact path="/my_recipes"
-                           element={<MyRecipesList myRecipes={myRecipes} setMyRecipes={setMyRecipes} setIds={setIds}
-                                                   ids={ids}/>}></Route>
-                    <Route exact path="/recipes/:id" element={<RecipeDetails myRecipes={myRecipes} setItems={setItems} setIds={setIds} ids={ids}/>}></Route>
+                           element={<MyRecipesList />}></Route>
+                    <Route exact path="/recipes/:id" element={<RecipeDetails  />}></Route>
                     <Route exact path="/create" element={<CreateRecipe/>}></Route>
                     <Route exact path="/menu" element={<Menu/>}></Route>
                     <Route exact path="/weekly_menu" element={<WeeklyMenu/>}></Route>
                 </Routes>
             </BrowserRouter>
-            <ShoppingList items={items} setItems={setItems}/>
+            <ShoppingList />
         </div>
     );
 }

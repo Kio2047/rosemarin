@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Rosemary from '../assets/images/rosemary.png'
 import SignInForm from "../components/SignInForm";
-import { toggleHasAccount } from "../redux/actions.tsx";
+import { toggleHasAccount } from "../redux/actions.js";
 
 export default function Signin () {
 

@@ -1,14 +1,17 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {useSelector} from 'react-redux'
+import React, {useEffect, useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux'
 
 import {useParams} from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {getMyShoppingList, postItem} from "../Utils/apiDBServiceShoppingList";
+import {setItems} from '../redux/actions'
 
 
-const RecipeDetails = ({myRecipes, items, setItems}) => {
+const RecipeDetails = () => {
     const recipes = useSelector(state => state.recipes)
-
+    const myRecipes = useSelector(state => state.myRecipes)
+    const dispatch = useDispatch();
+    
     const [recipe, setRecipe] = useState({});
     const [myRecipe, setMyRecipe] = useState({});
 
@@ -31,7 +34,7 @@ const RecipeDetails = ({myRecipes, items, setItems}) => {
             unit: data.unit,
         }
         postItem(newItem)
-            .then(res => setItems((prev) => [...prev, res]))
+            .then(res => dispatch(setItems((prev) => [...prev, res])))
             .catch(error => console.log(error))
     }
 
@@ -112,7 +115,7 @@ const RecipeDetails = ({myRecipes, items, setItems}) => {
                 }
                 {
                     myRecipe ? null : recipe.renditions ? recipe.renditions?.map((url, i) => <a key={i}
-                                                                             className="link-secondary text-center" href={url.url} target="_blank">{url.url}</a>,<br />) : <span></span>
+                    className="link-secondary text-center" href={url.url} target="_blank">{url.url}</a>,<br />) : <span></span>
                 }
                 <div className="card-actions justify-end">
                     <button className="btn btn-warning">Details</button>

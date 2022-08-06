@@ -1,13 +1,19 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 
 import Recipe from "../components/Recipe";
 import TopSection from "../components/TopSection";
 import SearchForm from "../components/SearchForm";
+import { setIds } from '../redux/actions';
 
-const RecipesList = ({ setIds, ids}) => {
+
+const RecipesList = () => {
 
     const recipes = useSelector(state => state.recipes)
+    const ids = useSelector(state => state.ids)
+    const dispatch = useDispatch()
+    
+    
 
     return (
         <>
@@ -20,7 +26,7 @@ const RecipesList = ({ setIds, ids}) => {
                             recipe={recipe}
                             key={recipe.id}
                             className={"horizontal span-col-4 card bg-base-100 shadow-xl flex-row"}
-                            setIds={setIds}
+                            setIds={dispatch(setIds)}
                             ids={ids}
                         ></Recipe> :
                         (i === 6 || i%10 === 6) ?
@@ -28,13 +34,13 @@ const RecipesList = ({ setIds, ids}) => {
                                 recipe={recipe}
                                 key={recipe.id}
                                 className={"vertical span-col-2 span-row-2 card bg-base-100 shadow-xl"}
-                                setIds={setIds}
+                                setIds={dispatch(setIds)}
                                 ids={ids}
                             ></Recipe> :
                                 <Recipe
                                     recipe={recipe}
                                     key={recipe.id} className={"vertical card bg-base-100 shadow-xl"}
-                                    setIds={setIds}
+                                    setIds={dispatch(setIds)}
                                     ids={ids}
                                 ></Recipe>
                 )}
