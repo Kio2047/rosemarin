@@ -14,26 +14,20 @@ import ShoppingList from "./pages/ShoppingList";
 import Menu from "./pages/Menu";
 import WeeklyMenu from "./pages/WeeklyMenu";
 import RecipeDetails from "./components/RecipeDetails";
-import {getMyRecipes} from "./Utils/apiDBRecipeService";
-import {getMyShoppingList} from "./Utils/apiDBServiceShoppingList";
-import auth from "./Utils/Auth";
+import { getMyRecipes } from "./Utils/apiDBRecipeService";
+import { getMyShoppingList } from "./Utils/apiDBServiceShoppingList";
 import Logout from "./pages/Logout";
 import Signin from './pages/SignIn';
 import { useSelector, useDispatch } from 'react-redux'
-import {toggleAuthenticate} from './redux/actions';
+import { toggleAuthenticate } from './redux/actions';
 
 function App() {
-    const isAuthenticated = useSelector(state => state.isAuthenticated);
+
     const dispatch = useDispatch();
     const [recipes, setRecipes] = useState([]);
     const [myRecipes, setMyRecipes] = useState([]);
     const [ids, setIds] = useState([])
     const [items, setItems] = useState([]);
-    const [hasAccount, setHasAccount] = useState(true);
-
-    
-
-
 
     useEffect(() => {
       getMyShoppingList()
@@ -79,9 +73,9 @@ function App() {
     return (
         <div className="font-oxy-regular">
             <BrowserRouter>
-                <Navbar setHasAccount={setHasAccount}></Navbar>
+                <Navbar />
                 <Routes>
-                    <Route exact path="/" element={<Signin hasAccount={hasAccount} setHasAccount={setHasAccount}/>}></Route>
+                    <Route exact path="/" element={<Signin />}></Route>
                     <Route
                         path="/logout"
                         element={<Logout />}

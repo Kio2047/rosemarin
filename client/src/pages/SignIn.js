@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import {useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from "react-redux";
+
 import Rosemary from '../assets/images/rosemary.png'
 import SignInForm from "../components/SignInForm";
+import { toggleHasAccount } from "../redux/actions";
 
+export default function Signin () {
 
-
-
-export default function Signin ({  hasAccount, setHasAccount }) {
     const dispatch = useDispatch();
-  
-    const switchHasAccount = function () {
-        setHasAccount(!hasAccount);
-    };
+    const hasAccount = useSelector((state) => state.hasAccount);
 
     return (
         <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -29,7 +26,7 @@ export default function Signin ({  hasAccount, setHasAccount }) {
                     </h2>
                     <p className="text-center text-sm text-gray-600 mt-5">
                         {hasAccount ? "Don't have an account yet?" : "Already have an account?"} {' '}
-                        <button onClick={switchHasAccount} className="font-medium text-purple-600 hover:text-purple-500 cursor-pointer">
+                        <button onClick={() => dispatch(toggleHasAccount())} className="font-medium text-purple-600 hover:text-purple-500 cursor-pointer">
                             {hasAccount ? "Sign up" : "Log in"}
                         </button>
                     </p>
