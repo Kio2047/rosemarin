@@ -17,4 +17,4 @@ const ShoppingListItem = sequelize.define('ShoppingListItem', {
 });
 
 
-module.exports = ShoppingListItem;
+export default ShoppingListItem;

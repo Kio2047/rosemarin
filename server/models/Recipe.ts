@@ -1,10 +1,11 @@
-const sequelize = require('./index');
-const {DataTypes} = require('sequelize');
-const User = require('./User');
-const Ingredient = require('./Ingredient');
-const Instruction = require('./Instruction');
+import sequelize from './index';
+import { DataTypes } from 'sequelize';
+import User from './User';
+import Ingredient from './Ingredient';
+import Instruction from './Instruction';
+import RecipeModel from '../types/Recipe';
 
-const Recipe = sequelize.define('Recipe', {
+const Recipe = sequelize.define<RecipeModel>('Recipe', {
     title: {
         type: DataTypes.STRING,
         allowNull: false
@@ -35,7 +36,7 @@ const Recipe = sequelize.define('Recipe', {
     }
 });
 
-Recipe.hasMany(Ingredient, { onDelete: "cascade" });
-Recipe.hasMany(Instruction, { onDelete: "cascade" });
+// Recipe.hasMany(Ingredient, { onDelete: "cascade" });
+// Recipe.hasMany(Instruction, { onDelete: "cascade" });
 
-module.exports = Recipe;
+export default Recipe;

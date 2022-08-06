@@ -1,4 +1,4 @@
-const Sequelize = require("sequelize");
+import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize("postgres", "postgres", "1111", {
   host: "localhost",
@@ -7,4 +7,4 @@ const sequelize = new Sequelize("postgres", "postgres", "1111", {
   logging: false,
 });
 
-module.exports = sequelize;
+export default sequelize;

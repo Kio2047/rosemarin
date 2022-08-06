@@ -1,4 +1,4 @@
-const ShoppingListItem = require('../models/ShoppingListItem')
+import ShoppingListItem from '../models/ShoppingListItem';
 
 const addItem = async (req, res) => {
     try {

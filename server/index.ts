@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import sequelize from "./models";
+import sequelize from "./models/index.js";
 import Router from "./router.js";
 import session from "express-session";
 import fileUpload from "express-fileupload";
@@ -26,7 +26,8 @@ app.use(
   })
 );
 
-const sessionOptions: session.SessionOptions = {
+
+const sessionOptions = {
   name: 'sid',
   secret,
   saveUninitialized: false,
@@ -39,6 +40,7 @@ const sessionOptions: session.SessionOptions = {
     secure: false,
   },
 }
+
 
 app.use(
   session(sessionOptions)

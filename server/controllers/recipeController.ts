@@ -1,9 +1,11 @@
-const Recipe = require("../models/Recipe");
-const Ingredient = require("../models/Ingredient");
-const Instruction = require("../models/Instruction");
-const fs = require("fs");
+import Recipe from "../models/Recipe";
+import Ingredient from "../models/Ingredient";
+import Instruction from "../models/Instruction";
+import fs from "fs";
+import InstructionModel from "../types/Instruction";
+import {Request, Response} from 'express'
 
-const createRecipe = async (req, res) => {
+const createRecipe = async (req: Request, res: Response) => {
   try {
     console.log(req.session);
     const ingredients = req.body.ingredients;
@@ -28,7 +30,7 @@ const createRecipe = async (req, res) => {
       });
     });
 
-    instructions.map((instruction) => {
+    instructions.map((instruction: InstructionModel) => {
       Instruction.create({
         text: instruction.text,
         temperature: instruction.temperature,
@@ -127,4 +129,4 @@ const getAllRecipes = async (req, res) => {
   }
 };
 
-module.exports = { createRecipe, removeRecipe, updateRecipe, getAllRecipes };
+export default { createRecipe, removeRecipe, updateRecipe, getAllRecipes };
