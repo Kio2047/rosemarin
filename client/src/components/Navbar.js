@@ -5,10 +5,13 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {faUser} from "@fortawesome/fontawesome-free-regular";
 import {faUserCheck} from "@fortawesome/fontawesome-free-solid";
+import { useSelector} from 'react-redux'
+
 
 library.add(faUser);
 
-const Navbar = ({isAuthenticated, setHasAccount}) => {
+const Navbar = ({setHasAccount}) => {
+    const isAuthenticated = useSelector(state => state.isAuthenticated);
 
     return (
         <div className="relative">

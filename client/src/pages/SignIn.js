@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import {useDispatch} from 'react-redux'
 import Rosemary from '../assets/images/rosemary.png'
 import SignInForm from "../components/SignInForm";
 
-export default function Signin ({ setIsAuthenticated, hasAccount, setHasAccount }) {
 
+
+
+export default function Signin ({  hasAccount, setHasAccount }) {
+    const dispatch = useDispatch();
+  
     const switchHasAccount = function () {
         setHasAccount(!hasAccount);
     };
@@ -29,7 +34,7 @@ export default function Signin ({ setIsAuthenticated, hasAccount, setHasAccount 
                         </button>
                     </p>
                 </div>
-                <SignInForm setIsAuthenticated={setIsAuthenticated} hasAccount={hasAccount}></SignInForm>
+                <SignInForm hasAccount={hasAccount}></SignInForm>
             </div>
         </div>
     )

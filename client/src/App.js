@@ -19,16 +19,20 @@ import {getMyShoppingList} from "./Utils/apiDBServiceShoppingList";
 import auth from "./Utils/Auth";
 import Logout from "./pages/Logout";
 import Signin from './pages/SignIn';
+import { useSelector, useDispatch } from 'react-redux'
+import {toggleAuthenticate} from './redux/actions';
 
 function App() {
+    const isAuthenticated = useSelector(state => state.isAuthenticated);
+    const dispatch = useDispatch();
     const [recipes, setRecipes] = useState([]);
     const [myRecipes, setMyRecipes] = useState([]);
     const [ids, setIds] = useState([])
     const [items, setItems] = useState([]);
     const [hasAccount, setHasAccount] = useState(true);
 
-    const initialState = auth.isAuthenticated();
-    const [isAuthenticated, setIsAuthenticated] = useState(initialState);
+    
+
 
 
     useEffect(() => {
@@ -63,7 +67,9 @@ function App() {
         getMyRecipes()
             // .then(recipes => console.log(recipes))
             .then(recipes => {
-                setIsAuthenticated(true)
+                if (document.cookie) {
+                   dispatch(toggleAuthenticate())
+                }
                 setMyRecipes(recipes)
             })
             .catch(err => console.log.bind(err))
@@ -73,12 +79,12 @@ function App() {
     return (
         <div className="font-oxy-regular">
             <BrowserRouter>
-                <Navbar isAuthenticated={isAuthenticated} setHasAccount={setHasAccount}></Navbar>
+                <Navbar setHasAccount={setHasAccount}></Navbar>
                 <Routes>
-                    <Route exact path="/" element={<Signin setIsAuthenticated={setIsAuthenticated} hasAccount={hasAccount} setHasAccount={setHasAccount}/>}></Route>
+                    <Route exact path="/" element={<Signin hasAccount={hasAccount} setHasAccount={setHasAccount}/>}></Route>
                     <Route
                         path="/logout"
-                        element={<Logout setIsAuthenticated={setIsAuthenticated} />}
+                        element={<Logout />}
                     />
 
                     <Route exact path="/home"

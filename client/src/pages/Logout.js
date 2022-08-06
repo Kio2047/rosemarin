@@ -1,12 +1,16 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {toggleAuthenticate} from '../redux/actions';
 import apiUserService from "../Utils/apiUserService";
 import auth from "../Utils/Auth";
 
-const Logout = (props) => {
+
+const Logout = () => {
 
     let navigate = useNavigate();
+    const dispatch = useDispatch();
 
 /*     const handleClick = () => {
         console.log('penne2')
@@ -22,7 +26,7 @@ const Logout = (props) => {
             apiUserService.logout()
             .then(res => console.log(res))
             .catch(err => console.log(err));
-            props.setIsAuthenticated(false);
+            dispatch(toggleAuthenticate());
             auth.logout(() => navigate("../", {replace: true}));
         } else {
             navigate(-1, {replace: true})

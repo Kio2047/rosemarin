@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {toggleAuthenticate} from '../redux/actions';
 
 import { loginFields, signupFields } from "../constants/formFields";
 import apiUserService from "../Utils/apiUserService";
@@ -8,9 +10,10 @@ import FormExtra from "./FormExtra";
 import auth from "../Utils/Auth";
 import Input from "./Input";
 
-export default function SignInForm({ setIsAuthenticated, hasAccount }) {
+export default function SignInForm({ hasAccount }) {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formState, setFormState] = useState({});
   const [formFields, setFormFields] = useState([]);
@@ -54,7 +57,7 @@ export default function SignInForm({ setIsAuthenticated, hasAccount }) {
         hasAccount ? setErrorMessage('Incorrect login information.') : setErrorMessage('Account already exists. Please try again.');
       }
       else {
-        setIsAuthenticated(true);
+        dispatch(toggleAuthenticate())
         auth.login(() => navigate("../home", { replace: true }));
       };
     }
