@@ -1,10 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
+import {useSelector} from 'react-redux'
+
 import {useParams} from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {getMyShoppingList, postItem} from "../Utils/apiDBServiceShoppingList";
 
 
-const RecipeDetails = ({recipes, myRecipes, items, setItems}) => {
+const RecipeDetails = ({myRecipes, items, setItems}) => {
+    const recipes = useSelector(state => state.recipes)
+
     const [recipe, setRecipe] = useState({});
     const [myRecipe, setMyRecipe] = useState({});
 

@@ -1,13 +1,18 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
+
 import Recipe from "../components/Recipe";
 import TopSection from "../components/TopSection";
 import SearchForm from "../components/SearchForm";
 
-const RecipesList = ({recipes, setIds, ids, setRecipes}) => {
+const RecipesList = ({ setIds, ids}) => {
+
+    const recipes = useSelector(state => state.recipes)
+
     return (
         <>
-            <TopSection></TopSection>
-            <SearchForm setRecipes={setRecipes}></SearchForm>
+            <TopSection />
+            <SearchForm />
             <ul className="bg-transparent container-grid max-w-7xl mx-auto pr-5 pl-5">
                 {recipes.map((recipe, i) =>
                     (i === 4 || i%10 === 4 ) ?

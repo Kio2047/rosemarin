@@ -2,18 +2,21 @@ import React, {useState} from 'react';
 import {getRandomRecipe} from "../Utils/apiRecipeService";
 import {options} from '../data';
 import { useNavigate } from 'react-router-dom';
+import {useDispatch} from 'react-redux'
+import { setRecipes } from '../redux/actions.tsx';
 
-const SearchForm = ({setRecipes, categories}) => {
+const SearchForm = ({categories}) => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     function searchHandler(event) {
         event.preventDefault();
-        getRandomRecipe(event.target.search.value)
-            // .then(recipes => console.log(recipes.results))
-            .then(data => setRecipes(data.results))
-            .catch(err => console.log.bind(err))
-        navigate("../home", { replace: true })
+        (async () => {
+           const taggedRecipes = await getRandomRecipe(event.target.search.value)
+            dispatch(setRecipes(taggedRecipes.results))
+            navigate("../home", { replace: true })
+        })();
     }
 
     return (

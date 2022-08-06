@@ -19,29 +19,32 @@ import { getMyShoppingList } from "./Utils/apiDBServiceShoppingList";
 import Logout from "./pages/Logout";
 import Signin from './pages/SignIn';
 import { useSelector, useDispatch } from 'react-redux'
-import { toggleAuthenticate } from './redux/actions';
+import { toggleAuthenticate, setAuthenticate } from './redux/actions.tsx';
+import { setRecipes } from './redux/actions.tsx'
 
 function App() {
 
     const dispatch = useDispatch();
-    const [recipes, setRecipes] = useState([]);
     const [myRecipes, setMyRecipes] = useState([]);
     const [ids, setIds] = useState([])
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-      getMyShoppingList()
-        // .then(recipes => console.log(recipes))
-        .then(itemsSL => setItems(itemsSL))
-        .catch(err => console.log.bind(err))
+      (async () => {
+          const data = await getMyShoppingList()
+          setItems(data)
+      })();   
     }, [])
 
     useEffect(() => {
-        getRandomRecipe()
-            // .then(recipes => console.log(recipes))
-          .then(data => setRecipes(data.results))
-          .catch(err => console.log.bind(err))
-        // setRecipes(getRandomRecipe());
+        (async () => {
+            const data = await getRandomRecipe()
+            console.log('List of random recipes: ', data.results)
+            dispatch(setRecipes(data.results))
+            if (document.cookie) {
+                setAuthenticate(true);
+            }
+        })();
     }, []);
 
 
@@ -61,9 +64,14 @@ function App() {
         getMyRecipes()
             // .then(recipes => console.log(recipes))
             .then(recipes => {
-                if (document.cookie) {
+
+            //THIS WAS CAUSING THE ISSUE: 
+            //everytime ids change, toggleAuthenticate was called if the cookie was active
+
+            /*     if (document.cookie) {
                    dispatch(toggleAuthenticate())
-                }
+                } */
+                console.log('Am i being called? ', recipes)
                 setMyRecipes(recipes)
             })
             .catch(err => console.log.bind(err))
@@ -82,12 +90,11 @@ function App() {
                     />
 
                     <Route exact path="/home"
-                           element={<RecipesList setRecipes={setRecipes} recipes={recipes} setIds={setIds}
-                                                 ids={ids}/>}></Route>
+                           element={<RecipesList setIds={setIds}ids={ids}/>}></Route>
                     <Route exact path="/my_recipes"
                            element={<MyRecipesList myRecipes={myRecipes} setMyRecipes={setMyRecipes} setIds={setIds}
-                                                   ids={ids} setRecipes={setRecipes}/>}></Route>
-                    <Route exact path="/recipes/:id" element={<RecipeDetails recipes={recipes} myRecipes={myRecipes} setItems={setItems} setIds={setIds} ids={ids}/>}></Route>
+                                                   ids={ids}/>}></Route>
+                    <Route exact path="/recipes/:id" element={<RecipeDetails myRecipes={myRecipes} setItems={setItems} setIds={setIds} ids={ids}/>}></Route>
                     <Route exact path="/create" element={<CreateRecipe/>}></Route>
                     <Route exact path="/menu" element={<Menu/>}></Route>
                     <Route exact path="/weekly_menu" element={<WeeklyMenu/>}></Route>

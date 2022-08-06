@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import {toggleAuthenticate} from '../redux/actions';
+import {toggleAuthenticate} from '../redux/actions.tsx';
 
 import { loginFields, signupFields } from "../constants/formFields";
 import apiUserService from "../Utils/apiUserService";
