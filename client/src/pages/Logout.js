@@ -2,7 +2,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import {toggleAuthenticate} from '../redux/actions.tsx';
+
+import {toggleAuthenticate} from '../redux/actions';
 import apiUserService from "../Utils/apiUserService";
 import auth from "../Utils/Auth";
 

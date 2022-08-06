@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
 
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import Rosemary from '../assets/images/rosemary.png'
 import SignInForm from "../components/SignInForm";
-import { toggleHasAccount } from "../redux/actions.tsx";
+import { toggleHasAccount } from "../redux/actions";
 
-export default function Signin () {
+export default function SignIn () {
 
-    const dispatch = useDispatch();
-    const hasAccount = useSelector((state) => state.hasAccount);
+    const dispatch = useAppDispatch();
+    const hasAccount = useAppSelector((state) => state.hasAccount);
 
     return (
         <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -31,7 +31,7 @@ export default function Signin () {
                         </button>
                     </p>
                 </div>
-                <SignInForm hasAccount={hasAccount}></SignInForm>
+                <SignInForm ></SignInForm>
             </div>
         </div>
     )

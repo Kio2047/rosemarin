@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import {toggleAuthenticate} from '../redux/actions.tsx';
+import { useSelector, useDispatch } from 'react-redux';
+import {toggleAuthenticate} from '../redux/actions';
 
 import { loginFields, signupFields } from "../constants/formFields";
 import apiUserService from "../Utils/apiUserService";
@@ -10,10 +10,11 @@ import FormExtra from "./FormExtra";
 import auth from "../Utils/Auth";
 import Input from "./Input";
 
-export default function SignInForm({ hasAccount }) {
+export default function SignInForm() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const hasAccount = useSelector((state) => state.hasAccount);
 
   const [formState, setFormState] = useState({});
   const [formFields, setFormFields] = useState([]);

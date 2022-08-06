@@ -17,10 +17,10 @@ import RecipeDetails from "./components/RecipeDetails";
 import { getMyRecipes } from "./Utils/apiDBRecipeService";
 import { getMyShoppingList } from "./Utils/apiDBServiceShoppingList";
 import Logout from "./pages/Logout";
-import Signin from './pages/SignIn';
-import { useSelector, useDispatch } from 'react-redux'
-import { toggleAuthenticate, setAuthenticate } from './redux/actions.tsx';
-import { setRecipes } from './redux/actions.tsx'
+import SignIn from './pages/SignIn';
+import { usector, useDispatch } from 'react-redux'
+import { toggleAuthenticate, setAuthenticate } from './redux/actions';
+import { setRecipes } from './redux/actions';
 
 function App() {
 
@@ -33,7 +33,7 @@ function App() {
       (async () => {
           const data = await getMyShoppingList()
           setItems(data)
-      })();   
+      })();
     }, [])
 
     useEffect(() => {
@@ -65,7 +65,7 @@ function App() {
             // .then(recipes => console.log(recipes))
             .then(recipes => {
 
-            //THIS WAS CAUSING THE ISSUE: 
+            //THIS WAS CAUSING THE ISSUE:
             //everytime ids change, toggleAuthenticate was called if the cookie was active
 
             /*     if (document.cookie) {
@@ -83,7 +83,7 @@ function App() {
             <BrowserRouter>
                 <Navbar />
                 <Routes>
-                    <Route exact path="/" element={<Signin />}></Route>
+                    <Route exact path="/" element={<SignIn />}></Route>
                     <Route
                         path="/logout"
                         element={<Logout />}

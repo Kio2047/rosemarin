@@ -6,7 +6,7 @@ import {library} from "@fortawesome/fontawesome-svg-core";
 import {faUser} from "@fortawesome/fontawesome-free-regular";
 import {faUserCheck} from "@fortawesome/fontawesome-free-solid";
 import { useSelector, useDispatch} from 'react-redux'
-import { setHasAccount } from '../redux/actions.tsx';
+import { setHasAccount } from '../redux/actions';
 
 library.add(faUser);
 
@@ -35,7 +35,7 @@ const Navbar = () => {
                             <FontAwesomeIcon icon={faUserCheck} className="text-2xl cursor-pointer mr-3"/>Logout
                         </Link>
                     </div>
-                </div> : 
+                </div> :
                 <div className="flex justify-center items-center h-20 bg-base-100 shadow-md fixed top-0 left-0 right-0 z-10">
                    <div className="">
                         <span to="/home" className="btn btn-ghost normal-case text-3xl font-PoiretOne mr-4 ml-4">ROSEMARY</span>
@@ -43,7 +43,7 @@ const Navbar = () => {
                     <div className='absolute right-20'>
                         <Link className="menu-item cursor-pointer" to="/" onClick={() => dispatch(setHasAccount(true))}>
                             <FontAwesomeIcon icon={faUser}className="text-2xl cursor-pointer mr-3"/>Login
-                        </Link> 
+                        </Link>
                     </div>
                 </div>
                 }
