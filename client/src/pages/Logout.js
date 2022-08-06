@@ -8,17 +8,20 @@ const Logout = (props) => {
 
     let navigate = useNavigate();
 
-    const handleClick = () => {
+/*     const handleClick = () => {
         console.log('penne2')
         apiUserService.logout()
             .then(res => console.log(res))
             .catch(err => console.log(err));
         handleLogout();
     };
-
+ */
     const handleLogout = (shouldLogout) => {
         if (shouldLogout) {
             console.log("penne")
+            apiUserService.logout()
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
             props.setIsAuthenticated(false);
             auth.logout(() => navigate("../", {replace: true}));
         } else {

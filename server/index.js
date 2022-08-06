@@ -24,6 +24,7 @@ app.use(
 
 app.use(
   session({
+    name: 'sid',
     path: "/",
     secret: secret,
     saveUninitialized: false,
