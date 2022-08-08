@@ -32,7 +32,9 @@ function App() {
 
     const dispatch = useDispatch();
     const ids = useSelector(state => state.ids);
-    
+  
+    console.log('ids', ids)
+
     
 
     useEffect(() => {
@@ -44,25 +46,26 @@ function App() {
 
     useEffect(() => {
         (async () => {
+            if (document.cookie) {
+                dispatch(setAuthenticate(true));
+            }
             const data = await getRandomRecipe()
             console.log('List of random recipes: ', data.results)
             dispatch(setRecipes(data.results))
-            if (document.cookie) {
-                setAuthenticate(true);
-            }
+            
         })();
     }, []);
 
+    const idsSetter = (el, ids) => {
+        let id = el.id;
+        let id_tasty = el.id_tasty;
+        const filtered = ids.filter(e => e.id.tasty !== el.id_tasty);
+        return [...filtered, {id, id_tasty}]
+    }
 
     useEffect(() => {
         getMyRecipes()
-            .then(recipes => recipes.map(el => dispatch(setIds(prev => {
-
-                let id = el.id;
-                let id_tasty = el.id_tasty;
-                const filtered = prev.filter(e => e.id_tasty !== el.id_tasty);
-                return [...filtered, {id, id_tasty}]
-            }))))
+            .then(recipes => recipes.map(el => dispatch(setIds(idsSetter(el, ids)))))
             .catch(err => console.log.bind(err))
     }, []);
 

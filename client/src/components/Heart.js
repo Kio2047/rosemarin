@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {faHeart} from "@fortawesome/fontawesome-free-solid";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {deleteRecipe, getMyRecipes, postRecipe} from "../Utils/apiDBRecipeService";
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
@@ -10,11 +11,12 @@ const Heart = ({recipe, ids, setIds}) => {
 
     const [isFavorite, setIsFavorite] = useState(false);
     const [currentId, setCurrentId] = useState(0);
- 
+    // const ids = useSelector(state => state.ids);
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
-        ids.map(id => {
+        ids.map((id) => {
             if (id.id_tasty === recipe.id || id.id_tasty === recipe.id_tasty) {
                 setIsFavorite(true);
                 setCurrentId(id.id);
@@ -55,17 +57,17 @@ const Heart = ({recipe, ids, setIds}) => {
                 .then(res => console.log(res))
                 .catch(error => console.log(error))
 
-            setIds(prev => [...prev, {id: currentId, id_tasty: recipe.id}]);
+            dispatch(setIds(prev => [...prev, {id: currentId, id_tasty: recipe.id}]));
 
         } else {
             if (window.confirm("You are removing recipe. Are you sure?")) {
                 deleteRecipe({id: currentId})
                     .then(res => console.log(res))
                     .catch(error => console.log(error))
-                setIds(prev => {
+                dispatch(setIds(prev => {
                     const filtered = prev.filter(id => id.id !== currentId);
                     return [...filtered]
-                })
+                }))
             }
         }
 
