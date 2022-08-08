@@ -1,11 +1,11 @@
 import sequelize from './index';
 import { DataTypes } from 'sequelize';
-import User from './User';
-import Ingredient from './Ingredient';
-import Instruction from './Instruction';
-import RecipeModel from '../types/Recipe';
+import IngredientModel from './Ingredient';
+import InstructionModel from './Instruction';
+import Recipe from '../types/Recipe';
+import UserModel from './User';
 
-const Recipe = sequelize.define<RecipeModel>('Recipe', {
+const RecipeModel = sequelize.define<Recipe>('Recipe', {
     title: {
         type: DataTypes.STRING,
         allowNull: false
@@ -36,7 +36,4 @@ const Recipe = sequelize.define<RecipeModel>('Recipe', {
     }
 });
 
-// Recipe.hasMany(Ingredient, { onDelete: "cascade" });
-// Recipe.hasMany(Instruction, { onDelete: "cascade" });
-
-export default Recipe;
+export default RecipeModel;

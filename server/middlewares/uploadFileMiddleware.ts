@@ -1,10 +1,13 @@
-const path = require('path');
+import path from 'path';
+import {Request, Response, NextFunction} from 'express'
+// import {ExReq} from  '../types/request'
+import fileUpload, { UploadedFile } from 'express-fileupload';
 
-const fileMiddleware = async (req, res, next) => {
+const fileMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     try {
         console.log(req.files);
         if(req.files) {
-            let file = req.files.file;
+        let file = req.files.file as UploadedFile;
             let ext = path.extname(file.name);
             let newName = file.md5 + ext;
             file.mv("./images/" + newName);
@@ -19,5 +22,5 @@ const fileMiddleware = async (req, res, next) => {
     }
 }
 
-module.exports = fileMiddleware;
+export default fileMiddleware;
 

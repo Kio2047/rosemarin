@@ -1,7 +1,15 @@
-declare module 'express' {
-  interface Request {
-    user?: any
-  }
-}
+import User from './User'
+import {Request} from 'express'
 
-export {}
+declare module 'express' {
+  export interface Request{
+    user?: User,
+    image?: any
+  }
+} 
+
+
+/* export interface ExReq extends Request {
+  user?: User,
+  image?: any,
+} */

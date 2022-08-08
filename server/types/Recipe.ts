@@ -1,7 +1,8 @@
 import { Model, CreationOptional, InferAttributes, InferCreationAttributes } from 'sequelize';
 
-export default interface RecipeModel extends Model<InferAttributes<RecipeModel>, InferCreationAttributes<RecipeModel>> {
+export default interface Recipe extends Model<InferAttributes<Recipe>, InferCreationAttributes<Recipe>> {
   id?: CreationOptional<number>;
+  UserId?: number,
   title: string,
   description?: string,
   img_url?: string,

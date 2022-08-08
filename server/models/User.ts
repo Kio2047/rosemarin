@@ -1,8 +1,12 @@
 import sequelize from './'
-import UserModel from '../types/User';
-import { DataTypes } from 'sequelize/types';
+import User from '../types/User';
+import { DataTypes } from 'sequelize';
+import RecipeModel from './Recipe';
+import IngredientModel from './Ingredient';
+import ShoppingListItemModel from './ShoppingListItem';
+import InstructionModel from './Instruction';
 
-const User = sequelize.define<UserModel>('User', {
+const UserModel = sequelize.define<User>('User', {
     name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -17,8 +21,17 @@ const User = sequelize.define<UserModel>('User', {
     },
 });
 
-export default User
+/***** ALL ASSOCIATIONS NEED TO BE IN ONE FILE *****/
+UserModel.hasMany(RecipeModel, { onDelete: "cascade", foreignKey: 'UserId' });
+UserModel.hasMany(ShoppingListItemModel, { onDelete: "cascade", foreignKey: 'UserId' }); 
 
-//NEED TO FIX THESE TWO ONCE 
-// User.hasMany(Recipe, { onDelete: "cascade" });
-// User.hasMany(ShoppingListItem, { onDelete: "cascade" }); 
+RecipeModel.belongsTo(UserModel)
+ShoppingListItemModel.belongsTo(UserModel) //This will create foreignKey in ShoppingListItem
+
+RecipeModel.hasMany(IngredientModel, { onDelete: "cascade", foreignKey: 'RecipeId'});
+RecipeModel.hasMany(InstructionModel, { onDelete: "cascade", foreignKey: 'RecipeId'});
+
+IngredientModel.belongsTo(RecipeModel);
+InstructionModel.belongsTo(RecipeModel);
+export default UserModel
+

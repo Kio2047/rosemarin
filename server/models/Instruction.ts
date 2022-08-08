@@ -1,10 +1,9 @@
-import { Model, DataTypes, CreationOptional, InferAttributes, InferCreationAttributes } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import sequelize from '../models'
-import InstructionModel  from '../types/Instruction';
-// We recommend you declare an interface for the attributes, for stricter typechecking
+import Instruction  from '../types/Instruction';
+import RecipeModel from './Recipe';
 
-
-const Instruction = sequelize.define<InstructionModel>('User', {
+const InstructionModel = sequelize.define<Instruction>('User', {
     text: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -15,4 +14,4 @@ const Instruction = sequelize.define<InstructionModel>('User', {
     }
 });
 
-export default Instruction
+export default InstructionModel

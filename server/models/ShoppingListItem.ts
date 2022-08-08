@@ -1,9 +1,8 @@
 import sequelize from './index';
 import { DataTypes } from 'sequelize';
-import Ingredient from '../types/Ingredient';
-import RecipeModel from './Recipe';
+import ShoppingListItem from '../types/ShoppingListItem';
 
-const IngredientModel = sequelize.define<Ingredient>('Ingredient', {
+const ShoppingListItemModel = sequelize.define<ShoppingListItem>('ShoppingListItem', {
     name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -18,5 +17,5 @@ const IngredientModel = sequelize.define<Ingredient>('Ingredient', {
     },
 });
 
-export default IngredientModel;
 
+export default ShoppingListItemModel;

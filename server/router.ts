@@ -8,19 +8,22 @@ import authMiddleware from "./middlewares/authMiddleware";
 
 const router = express.Router();
 
+/***** USER *****/
 router.get("/logout", authMiddleware, userController.logoutUser);
 router.post("/register", userController.createUser);
 router.post("/login", userController.loginUser);
 
+/***** RECIPES *****/
 router.get("/recipes", authMiddleware, recipeController.getAllRecipes);
 router.post("/recipes", fileMiddleware, authMiddleware, recipeController.createRecipe);
 router.put("/recipes/:id", fileMiddleware, authMiddleware, recipeController.updateRecipe);
 router.delete("/recipes", authMiddleware, recipeController.removeRecipe);
 
-router.get("/items", shoppingListController.getAllItems);
-router.post("/items", shoppingListController.addItem);
-router.put("/items", shoppingListController.updateItem);
-router.delete("/items", shoppingListController.removeItem);
+/***** SHOPPINGLIST ITEMS *****/
+router.get("/items", authMiddleware, shoppingListController.getAllItems);
+router.post("/items", authMiddleware, shoppingListController.addItem);
+router.put("/items", authMiddleware, shoppingListController.updateItem);
+router.delete("/items", authMiddleware, shoppingListController.removeItem);
 
 router.get("*", function (_, res) {
   res
