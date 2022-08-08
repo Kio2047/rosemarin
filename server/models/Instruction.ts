@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../models'
 import Instruction  from '../types/Instruction';
 
-const InstructionModel = sequelize.define<Instruction>('User', {
+const InstructionModel = sequelize.define<Instruction>('Instruction', {
     text: {
         type: DataTypes.STRING,
         allowNull: false,
