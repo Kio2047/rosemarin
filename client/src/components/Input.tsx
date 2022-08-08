@@ -1,3 +1,5 @@
+import type { InputProps } from "../types/propTypes";
+
 const fixedInputClass = "rounded-md appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
 
 function Input({
@@ -11,7 +13,7 @@ function Input({
                    isRequired = false,
                    placeholder,
                 //    customClass
-               }) {
+               }: InputProps) {
                 let customClass;
     return (
         <div className="my-5">

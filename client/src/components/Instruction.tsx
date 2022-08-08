@@ -1,6 +1,7 @@
 import React from 'react';
+import { InstructionProps } from '../types/propTypes';
 
-const Instruction = ({instruction}) => {
+const Instruction = ({instruction}: InstructionProps) => {
     return (
         <textarea
             name={"text-"+instruction}

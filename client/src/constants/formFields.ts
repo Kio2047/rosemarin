@@ -1,4 +1,6 @@
-const loginFields=[
+import type { FormField } from "../types/formTypes"
+
+const loginFields: FormField[] = [
     {
         labelText:"Email address",
         labelFor:"email",

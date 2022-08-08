@@ -76,7 +76,7 @@ function App() {
             .catch(err => console.log.bind(err))
     }, [ids])
 
-
+    console.log("here kio kio:", ids);
     return (
         <div className="font-oxy-regular">
             <BrowserRouter>
