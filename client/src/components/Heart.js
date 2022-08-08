@@ -11,7 +11,6 @@ const Heart = ({recipe, ids}) => {
 
     const [isFavorite, setIsFavorite] = useState(false);
     const [currentId, setCurrentId] = useState(0);
-    // const ids = useSelector(state => state.ids);
     const dispatch = useDispatch();
 
 
