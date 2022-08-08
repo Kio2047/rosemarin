@@ -27,7 +27,6 @@ const recipes = (state = [], action) => {
 }
 
 const myRecipes = (state = [], action) => {
-  console.log("helllooooooo", state)
   if (action.type === 'SET_MY_RECIPES') {
     return action.payload
   }
@@ -35,7 +34,6 @@ const myRecipes = (state = [], action) => {
 }
 
 const ids = (state = [], action) => {
-  console.log('IDS', state)
   if (action.type === 'SET_IDS') {
     return action.payload
   }

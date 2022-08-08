@@ -33,8 +33,7 @@ function App() {
     const dispatch = useDispatch();
     const ids = useSelector(state => state.ids);
   
-    console.log('ids', ids)
-
+    
     
 
     useEffect(() => {
@@ -56,7 +55,7 @@ function App() {
         })();
     }, []);
 
-    const idsSetter = (el, ids) => {
+    const idsHelper = (el, ids) => {
         let id = el.id;
         let id_tasty = el.id_tasty;
         const filtered = ids.filter(e => e.id.tasty !== el.id_tasty);
@@ -65,7 +64,7 @@ function App() {
 
     useEffect(() => {
         getMyRecipes()
-            .then(recipes => recipes.map(el => dispatch(setIds(idsSetter(el, ids)))))
+            .then(recipes => recipes.map(el => dispatch(setIds(idsHelper(el, ids)))))
             .catch(err => console.log.bind(err))
     }, []);
 

@@ -24,11 +24,11 @@ const Heart = ({recipe, ids, setIds}) => {
         })
     }, [ids]);
 
-    const favoriteSetter = (ids) => {  
+    const favoriteHelper = (ids) => {  
        return ids = [...ids, {id: currentId, id_tasty: recipe.id}] 
     }
 
-    const unfavoriteSetter = (ids) => {
+    const unfavoriteHelper = (ids) => {
         const filtered = ids.filter(id => id.id !== currentId);
         return [...filtered]
     
@@ -71,14 +71,14 @@ const Heart = ({recipe, ids, setIds}) => {
                 .then(res => console.log(res))
                 .catch(error => console.log(error))
 
-            dispatch(setIds(favoriteSetter(ids)));
+            dispatch(setIds(favoriteHelper(ids)));
 
         } else {
             if (window.confirm("You are removing recipe. Are you sure?")) {
                 deleteRecipe({id: currentId})
                     .then(res => console.log(res))
                     .catch(error => console.log(error))
-                dispatch(setIds(unfavoriteSetter(ids)))
+                dispatch(setIds(unfavoriteHelper(ids)))
             }
         }
 
