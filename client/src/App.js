@@ -18,13 +18,12 @@ import { getMyRecipes } from "./Utils/apiDBRecipeService";
 import { getMyShoppingList } from "./Utils/apiDBServiceShoppingList";
 import Logout from "./pages/Logout";
 import SignIn from './pages/SignIn';
-import { usector, useDispatch } from 'react-redux'
-import { toggleAuthenticate, setAuthenticate } from './redux/actions';
-import { setRecipes } from './redux/actions';
+import { useAppSelector, useAppDispatch } from './redux/hooks';
+import { toggleAuthenticate, setAuthenticate, setRecipes } from './redux/actions';
 
 function App() {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [myRecipes, setMyRecipes] = useState([]);
     const [ids, setIds] = useState([])
     const [items, setItems] = useState([]);
@@ -38,12 +37,12 @@ function App() {
 
     useEffect(() => {
         (async () => {
+            if (document.cookie) {
+                dispatch(setAuthenticate(true));
+            }
             const data = await getRandomRecipe()
             console.log('List of random recipes: ', data.results)
             dispatch(setRecipes(data.results))
-            if (document.cookie) {
-                setAuthenticate(true);
-            }
         })();
     }, []);
 

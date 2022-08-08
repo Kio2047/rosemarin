@@ -1,7 +1,7 @@
 import {combineReducers, AnyAction} from 'redux'
 import { PayloadAction } from '@reduxjs/toolkit'
 
-import type { recipe, state } from './reduxTypes';
+import type { APIRecipe, state } from '../types';
 import { store } from './store';
 
 export const isAuthenticated = (state: Boolean = false, action: AnyAction) => {
@@ -24,7 +24,7 @@ export const hasAccount = (state: Boolean = true, action: AnyAction) => {
   return state;
 }
 
-export const recipes = (state: recipe[] = [], action: AnyAction) => {
+export const recipes = (state: APIRecipe[] = [], action: AnyAction) => {
   if (action.type === 'SET_RECIPES'){
     return action.payload
   }

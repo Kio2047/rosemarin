@@ -9,7 +9,6 @@ const Heart = ({recipe, setIds, ids}) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const [currentId, setCurrentId] = useState(0);
 
-
     useEffect(() => {
         ids.map(id => {
             if (id.id_tasty === recipe.id || id.id_tasty === recipe.id_tasty) {
@@ -24,7 +23,7 @@ const Heart = ({recipe, setIds, ids}) => {
         if (!isFavorite) {
             const instructions = recipe.instructions.map(el => {
                 let text = el.display_text;
-                return {text}
+                return {text};
             })
             const ingredients = recipe.sections.map(el => {
                 let final = [];
@@ -48,6 +47,7 @@ const Heart = ({recipe, setIds, ids}) => {
                 ingredients: ingredients.flat(),
                 instructions: instructions
             }
+            console.log("new recipe type", newRecipe);
             postRecipe(newRecipe)
                 .then(res => console.log(res))
                 .catch(error => console.log(error))

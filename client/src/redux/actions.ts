@@ -1,4 +1,4 @@
-import type { recipe } from "./reduxTypes";
+import type { APIRecipe } from "../types";
 
 export const toggleAuthenticate = () => ({
   type: 'TOGGLE_AUTHENTICATE'
@@ -18,7 +18,7 @@ export const setHasAccount = (status: boolean) => ({
   payload: status
 });
 
-export const setRecipes = (payload: recipe[]) => ({
+export const setRecipes = (payload: APIRecipe[]) => ({
   type: 'SET_RECIPES',
   payload
 })
