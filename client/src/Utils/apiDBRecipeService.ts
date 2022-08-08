@@ -1,8 +1,8 @@
-import type { NewRecipe } from "../types/recipeTypes";
+import type { NewRecipe, SavedRecipe } from "../types/recipeTypes";
 
 const baseDBUrl = 'http://localhost:3001/recipes';
 
-export const getMyRecipes = async () => {
+export const getMyRecipes = async (): Promise<SavedRecipe[] | undefined>  => {
 	try {
 		const response = await fetch(baseDBUrl, {
 			credentials: 'include',
