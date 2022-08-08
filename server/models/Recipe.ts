@@ -1,9 +1,6 @@
 import sequelize from './index';
 import { DataTypes } from 'sequelize';
-import IngredientModel from './Ingredient';
-import InstructionModel from './Instruction';
 import Recipe from '../types/Recipe';
-import UserModel from './User';
 
 const RecipeModel = sequelize.define<Recipe>('Recipe', {
     title: {
