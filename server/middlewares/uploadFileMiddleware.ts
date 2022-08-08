@@ -11,7 +11,7 @@ const fileMiddleware = async (req: Request, res: Response, next: NextFunction) =
             let ext = path.extname(file.name);
             let newName = file.md5 + ext;
             file.mv("./images/" + newName);
-            req.image = path.relative('/', './images/') + '/' + newName;
+            req.body.image = path.relative('/', './images/') + '/' + newName;
             next();
         } else {
             next();

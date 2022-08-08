@@ -1,12 +1,13 @@
 import { Request, Response} from 'express'
 
-// import '../types/request';
+/// <reference> session.d.ts
+import * as express from '../types/request'
 import ShoppingListItem from '../models/ShoppingListItem';
 
 const addItem = async (req: Request, res: Response) => {
     try {
         if (req.user){
-            const UserId = req.user.id;
+            const UserId = req.body.user.id;
             const {name, unit, quantity} = req.body;
             const result = await ShoppingListItem.create({
                 name,
@@ -25,7 +26,7 @@ const addItem = async (req: Request, res: Response) => {
 const updateItem = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
-        await ShoppingListItem.destroy({where: {id: id}});
+        await ShoppingListItem.destroy({where: {id}});
         await ShoppingListItem.create({
             name: req.body.name,
             unit: req.body.unit,
@@ -55,8 +56,7 @@ const getAllItems = async (req: Request, res: Response) => {
     try {
         if (req.user){
             const UserId = req.user.id
-            const userId = 1;
-            const allItems = await ShoppingListItem.findAll({where: {UserId: userId}});
+            const allItems = await ShoppingListItem.findAll({where: {UserId}});
             res.status(200).send(allItems);
         }
     } catch (err) {

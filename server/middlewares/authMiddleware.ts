@@ -1,6 +1,7 @@
 import UserModel from "../models/User";
 import {NextFunction, Request, Response} from 'express'
-// import {ExReq} from  '../types/request'
+/// <reference> session.d.ts
+import * as express from '../types/request'
 import User from "../types/User";
 
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {

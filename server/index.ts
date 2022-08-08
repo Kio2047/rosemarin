@@ -3,7 +3,8 @@ import cors from "cors";
 import sequelize from "./models/index";
 import Router from "./router";
 import session, { SessionOptions } from "express-session";
-import './types/session'
+/// <reference> session.d.ts
+import * as express_session from './types/session'
 import fileUpload from "express-fileupload";;
 
 const app = express();
@@ -18,8 +19,9 @@ const corsOptions: cors.CorsOptions = {
 (async () => {
   try {
     await sequelize.sync({ force: false });
+    console.log('Database connection successful 🟢')
   } catch (error) {
-    console.log("Database connection failed: ", error);
+    console.log("Database connection failed 🔴 ", error);
   }
 })();
 
@@ -35,29 +37,27 @@ app.use(
   })
   );
   
-  
-  const sessionOptions: SessionOptions = {
-    name: 'sid',
-    secret,
-    saveUninitialized: false,
-    resave: false,
-    cookie: {
-      maxAge,
-      sameSite: true,
-      httpOnly: false,
-      // we would want to set secure=true in a production environment
-      secure: false,
-    },
-  }
-  
-  
-  app.use(
-    session(sessionOptions)
-    );
-    
-    app.use(Router);
+const sessionOptions: SessionOptions = {
+  name: 'sid',
+  secret,
+  saveUninitialized: false,
+  resave: false,
+  cookie: {
+    maxAge,
+    sameSite: true,
+    httpOnly: false,
+    // we would want to set secure=true in a production environment
+    secure: false,
+  },
+}
 
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}.`);
-  });
-    
+app.use(
+  session(sessionOptions)
+  );
+  
+app.use(Router);
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}. 🔹`);
+});
+  

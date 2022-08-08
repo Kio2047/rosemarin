@@ -8,6 +8,8 @@ import IngredientModel from "../models/Ingredient";
 import Instruction from "../types/Instruction";
 import Ingredient from "../types/Ingredient";
 import InstructionModel from "../models/Instruction";
+/// <reference> session.d.ts
+import * as express from '../types/request'
 
 const createRecipe = async (req: Request, res: Response) => {
   try {
