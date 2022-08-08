@@ -15,15 +15,13 @@ const createUser = async (req: Request, res: Response) => {
         email, 
         password: hashedPassword,
       });
-
       req.session.sid = user.id;
-
       res.status(201).send("Success");
     } else {
       res.status(400).send("Account already exists.");
     }
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log('userController, createUser error 🔴: ', error);
     res.status(500).send({ message: "Due to error user have not been saved" });
   }
 };
@@ -45,24 +43,18 @@ const loginUser = async (req: Request, res: Response) => {
     } else {
       res.status(401).send("User does not exist");
     }
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log('userController, loginUser error: 🔴', error);
     res.status(500);
   }
 };
 
-/* const profileUser = async (req: Request, res: Response) => {
-  try {
-    res.status(200).json(req.user);
-  } catch (err) {
-    res.status(500);
-    console.log(err);
-  }
-}; */
-
 const logoutUser = (req: Request, res: Response) => {
-  req.session.destroy((e) => {
-    if (e) res.status(500).send("Something went wrong");
+  req.session.destroy((error) => {
+    if (error) {
+      console.log('userController, logoutUser error 🔴: ', error)
+      res.status(500).send("Session error");
+    }
     else {
       res.clearCookie("sid");
       res.sendStatus(200);

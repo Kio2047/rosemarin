@@ -127,7 +127,6 @@ const removeRecipe = async (req: Request, res: Response) => {
 const getAllRecipes = async (req: Request, res: Response) => {
   try {
     console.log("Session ", req.session);
-    //todo const userId = req.session.sid;
     const UserId = req.session.sid;
     const allRecipes = await RecipeModel.findAll({
       where: { UserId },

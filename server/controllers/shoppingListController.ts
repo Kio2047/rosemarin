@@ -7,7 +7,7 @@ import ShoppingListItem from '../models/ShoppingListItem';
 const addItem = async (req: Request, res: Response) => {
     try {
         if (req.user){
-            const UserId = req.body.user.id;
+            const UserId = req.user.id;
             const {name, unit, quantity} = req.body;
             const result = await ShoppingListItem.create({
                 name,
@@ -18,7 +18,7 @@ const addItem = async (req: Request, res: Response) => {
             res.status(201).send(result);
         }
     } catch (error) {
-        console.log(error);
+        console.log('shoppingListController, addItem error 🔴: ', error);
         res.status(500).send({"message": "Due to error item has not been added"});
     }
 }
@@ -26,13 +26,14 @@ const addItem = async (req: Request, res: Response) => {
 const updateItem = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
+        const UserId = req.session.sid
+        const {name, unit, quantity} = req.body
         await ShoppingListItem.destroy({where: {id}});
         await ShoppingListItem.create({
-            name: req.body.name,
-            unit: req.body.unit,
-            quantity: req.body.quantity,
-            // todo const userId = req.session.sid;
-            UserId: 1
+            name,
+            unit,
+            quantity,
+            UserId
         });
         res.status(200).send({"message": "Item has been successfully updated"});
     } catch (err) {

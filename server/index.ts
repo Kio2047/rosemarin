@@ -11,32 +11,11 @@ const app = express();
 const maxAge = process.env.MAX_AGE ? parseInt(process.env.MAX_AGE) : 3600000;
 const secret = process.env.SESSION_SECRET || "secret123";
 const PORT = 3001;
+
 const corsOptions: cors.CorsOptions = {
   origin: "http://localhost:3000",
   credentials: true,
 };
-
-(async () => {
-  try {
-    await sequelize.sync({ force: false });
-    console.log('Database connection successful 🟢')
-  } catch (error) {
-    console.log("Database connection failed 🔴 ", error);
-  }
-})();
-
-
-
-app.use(cors(corsOptions));
-
-app.use(express.json());
-
-app.use(
-  fileUpload({
-    createParentPath: true,
-  })
-  );
-  
 const sessionOptions: SessionOptions = {
   name: 'sid',
   secret,
@@ -51,10 +30,20 @@ const sessionOptions: SessionOptions = {
   },
 }
 
-app.use(
-  session(sessionOptions)
-  );
-  
+async function connectDatabase() {
+  try {
+    await sequelize.sync({ force: false });
+    console.log('Database connection successful 🟢')
+  } catch (error) {
+    console.log("Database connection failed 🔴 ", error);
+  }
+};
+connectDatabase();
+
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(fileUpload({createParentPath: true}));
+app.use(session(sessionOptions));
 app.use(Router);
 
 app.listen(PORT, () => {

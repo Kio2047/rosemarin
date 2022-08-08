@@ -1,7 +1,6 @@
 import path from 'path';
 import {Request, Response, NextFunction} from 'express'
-// import {ExReq} from  '../types/request'
-import fileUpload, { UploadedFile } from 'express-fileupload';
+import { UploadedFile } from 'express-fileupload';
 
 const fileMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     try {

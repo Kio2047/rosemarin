@@ -7,9 +7,3 @@ declare module 'express' {
     image?: any
   }
 } 
-
-
-/* export interface ExReq extends Request {
-  user?: User,
-  image?: any,
-} */
