@@ -39,7 +39,7 @@ const MyRecipesList = () => {
                            recipe={recipe}
                            key={recipe.id}
                            className={"horizontal span-col-4 card bg-base-100 shadow-xl flex-row"}
-                           setIds={dispatch(setIds)}
+                        //    setIds={setIds}
                            ids={ids}
                         ></Recipe> 
                    } else if (i % 5 === 0) {
@@ -47,7 +47,7 @@ const MyRecipesList = () => {
                            recipe={recipe}
                            key={recipe.id}
                            className={"vertical span-col-2 span-row-2 card bg-base-100 shadow-xl"}
-                           setIds={dispatch(setIds)}
+                        //    setIds={setIds}
                            ids={ids}
                         ></Recipe> 
                    } else {
@@ -55,7 +55,7 @@ const MyRecipesList = () => {
                             recipe={recipe}
                             key={recipe.id}
                             className={"vertical card bg-base-100 shadow-xl"}
-                            setIds={dispatch(setIds)}
+                            // setIds={setIds}
                             ids={ids}
                             ></Recipe>
                    }})}

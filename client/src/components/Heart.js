@@ -4,10 +4,10 @@ import {faHeart} from "@fortawesome/fontawesome-free-solid";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {deleteRecipe, getMyRecipes, postRecipe} from "../Utils/apiDBRecipeService";
 import { useDispatch, useSelector } from 'react-redux';
+import {setIds} from '../redux/actions'
 
 
-
-const Heart = ({recipe, ids, setIds}) => {
+const Heart = ({recipe, ids}) => {
 
     const [isFavorite, setIsFavorite] = useState(false);
     const [currentId, setCurrentId] = useState(0);
@@ -23,6 +23,7 @@ const Heart = ({recipe, ids, setIds}) => {
             }
         })
     }, [ids]);
+    console.log('IDSSSSS', ids)
 
     const favoriteHelper = (ids) => {  
        return ids = [...ids, {id: currentId, id_tasty: recipe.id}] 
@@ -70,16 +71,21 @@ const Heart = ({recipe, ids, setIds}) => {
             postRecipe(newRecipe)
                 .then(res => console.log(res))
                 .catch(error => console.log(error))
+                console.log('fave', ids)
 
             dispatch(setIds(favoriteHelper(ids)));
+            
 
         } else {
             if (window.confirm("You are removing recipe. Are you sure?")) {
                 deleteRecipe({id: currentId})
                     .then(res => console.log(res))
                     .catch(error => console.log(error))
+                    console.log('unfav', ids)
                 dispatch(setIds(unfavoriteHelper(ids)))
             }
+            
+
         }
 
     }
