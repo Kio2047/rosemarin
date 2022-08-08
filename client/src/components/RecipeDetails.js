@@ -10,6 +10,7 @@ import {setItems} from '../redux/actions'
 const RecipeDetails = () => {
     const recipes = useSelector(state => state.recipes)
     const myRecipes = useSelector(state => state.myRecipes)
+    const items = useSelector(state => state.items)
     const dispatch = useDispatch();
     
     const [recipe, setRecipe] = useState({});
@@ -27,6 +28,10 @@ const RecipeDetails = () => {
         setMyRecipe(result);
     }, [])
 
+    const itemsHelper = (items, res) => {
+        return [...items, res]
+    }
+
     const addHandlerShoppingList = (data) => {
         const newItem = {
             name: data.name,
@@ -34,7 +39,7 @@ const RecipeDetails = () => {
             unit: data.unit,
         }
         postItem(newItem)
-            .then(res => dispatch(setItems((prev) => [...prev, res])))
+            .then(res => dispatch(setItems(itemsHelper(items, res))))
             .catch(error => console.log(error))
     }
 

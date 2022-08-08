@@ -14,14 +14,16 @@ const ShoppingList = () => {
             .catch(err => console.log.bind(err))
     }, [])
 
+    const delItemHelper = (items, id) => {
+        const filtered = items.filter(item => item.id !== id);
+        return [...filtered]
+    }
+
     const delItemHandler = (id) => {
         deleteItem({id})
             .then(res => console.log(res))
             .catch(err => console.log.bind(err))
-        dispatch(setItems(prev => {
-            const filtered = prev.filter(item => item.id !== id);
-            return [...filtered]
-        }))
+        dispatch(setItems(delItemHelper(items, id)))
     }
 
     return (

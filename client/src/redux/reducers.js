@@ -41,6 +41,7 @@ const ids = (state = [], action) => {
 }
 
 const items = (state = [], action) => {
+  console.log('items', state)
   if (action.type === 'SET_ITEMS') {
     return action.payload
   }
