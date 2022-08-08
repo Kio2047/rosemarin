@@ -14,36 +14,36 @@ import ShoppingList from "./pages/ShoppingList";
 import Menu from "./pages/Menu";
 import WeeklyMenu from "./pages/WeeklyMenu";
 import RecipeDetails from "./components/RecipeDetails";
-import {getMyRecipes} from "./Utils/apiDBRecipeService";
-import {getMyShoppingList} from "./Utils/apiDBServiceShoppingList";
-import auth from "./Utils/Auth";
+import { getMyRecipes } from "./Utils/apiDBRecipeService";
+import { getMyShoppingList } from "./Utils/apiDBServiceShoppingList";
 import Logout from "./pages/Logout";
-import Signin from './pages/SignIn';
+import SignIn from './pages/SignIn';
+import { useAppSelector, useAppDispatch } from './redux/hooks';
+import { toggleAuthenticate, setAuthenticate, setRecipes } from './redux/actions';
 
 function App() {
-    const [recipes, setRecipes] = useState([]);
+
+    const dispatch = useAppDispatch();
     const [myRecipes, setMyRecipes] = useState([]);
     const [ids, setIds] = useState([])
     const [items, setItems] = useState([]);
-    const [hasAccount, setHasAccount] = useState(true);
-
-    const initialState = auth.isAuthenticated();
-    const [isAuthenticated, setIsAuthenticated] = useState(initialState);
-
 
     useEffect(() => {
-      getMyShoppingList()
-        // .then(recipes => console.log(recipes))
-        .then(itemsSL => setItems(itemsSL))
-        .catch(err => console.log.bind(err))
+      (async () => {
+          const data = await getMyShoppingList()
+          setItems(data)
+      })();
     }, [])
 
     useEffect(() => {
-        getRandomRecipe()
-            // .then(recipes => console.log(recipes))
-          .then(data => setRecipes(data.results))
-          .catch(err => console.log.bind(err))
-        // setRecipes(getRandomRecipe());
+        (async () => {
+            if (document.cookie) {
+                dispatch(setAuthenticate(true));
+            }
+            const data = await getRandomRecipe()
+            console.log('List of random recipes: ', data.results)
+            dispatch(setRecipes(data.results))
+        })();
     }, []);
 
 
@@ -63,31 +63,37 @@ function App() {
         getMyRecipes()
             // .then(recipes => console.log(recipes))
             .then(recipes => {
-                setIsAuthenticated(true)
+
+            //THIS WAS CAUSING THE ISSUE:
+            //everytime ids change, toggleAuthenticate was called if the cookie was active
+
+            /*     if (document.cookie) {
+                   dispatch(toggleAuthenticate())
+                } */
+                console.log('Am i being called? ', recipes)
                 setMyRecipes(recipes)
             })
             .catch(err => console.log.bind(err))
     }, [ids])
 
-
+    console.log("here kio kio:", ids);
     return (
         <div className="font-oxy-regular">
             <BrowserRouter>
-                <Navbar isAuthenticated={isAuthenticated} setHasAccount={setHasAccount}></Navbar>
+                <Navbar />
                 <Routes>
-                    <Route exact path="/" element={<Signin setIsAuthenticated={setIsAuthenticated} hasAccount={hasAccount} setHasAccount={setHasAccount}/>}></Route>
+                    <Route exact path="/" element={<SignIn />}></Route>
                     <Route
                         path="/logout"
-                        element={<Logout setIsAuthenticated={setIsAuthenticated} />}
+                        element={<Logout />}
                     />
 
                     <Route exact path="/home"
-                           element={<RecipesList setRecipes={setRecipes} recipes={recipes} setIds={setIds}
-                                                 ids={ids}/>}></Route>
+                           element={<RecipesList setIds={setIds}ids={ids}/>}></Route>
                     <Route exact path="/my_recipes"
                            element={<MyRecipesList myRecipes={myRecipes} setMyRecipes={setMyRecipes} setIds={setIds}
-                                                   ids={ids} setRecipes={setRecipes}/>}></Route>
-                    <Route exact path="/recipes/:id" element={<RecipeDetails recipes={recipes} myRecipes={myRecipes} setItems={setItems} setIds={setIds} ids={ids}/>}></Route>
+                                                   ids={ids}/>}></Route>
+                    <Route exact path="/recipes/:id" element={<RecipeDetails myRecipes={myRecipes} setItems={setItems} setIds={setIds} ids={ids}/>}></Route>
                     <Route exact path="/create" element={<CreateRecipe/>}></Route>
                     <Route exact path="/menu" element={<Menu/>}></Route>
                     <Route exact path="/weekly_menu" element={<WeeklyMenu/>}></Route>

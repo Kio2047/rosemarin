@@ -117,6 +117,7 @@ const getAllRecipes = async (req, res) => {
       where: { UserId },
       include: ["Instructions", "Ingredients"],
     });
+    console.log('These are the my recipes: ', allRecipes)
     res.status(200).send(allRecipes);
   } catch (err) {
     console.log(err);

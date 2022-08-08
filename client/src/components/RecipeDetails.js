@@ -1,10 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
+import {useSelector} from 'react-redux'
+
 import {useParams} from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {getMyShoppingList, postItem} from "../Utils/apiDBServiceShoppingList";
 
 
-const RecipeDetails = ({recipes, myRecipes, items, setItems}) => {
+const RecipeDetails = ({myRecipes, items, setItems}) => {
+
+    const recipes = useSelector(state => state.recipes);
+
     const [recipe, setRecipe] = useState({});
     const [myRecipe, setMyRecipe] = useState({});
 
@@ -13,23 +18,23 @@ const RecipeDetails = ({recipes, myRecipes, items, setItems}) => {
     useEffect(() => {
         const result = recipes.find(res => +id === res.id);
         setRecipe(result);
-    }, [])
+    }, []);
 
     useEffect(() => {
         const result = myRecipes.find(res => +id === res.id);
         setMyRecipe(result);
-    }, [])
+    }, []);
 
     const addHandlerShoppingList = (data) => {
         const newItem = {
             name: data.name,
             quantity: data.quantity,
             unit: data.unit,
-        }
+        };
         postItem(newItem)
             .then(res => setItems((prev) => [...prev, res]))
-            .catch(error => console.log(error))
-    }
+            .catch(error => console.log(error));
+    };
 
     return (
         <>
