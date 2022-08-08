@@ -17,14 +17,13 @@ import RecipeDetails from "./components/RecipeDetails";
 import { getMyRecipes } from "./Utils/apiDBRecipeService";
 import { getMyShoppingList } from "./Utils/apiDBServiceShoppingList";
 import Logout from "./pages/Logout";
-import Signin from './pages/SignIn';
-import { useSelector, useDispatch } from 'react-redux'
-import { toggleAuthenticate, setAuthenticate } from './redux/actions.tsx';
-import { setRecipes } from './redux/actions.tsx'
+import SignIn from './pages/SignIn';
+import { useAppSelector, useAppDispatch } from './redux/hooks';
+import { toggleAuthenticate, setAuthenticate, setRecipes } from './redux/actions';
 
 function App() {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [myRecipes, setMyRecipes] = useState([]);
     const [ids, setIds] = useState([])
     const [items, setItems] = useState([]);
@@ -33,17 +32,17 @@ function App() {
       (async () => {
           const data = await getMyShoppingList()
           setItems(data)
-      })();   
+      })();
     }, [])
 
     useEffect(() => {
         (async () => {
+            if (document.cookie) {
+                dispatch(setAuthenticate(true));
+            }
             const data = await getRandomRecipe()
             console.log('List of random recipes: ', data.results)
             dispatch(setRecipes(data.results))
-            if (document.cookie) {
-                setAuthenticate(true);
-            }
         })();
     }, []);
 
@@ -65,7 +64,7 @@ function App() {
             // .then(recipes => console.log(recipes))
             .then(recipes => {
 
-            //THIS WAS CAUSING THE ISSUE: 
+            //THIS WAS CAUSING THE ISSUE:
             //everytime ids change, toggleAuthenticate was called if the cookie was active
 
             /*     if (document.cookie) {
@@ -77,13 +76,13 @@ function App() {
             .catch(err => console.log.bind(err))
     }, [ids])
 
-
+    console.log("here kio kio:", ids);
     return (
         <div className="font-oxy-regular">
             <BrowserRouter>
                 <Navbar />
                 <Routes>
-                    <Route exact path="/" element={<Signin />}></Route>
+                    <Route exact path="/" element={<SignIn />}></Route>
                     <Route
                         path="/logout"
                         element={<Logout />}

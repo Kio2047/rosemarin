@@ -1,20 +1,22 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
 
+import { useAppSelector } from '../redux/hooks';
 import Recipe from "../components/Recipe";
 import TopSection from "../components/TopSection";
 import SearchForm from "../components/SearchForm";
+import type { RecipesListProps } from '../types/propTypes';
+import type { APIRecipe } from '../types/recipeTypes';
 
-const RecipesList = ({ setIds, ids}) => {
+const RecipesList = ({ setIds, ids }: RecipesListProps) => {
 
-    const recipes = useSelector(state => state.recipes)
+    const recipes = useAppSelector(state => state.recipes)
 
     return (
         <>
             <TopSection />
             <SearchForm />
             <ul className="bg-transparent container-grid max-w-7xl mx-auto pr-5 pl-5">
-                {recipes.map((recipe, i) =>
+                {recipes.map((recipe: APIRecipe, i: number) =>
                     (i === 4 || i%10 === 4 ) ?
                         <Recipe
                             recipe={recipe}

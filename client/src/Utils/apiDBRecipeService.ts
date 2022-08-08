@@ -1,20 +1,22 @@
+import type { NewRecipe, SavedRecipe } from "../types/recipeTypes";
+
 const baseDBUrl = 'http://localhost:3001/recipes';
 
-export const getMyRecipes = async () => {
+export const getMyRecipes = async (): Promise<SavedRecipe[] | undefined>  => {
 	try {
 		const response = await fetch(baseDBUrl, {
 			credentials: 'include',
 		})
 		return await response.json();
-		
-	} catch (err) {
-		console.log(err);
+
+	} catch (error) {
+		console.log(error);
 	}
 }
 
-export const postRecipe = async (recipe) => {
+export const postRecipe = async (recipe: NewRecipe) => {
 	try {
-		console.log('This is the new recipe: ', recipe)
+		// console.log('This is the new recipe: ', recipe);
 		const response = await fetch(baseDBUrl, {
 			method: 'POST',
 			credentials: 'include',
@@ -22,13 +24,13 @@ export const postRecipe = async (recipe) => {
 			body: JSON.stringify(recipe)
 		});
 		return await response.json();
-		
-	} catch (err) {
-		console.log(err);
+
+	} catch (error) {
+		console.log(error);
 	}
 }
 
-export const deleteRecipe = async (id) => {
+export const deleteRecipe = async (id: number) => {
 	try {
 		const response = await fetch(
 			baseDBUrl, {
@@ -38,8 +40,8 @@ export const deleteRecipe = async (id) => {
 			body: JSON.stringify(id)
 		})
 		return await response.json()
-		
-	} catch (err) {
-		console.log(err)
+
+	} catch (error) {
+		console.log(error)
 	}
 }

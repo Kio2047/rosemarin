@@ -1,46 +1,54 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import {toggleAuthenticate} from '../redux/actions.tsx';
+import {toggleAuthenticate} from '../redux/actions';
 
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { loginFields, signupFields } from "../constants/formFields";
-import apiUserService from "../Utils/apiUserService";
+import { login, register } from "../Utils/apiUserService";
 import FormAction from "./FormAction";
 import FormExtra from "./FormExtra";
 import auth from "../Utils/Auth";
 import Input from "./Input";
+import type { FormField, LoginForm, RegisterForm } from "../types/formTypes";
 
-export default function SignInForm({ hasAccount }) {
+export default function SignInForm() {
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const hasAccount = useAppSelector((state) => state.hasAccount);
 
-  const [formState, setFormState] = useState({});
-  const [formFields, setFormFields] = useState([]);
+  type FormStateType = LoginForm | RegisterForm;
+  // Why doesn't the below conditional work? Using type union instead in the meantime
+  // type FormStateType = hasAccount ? LoginForm : RegisterForm;
+
+  const [formState, setFormState] = useState<FormStateType>({email: "", password: ""});
+  const [formFields, setFormFields] = useState<FormField[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
 
   // Whenever user switches between login and register, update the states for form fields
   //  and reinitialize form values and error message
   useEffect(() => {
-    const importedFormFields = hasAccount ? loginFields : signupFields
+    const importedFormFields = hasAccount ? loginFields : signupFields;
     setFormFields(importedFormFields);
 
-    const initialFormState = {};
-    importedFormFields.forEach((field) => initialFormState[field.id] = "");
+    const initialFormState = {email: "", password: ""};
+    if (!hasAccount) {
+      importedFormFields.forEach((field) => (initialFormState as FormStateType)[field.id] = "");
+    }
     setFormState(initialFormState);
-
     setErrorMessage("");
 
   }, [hasAccount]);
 
-  const handleChange = function(event) {
+  const handleChange = function (event: React.FormEvent<HTMLInputElement>) {
     setFormState({
       ...formState,
-      [event.target.id]: event.target.value
+      // Why do I need to cast to HTMLInputElement below when I already give this as a generic type above
+      [(event.target as HTMLInputElement).id]: (event.target as HTMLInputElement).value
     });
   };
 
-  const handleSubmit = function (event) {
+  const handleSubmit = function (event: React.FormEvent) {
     event.preventDefault();
     if (!hasAccount && formState.password !== formState["confirm-password"]) {
       setErrorMessage("Passwords don't match");
@@ -52,7 +60,7 @@ export default function SignInForm({ hasAccount }) {
   // Handle login / registration
   const checkCredentials = async function () {
     try {
-      let response = hasAccount ? await apiUserService.login(formState) : await apiUserService.register(formState);
+      let response = hasAccount ? await login(formState as LoginForm) : await register(formState as RegisterForm);
       if (!response) {
         hasAccount ? setErrorMessage('Incorrect login information.') : setErrorMessage('Account already exists. Please try again.');
       }

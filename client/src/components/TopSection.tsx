@@ -1,5 +1,3 @@
-import React from 'react';
-
 const TopSection = () => {
     return (
         <div className="h-[400px] flex justify-between items-center">

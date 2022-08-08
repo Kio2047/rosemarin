@@ -1,6 +1,7 @@
 import React from 'react';
+import type { IngredientProps } from '../types/propTypes';
 
-const Ingredient = ({ingredient}) => {
+const Ingredient = ({ingredient}: IngredientProps) => {
     //todo `${ingredient}`
     return (
         <div className="flex justify-between mb-3">
