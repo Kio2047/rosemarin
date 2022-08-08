@@ -1,7 +1,8 @@
 import {combineReducers, AnyAction} from 'redux'
 import { PayloadAction } from '@reduxjs/toolkit'
 
-import type { APIRecipe, state } from '../types';
+import type { APIRecipe } from '../types/recipeTypes';
+import type { state } from '../types/stateTypes';
 import { store } from './store';
 
 export const isAuthenticated = (state: Boolean = false, action: AnyAction) => {

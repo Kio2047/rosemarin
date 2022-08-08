@@ -1,16 +1,8 @@
-// modify this once after finding out what recipe properties are actually being used
-
-export type state = {
-  isAuthenticated: Boolean,
-  hasAccount: Boolean,
-  recipes: APIRecipe[]
-}
-
 export type APIRecipe = any;
 
-export type savedRecipe = {
-  ingredients: savedRecipeIngredient[],
-  instructions: savedRecipeInstruction[],
+export type SavedRecipe = {
+  ingredients: SavedRecipeIngredient[],
+  instructions: SavedRecipeInstruction[],
   UserId: number,
   createdAt: string,
   description: string,
@@ -24,7 +16,7 @@ export type savedRecipe = {
   updatedAt: string
 }
 
-type savedRecipeIngredient = {
+type SavedRecipeIngredient = {
   name: string
   quantity: string
   unit: string
@@ -34,7 +26,7 @@ type savedRecipeIngredient = {
   updatedAt: string
 }
 
-type savedRecipeInstruction = {
+type SavedRecipeInstruction = {
   RecipeId: number,
   createdAt: string,
   id: number
@@ -43,25 +35,26 @@ type savedRecipeInstruction = {
   updatedAt: string
 }
 
-export type newRecipe = {
+export type NewRecipe = {
   title: string,
   description: string,
   img_url: string,
   img_alt_text: string,
-  ingredients: newRecipeIngredient[],
-  instructions: newRecipeInstruction,
+  ingredients: NewRecipeIngredient[],
+  instructions: NewRecipeInstruction,
   total_time?: null,
   id_tasty?: number
 }
 
-type newRecipeIngredient = {
+type NewRecipeIngredient = {
   name: string,
   quantity: string,
   unit: string
 }
 
-type newRecipeInstruction = {
+type NewRecipeInstruction = {
   text: string
 }
 
-export type shoppingListItem = newRecipeIngredient
+export type ShoppingListItem = NewRecipeIngredient
+

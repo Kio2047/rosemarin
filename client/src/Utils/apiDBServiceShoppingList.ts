@@ -1,4 +1,4 @@
-import type { shoppingListItem } from "../types";
+import type { ShoppingListItem } from "../types/recipeTypes";
 
 export const baseDBUrl = 'http://localhost:3001/items';
 
@@ -12,7 +12,7 @@ export const getMyShoppingList = async () => {
     }
 }
 
-export const postItem = async (recipe: shoppingListItem ) => {
+export const postItem = async (recipe: ShoppingListItem ) => {
   // console.log("here's what you're checking:", recipe);
   try {
     const response = await fetch(baseDBUrl, {

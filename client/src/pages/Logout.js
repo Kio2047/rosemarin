@@ -1,12 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, To} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import {toggleAuthenticate} from '../redux/actions';
-import apiUserService from "../Utils/apiUserService";
+import { logout } from '../Utils/apiUserService';
 import auth from "../Utils/Auth";
-
 
 const Logout = () => {
 
@@ -23,14 +22,13 @@ const Logout = () => {
  */
     const handleLogout = (shouldLogout) => {
         if (shouldLogout) {
-            console.log("penne")
-            apiUserService.logout()
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
+            logout()
+            .then(res => console.log("here's the response::::::", res))
+            .catch(error => console.log(error));
             dispatch(toggleAuthenticate());
             auth.logout(() => navigate("../", {replace: true}));
         } else {
-            navigate(-1, {replace: true})
+            navigate("-1", {replace: true})
         }
     };
 
@@ -49,7 +47,6 @@ const Logout = () => {
                 </div>
             </div>
         </div>
-
     );
 };
 

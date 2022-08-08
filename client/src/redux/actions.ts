@@ -1,4 +1,4 @@
-import type { APIRecipe } from "../types";
+import type { APIRecipe } from "../types/recipeTypes";
 
 export const toggleAuthenticate = () => ({
   type: 'TOGGLE_AUTHENTICATE'

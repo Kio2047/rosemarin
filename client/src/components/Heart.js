@@ -47,7 +47,6 @@ const Heart = ({recipe, setIds, ids}) => {
                 ingredients: ingredients.flat(),
                 instructions: instructions
             }
-            console.log("new recipe type", newRecipe);
             postRecipe(newRecipe)
                 .then(res => console.log(res))
                 .catch(error => console.log(error))

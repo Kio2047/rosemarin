@@ -1,4 +1,4 @@
-import type { newRecipe } from "../types";
+import type { NewRecipe } from "../types/recipeTypes";
 
 const baseDBUrl = 'http://localhost:3001/recipes';
 
@@ -14,7 +14,7 @@ export const getMyRecipes = async () => {
 	}
 }
 
-export const postRecipe = async (recipe: newRecipe) => {
+export const postRecipe = async (recipe: NewRecipe) => {
 	try {
 		// console.log('This is the new recipe: ', recipe);
 		const response = await fetch(baseDBUrl, {

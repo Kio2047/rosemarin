@@ -1,21 +1,23 @@
-import React, {useState} from 'react';
-import {getRandomRecipe} from "../Utils/apiRecipeService";
-import {options} from '../data';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import {useDispatch} from 'react-redux'
-import { setRecipes } from '../redux/actions';
 
-const SearchForm = ({categories}) => {
+import { getRandomRecipe } from "../Utils/apiRecipeService";
+import { options } from '../data';
+import { setRecipes } from '../redux/actions';
+import { useAppDispatch } from '../redux/hooks';
+
+const SearchForm = () => {
 
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch();
 
-    function searchHandler(event) {
+    function searchHandler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         (async () => {
-           const taggedRecipes = await getRandomRecipe(event.target.search.value)
-            dispatch(setRecipes(taggedRecipes.results))
-            navigate("../home", { replace: true })
+            console.log("YOU'RE THE ONE I WANT:", (event.target as HTMLFormElement).search.value);
+           const taggedRecipes = await getRandomRecipe((event.target as HTMLFormElement).search.value);
+            dispatch(setRecipes(taggedRecipes.results));
+            navigate("../home", { replace: true });
         })();
     }
 

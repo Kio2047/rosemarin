@@ -10,8 +10,9 @@ function Input({
                    type,
                    isRequired = false,
                    placeholder,
-                   customClass
+                //    customClass
                }) {
+                let customClass;
     return (
         <div className="my-5">
             <label htmlFor={labelFor} className="sr-only">
