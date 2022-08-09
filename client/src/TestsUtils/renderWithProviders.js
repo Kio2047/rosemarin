@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 // As a basic setup, import your same slice reducers
 import * as reducers from './reducers';
 
-export function renderWithProviders(
+export default function renderWithProviders(
   ui,
   {
     preloadedState = {},

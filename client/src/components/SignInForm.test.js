@@ -1,17 +1,16 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import {renderWithProviders} from '../TestsUtils/renderWithProviders'
 import SignInForm from './SignInForm'
 
 it('should have an email address field, a password field, a remember me checkbox, a forget your password link, and a submit button', () => {
-  render(
-    <Provider {children}>
+  renderWithProviders(
+    
       <BrowserRouter>
         <SignInForm/>
       </BrowserRouter>
-    </Provider>
-    
+  
    )
   const emailAddress = screen.getByPlaceholderText(/Email address/i);
   const password = screen.getByPlaceholderText(/Password/i);
@@ -28,7 +27,12 @@ it('should have an email address field, a password field, a remember me checkbox
 
 it ('should allow the user to submit their credentials', () => {
   const onSubmitMock = jest.fn();
-  render(<SignInForm onSubmit={onSubmit}/>)
+  renderWithProviders(
+   
+    <BrowserRouter>
+      <SignInForm onSubmitMock={onSubmit}/>
+    </BrowserRouter>
+)
 
   const emailAddress = screen.getByPlaceholderText(/Email address/i);
   const password = screen.getByPlaceholderText(/Password/i);
