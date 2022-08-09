@@ -79,7 +79,7 @@ function App() {
     console.log("here kio kio:", ids);
     return (
         <div className="font-oxy-regular">
-            <BrowserRouter>
+           
                 <Navbar />
                 <Routes>
                     <Route exact path="/" element={<SignIn />}></Route>
@@ -98,7 +98,7 @@ function App() {
                     <Route exact path="/menu" element={<Menu/>}></Route>
                     <Route exact path="/weekly_menu" element={<WeeklyMenu/>}></Route>
                 </Routes>
-            </BrowserRouter>
+            
             <ShoppingList items={items} setItems={setItems}/>
         </div>
     );
