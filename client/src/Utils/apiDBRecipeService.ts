@@ -30,7 +30,7 @@ export const postRecipe = async (recipe: NewRecipe) => {
 	}
 }
 
-export const deleteRecipe = async (id: number) => {
+export const deleteRecipe = async ({id}: {id: number}) => {
 	try {
 		const response = await fetch(
 			baseDBUrl, {
