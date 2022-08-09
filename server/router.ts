@@ -20,7 +20,7 @@ router.put("/recipes/:id", fileMiddleware, authMiddleware, recipeController.upda
 router.delete("/recipes", authMiddleware, recipeController.removeRecipe);
 
 /***** SHOPPINGLIST ITEMS *****/
-router.get("/items", authMiddleware, shoppingListController.getAllItems);
+router.get("/items", authMiddleware, shoppingListController.getUserItems);
 router.post("/items", authMiddleware, shoppingListController.addItem);
 router.put("/items", authMiddleware, shoppingListController.updateItem);
 router.delete("/items", authMiddleware, shoppingListController.removeItem);
