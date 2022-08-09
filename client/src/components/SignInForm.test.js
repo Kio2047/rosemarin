@@ -1,12 +1,21 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import SignInForm from './SignInForm'
 
 it('should have an email address field, a password field, a remember me checkbox, a forget your password link, and a submit button', () => {
-  render(<SignInForm/>)
+  render(
+    <Provider {children}>
+      <BrowserRouter>
+        <SignInForm/>
+      </BrowserRouter>
+    </Provider>
+    
+   )
   const emailAddress = screen.getByPlaceholderText(/Email address/i);
   const password = screen.getByPlaceholderText(/Password/i);
-  const submitButton = screen.getByText(/Login/i);
+  const submitButton = screen.getByRole('button', { name: /Login/i });
   const checkbox = screen.getByText(/Remember me/i);
   const forgetPassword = screen.getByText(/Forget your password\?/i);
 
@@ -18,12 +27,12 @@ it('should have an email address field, a password field, a remember me checkbox
 });
 
 it ('should allow the user to submit their credentials', () => {
-  const onSubmit = jest.fn();
-  // render(<SignInForm onSubmit={onSubmit}/>)
+  const onSubmitMock = jest.fn();
+  render(<SignInForm onSubmit={onSubmit}/>)
 
   const emailAddress = screen.getByPlaceholderText(/Email address/i);
   const password = screen.getByPlaceholderText(/Password/i);
-  const submitButton = screen.getByText(/Login/i);
+  const submitButton = screen.getByRole('button', { name: /Login/i });;
 
   userEvent.type(emailAddress, 'ching@gmail.com');
   userEvent.type(password, '1234');
