@@ -26,6 +26,7 @@ function App() {
     const dispatch = useAppDispatch();
     // const [ids, setIds] = useState([])
     const ids = useAppSelector((state) => state.ids);
+    const isAuthenticated = useAppSelector((state) => state.isAuthenticated);
 
     // const [items, setItems] = useState([]);
 
@@ -39,10 +40,10 @@ function App() {
 
     useEffect(() => {
         (async () => {
-            if (document.cookie) {
-                dispatch(setAuthenticate(true));
-            }
-            const data = await getRandomRecipe()
+            // if (document.cookie) {
+            //     dispatch(setAuthenticate(true));
+            // }
+            const data = await getRandomRecipe ()
             // console.log('List of random recipes: ', data.results)
             dispatch(setRecipes(data.results))
         })();
@@ -83,21 +84,21 @@ function App() {
         <div className="font-oxy-regular">
             <BrowserRouter>
                 <Navbar />
-                <Routes>
-                    <Route exact path="/" element={<SignIn />}></Route>
-                    <Route
-                        path="/logout"
-                        element={<Logout />}
-                    />
 
-                    <Route exact path="/home"
-                           element={<RecipesList />}></Route>
-                    <Route exact path="/my_recipes"
-                           element={<MyRecipesList />}></Route>
-                    <Route exact path="/recipes/:id" element={<RecipeDetails />}></Route>
-                    <Route exact path="/create" element={<CreateRecipe/>}></Route>
-                    <Route exact path="/menu" element={<Menu/>}></Route>
-                    <Route exact path="/weekly_menu" element={<WeeklyMenu/>}></Route>
+                <Routes>
+                    {document.cookie ?
+                    <>
+                        <Route exact path="/" element={<RecipesList />}></Route>
+                        <Route path="/logout" element={<Logout />}></Route>
+                        <Route exact path="/home" element={<RecipesList />}></Route>
+                        <Route exact path="/my_recipes" element={<MyRecipesList />}></Route>
+                        <Route exact path="/recipes/:id" element={<RecipeDetails />}></Route>
+                        <Route exact path="/create" element={<CreateRecipe/>}></Route>
+                        <Route exact path="/menu" element={<Menu/>}></Route>
+                        <Route exact path="/weekly_menu" element={<WeeklyMenu/>}></Route>
+                    </>
+                    :
+                    <Route path="/*" element={<SignIn />}></Route>}
                 </Routes>
             </BrowserRouter>
             <ShoppingList />

@@ -10,6 +10,7 @@ import FormExtra from "./FormExtra";
 import auth from "../Utils/Auth";
 import Input from "./Input";
 import type { FormField, LoginForm, RegisterForm } from "../types/formTypes";
+import { setAuthenticate } from "../redux/actions";
 
 export default function SignInForm() {
 
@@ -65,8 +66,12 @@ export default function SignInForm() {
         hasAccount ? setErrorMessage('Incorrect login information.') : setErrorMessage('Account already exists. Please try again.');
       }
       else {
-        dispatch(toggleAuthenticate())
-        auth.login(() => navigate("../home", { replace: true }));
+        dispatch(setAuthenticate(true));
+        auth.login(() => {
+          // console.log("cookie status:", document.cookie.match(/^(.*;)?\s*sid\s*=\s*[^;]+(.*)?$/i));
+          navigate("/home", { replace: true });
+        }
+        );
       };
     }
     catch (error) {

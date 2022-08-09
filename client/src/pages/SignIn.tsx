@@ -4,8 +4,16 @@ import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import Rosemary from '../assets/images/rosemary.png'
 import SignInForm from "../components/SignInForm";
 import { toggleHasAccount } from "../redux/actions";
+// import { useNavigate } from 'react-router-dom';
+
 
 export default function SignIn () {
+
+    // const navigate = useNavigate();
+
+    // if (document.cookie) {
+    //     navigate("../home", { replace: true });
+    // }
 
     const dispatch = useAppDispatch();
     const hasAccount = useAppSelector((state) => state.hasAccount);
