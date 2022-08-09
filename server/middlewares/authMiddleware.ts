@@ -1,13 +1,13 @@
 import UserModel from "../models/User";
 import {NextFunction, Request, Response} from 'express'
 /// <reference> session.d.ts
-import * as express from '../types/request'
-import User from "../types/User";
+import * as express from '../models/types/request'
+import User from "../models/types/User";
 
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const UserId = req.session.sid;
-    console.log("Session in auth: ", req.session);
+    console.log("Session in auth (NEEDS A SID PROP, OTHERWISE 403) ", req.session);
 
     if (UserId) {
       req.user = (await UserModel.findByPk(UserId)) as User;

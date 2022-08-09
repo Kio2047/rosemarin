@@ -1,8 +1,8 @@
 import sequelize from './index';
 import { DataTypes } from 'sequelize';
-import ShoppingListItem from '../types/ShoppingListItem';
+import ShoppingListItemType from './types/ShoppingListItem';
 
-const ShoppingListItemModel = sequelize.define<ShoppingListItem>('ShoppingListItem', {
+const ShoppingListItem = sequelize.define<ShoppingListItemType>('ShoppingListItem', {
     name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -18,4 +18,4 @@ const ShoppingListItemModel = sequelize.define<ShoppingListItem>('ShoppingListIt
 });
 
 
-export default ShoppingListItemModel;
+export default ShoppingListItem;

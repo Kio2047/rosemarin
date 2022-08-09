@@ -14,13 +14,13 @@ router.post("/register", userController.createUser);
 router.post("/login", userController.loginUser);
 
 /***** RECIPES *****/
-router.get("/recipes", authMiddleware, recipeController.getAllRecipes);
+router.get("/recipes", authMiddleware, recipeController.getUserRecipes);
 router.post("/recipes", fileMiddleware, authMiddleware, recipeController.createRecipe);
 router.put("/recipes/:id", fileMiddleware, authMiddleware, recipeController.updateRecipe);
 router.delete("/recipes", authMiddleware, recipeController.removeRecipe);
 
 /***** SHOPPINGLIST ITEMS *****/
-router.get("/items", authMiddleware, shoppingListController.getAllItems);
+router.get("/items", authMiddleware, shoppingListController.getUserItems);
 router.post("/items", authMiddleware, shoppingListController.addItem);
 router.put("/items", authMiddleware, shoppingListController.updateItem);
 router.delete("/items", authMiddleware, shoppingListController.removeItem);

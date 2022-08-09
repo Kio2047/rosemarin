@@ -1,8 +1,8 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../models'
-import Instruction  from '../types/Instruction';
+import InstructionType  from './types/Instruction';
 
-const InstructionModel = sequelize.define<Instruction>('Instruction', {
+const Instruction = sequelize.define<InstructionType>('Instruction', {
     text: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -13,4 +13,4 @@ const InstructionModel = sequelize.define<Instruction>('Instruction', {
     }
 });
 
-export default InstructionModel
+export default Instruction

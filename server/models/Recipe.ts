@@ -1,8 +1,8 @@
 import sequelize from './index';
 import { DataTypes } from 'sequelize';
-import Recipe from '../types/Recipe';
+import RecipeModel from './types/Recipe';
 
-const RecipeModel = sequelize.define<Recipe>('Recipe', {
+const  Recipe = sequelize.define<RecipeModel>('Recipe', {
     title: {
         type: DataTypes.STRING,
         allowNull: false
@@ -33,4 +33,4 @@ const RecipeModel = sequelize.define<Recipe>('Recipe', {
     }
 });
 
-export default RecipeModel;
+export default Recipe;

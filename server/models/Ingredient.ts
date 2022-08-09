@@ -1,8 +1,8 @@
 import sequelize from './index';
 import { DataTypes } from 'sequelize';
-import Ingredient from '../types/Ingredient';
+import IngredientType from './types/Ingredient';
 
-const IngredientModel = sequelize.define<Ingredient>('Ingredient', {
+const Ingredient = sequelize.define<IngredientType>('Ingredient', {
     name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -17,5 +17,5 @@ const IngredientModel = sequelize.define<Ingredient>('Ingredient', {
     },
 });
 
-export default IngredientModel;
+export default Ingredient;
 
