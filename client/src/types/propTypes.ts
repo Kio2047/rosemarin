@@ -1,7 +1,11 @@
 import React from "react";
 import type { FormField } from "./formTypes";
-import type { IDs } from "./stateTypes";
-import type { APIRecipe } from "./recipeTypes";
+import type { APIRecipe, NewRecipe, SavedRecipe } from "./recipeTypes";
+
+export type IDs = {
+  id: number,
+  id_tasty: number
+}
 
 export type FormActionProps = {
   handleSubmit: (event: React.FormEvent<HTMLButtonElement>) => void,
@@ -22,7 +26,7 @@ export type InputProps = {
 }
 
 export type IngredientProps = {
-  ingredient: string[]
+  ingredient: string
 }
 
 export type RecipesListProps = {
@@ -32,10 +36,39 @@ export type RecipesListProps = {
 
 export type HeartProps = {
   recipe: APIRecipe,
-  ids: IDs[],
-  setIds: React.Dispatch<React.SetStateAction<IDs[]>>
 }
 
 export type InstructionProps = {
   instruction: string
 }
+
+export type RecipeProps = {
+  recipe: APIRecipe,
+  className: string,
+}
+
+export type ShoppingListItem = {
+  name: string,
+  unit: string,
+  quantity: string,
+  UserId?: number,
+  id?: number
+}
+
+// export type ShoppingListProps = {
+//   items: ShoppingListItem[],
+//   setItems: React.Dispatch<React.SetStateAction<ShoppingListItem[]>>
+// }
+
+// export type MyRecipesProps = {
+//   myRecipes: SavedRecipe[],
+//   setMyRecipes: React.Dispatch<React.SetStateAction<SavedRecipe[]>>,
+//   setIds: React.Dispatch<React.SetStateAction<IDs[]>>,
+//   ids: IDs[]
+// }
+
+// export type RecipeDetailsProps = {
+//   myRecipes: SavedRecipe[],
+//   items: ShoppingListItem[],
+//   setItems: React.Dispatch<React.SetStateAction<ShoppingListItem[]>>
+// }

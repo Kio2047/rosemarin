@@ -9,7 +9,10 @@ export const store = configureStore({
   preloadedState: {
     isAuthenticated: false,
     hasAccount: true,
-    recipes: []
+    recipes: [],
+    myRecipes: [],
+    ids: [],
+    items: []
   }
 })
 
