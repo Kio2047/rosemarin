@@ -4,7 +4,7 @@ import { Request, Response} from 'express'
 import * as express from '../models/types/request'
 import Model from '../models/queries/shoppingListQueries'
 
-const addItem = async (req: Request, res: Response) => {
+async function addItem (req: Request, res: Response) {
     try {
         if (req.user){
             const UserId = req.user.id;
@@ -20,7 +20,7 @@ const addItem = async (req: Request, res: Response) => {
     }
 }
 
-const updateItem = async (req: Request, res: Response) => {
+async function updateItem (req: Request, res: Response) {
     try {
         const id = +req.params.id;
         const UserId = req.session.sid
@@ -35,7 +35,7 @@ const updateItem = async (req: Request, res: Response) => {
     }
 }
 
-const removeItem = async (req: Request, res: Response) => {
+async function removeItem (req: Request, res: Response) {
     try {
         const id = req.body.id;
         await Model.removeItem(id);
@@ -48,7 +48,7 @@ const removeItem = async (req: Request, res: Response) => {
     }
 }
 
-const getUserItems = async (req: Request, res: Response) => {
+async function getUserItems (req: Request, res: Response) {
     try {
         if (req.user){
             const UserId = req.user.id

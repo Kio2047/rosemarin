@@ -4,7 +4,7 @@ import Model from '../models/queries/recipeQueries'
 /// <reference> session.d.ts
 import * as express from '../models/types/request'
 
-const createRecipe = async (req: Request, res: Response) => {
+async function createRecipe (req: Request, res: Response) {
   try {
     console.log('recipeController, createRecipe :', req.session);
     if (req.user) {
@@ -28,7 +28,7 @@ const createRecipe = async (req: Request, res: Response) => {
   }
 };
 
-const updateRecipe = async (req: Request, res: Response) => {
+async function updateRecipe (req: Request, res: Response) {
   try {
     if (req.user){
       const RecipeId = +req.params.id;
@@ -51,7 +51,7 @@ const updateRecipe = async (req: Request, res: Response) => {
   }
 };
 
-const removeRecipe = async (req: Request, res: Response) => {
+async function removeRecipe (req: Request, res: Response) {
   try {
     const RecipeId = req.body.id;
     await Model.deleteRecipe(RecipeId);
@@ -64,7 +64,7 @@ const removeRecipe = async (req: Request, res: Response) => {
   }
 };
 
-const getUserRecipes = async (req: Request, res: Response) => {
+async function getUserRecipes (req: Request, res: Response) {
   try {
     // console.log("recipeController, getUserRecipes session: ", req.session);
     const UserId = req.session.sid;
