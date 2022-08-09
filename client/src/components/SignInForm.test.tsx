@@ -18,8 +18,8 @@ it('should have an email address field, a password field, a remember me checkbox
 });
 
 it ('should allow the user to submit their credentials', () => {
-  const submit = jest.fn();
-  render(<SignInForm onSubmit={submit}/>)
+  const onSubmit = jest.fn();
+  // render(<SignInForm onSubmit={onSubmit}/>)
 
   const emailAddress = screen.getByPlaceholderText(/Email address/i);
   const password = screen.getByPlaceholderText(/Password/i);
@@ -29,7 +29,7 @@ it ('should allow the user to submit their credentials', () => {
   userEvent.type(password, '1234');
   userEvent.click(submitButton);
 
-  expect(submit).toHaveBeenCalledWith({
+  expect(onSubmit).toHaveBeenCalledWith({
     emailAddress: 'ching@gmail.com',
     password: '1234'
   })
