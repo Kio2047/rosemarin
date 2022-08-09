@@ -1,8 +1,8 @@
 import sequelize from './index';
 import { DataTypes } from 'sequelize';
-import RecipeType from '../types/Recipe';
+import RecipeModel from './types/Recipe';
 
-const  Recipe = sequelize.define<RecipeType>('Recipe', {
+const  Recipe = sequelize.define<RecipeModel>('Recipe', {
     title: {
         type: DataTypes.STRING,
         allowNull: false

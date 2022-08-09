@@ -1,6 +1,6 @@
 import sequelize from './index';
 import { DataTypes } from 'sequelize';
-import IngredientType from '../types/Ingredient';
+import IngredientType from './types/Ingredient';
 
 const Ingredient = sequelize.define<IngredientType>('Ingredient', {
     name: {

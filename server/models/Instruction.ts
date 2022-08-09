@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../models'
-import InstructionType  from '../types/Instruction';
+import InstructionType  from './types/Instruction';
 
 const Instruction = sequelize.define<InstructionType>('Instruction', {
     text: {

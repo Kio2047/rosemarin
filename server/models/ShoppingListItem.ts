@@ -1,6 +1,6 @@
 import sequelize from './index';
 import { DataTypes } from 'sequelize';
-import ShoppingListItemType from '../types/ShoppingListItem';
+import ShoppingListItemType from './types/ShoppingListItem';
 
 const ShoppingListItem = sequelize.define<ShoppingListItemType>('ShoppingListItem', {
     name: {

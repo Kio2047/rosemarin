@@ -4,7 +4,7 @@ import sequelize from "./models/index";
 import Router from "./router";
 import session, { SessionOptions } from "express-session";
 /// <reference> session.d.ts
-import * as express_session from './types/session'
+import * as express_session from './models/types/session'
 import fileUpload from "express-fileupload";;
 
 const app = express();

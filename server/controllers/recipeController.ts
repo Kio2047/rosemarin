@@ -1,145 +1,81 @@
-import fs from "fs";
-// import {ExReq} from  '../types/request'
-
 import {Request, Response} from 'express'
-// import '../types/request'
-import Recipe from "../models/Recipe";
-import Ingredient from "../models/Ingredient";
-import InstructionType from "../types/Instruction";
-import IngredientType from "../types/Ingredient";
-import Instruction from "../models/Instruction";
+
+import Model from '../models/queries/recipeQueries'
 /// <reference> session.d.ts
-import * as express from '../types/request'
+import * as express from '../models/types/request'
 
 const createRecipe = async (req: Request, res: Response) => {
   try {
-    console.log(req.session);
+    console.log('recipeController, createRecipe :', req.session);
     if (req.user) {
-
-      const {ingredients, instructions, title, description, img_url, img_data, img_alt_text, total_time, id_tasty} = req.body
+      const {instructions, ingredients} = req.body
+      const {title, description, img_url, img_data, img_alt_text, total_time, id_tasty} = req.body
+      const recipe = {title, description, img_url, img_data, img_alt_text, total_time, id_tasty};
       const UserId = req.user.id;
-      const newRecipe = await Recipe.create({
-        title,
-        description,
-        img_url,
-        img_data,
-        img_alt_text,
-        total_time,
-        id_tasty,
-        UserId,
-      });
-  
-      ingredients.forEach((ingredient: IngredientType) => {
-        Ingredient.create({
-          name: ingredient.name,
-          unit: ingredient.unit,
-          quantity: ingredient.quantity,
-          RecipeId: newRecipe.id,
-        });
-      });
-  
-      instructions.forEach((instruction: InstructionType) => {
-        Instruction.create({
-          text: instruction.text,
-          temperature: instruction.temperature,
-          RecipeId: newRecipe.id,
-        });
-      });
-  
+
+      const newRecipe = await Model.createRecipe(recipe, UserId)
+      Model.createIngredients(ingredients, newRecipe.id);
+      Model.createInstructions(instructions, newRecipe.id);
+
+      console.log('Recipe successfully created 🟢');
       res.status(201).send({ message: "Recipe has been successfully created" });
+    } else {
+      console.log('No user in the request body 🔴')
     }
-  } catch (err) {
-    console.log(err);
-    res
-      .status(500)
-      .send({ message: "Due to error recipe has not been created" });
+  } catch (error) {
+    console.log('recipeController, createRecipe error 🔴', error);
+    res.status(500).send({ message: "Due to error recipe has not been created" });
   }
 };
 
 const updateRecipe = async (req: Request, res: Response) => {
   try {
     if (req.user){
+      const RecipeId = +req.params.id;
+      const {instructions, ingredients} = req.body
+      const {title, description, img_url, img_data, img_alt_text, total_time, id_tasty} = req.body
+      const recipe = {title, description, img_url, img_data, img_alt_text, total_time, id_tasty};
+      const UserId = req.user.id;
 
-      const RecipeId = req.params.id;
-      const {ingredients, instructions, title, description, img_url, img_data, img_alt_text, total_time, id_tasty} = req.body
-      const UserId = req.user.id;    
+      await Model.deleteRecipe(RecipeId);
+      const updatedRecipe = await Model.createRecipe(recipe, UserId)
+      Model.createIngredients(ingredients, updatedRecipe.id);
+      Model.createInstructions(instructions, updatedRecipe.id)
 
-      await Recipe.destroy({ where: { id: RecipeId } });
-
-      const updatedRecipe = await Recipe.create({
-        title,
-        description,
-        img_url,
-        img_data,
-        img_alt_text,
-        total_time,
-        id_tasty,
-        UserId,
-      });
-  
-      ingredients.forEach((ingredient: IngredientType) => {
-        Ingredient.create({
-          name: ingredient.name,
-          unit: ingredient.unit,
-          quantity: ingredient.quantity,
-          RecipeId: updatedRecipe.id,
-        });
-      });
-  
-      instructions.forEach((instruction: InstructionType) => {
-        Instruction.create({
-          text: instruction.text,
-          temperature: instruction.temperature,
-          RecipeId: updatedRecipe.id,
-        });
-      });
-
+      console.log('Recipe successfully updated 🟢');
       res.status(200).send({ message: "Recipe has been successfully updated" });
     }
   } catch (error) {
-    console.log(error);
-    res
-      .status(500)
-      .send({ message: "Due to error recipe has not been updated" });
+    console.log('recipeController, updateRecipe error 🔴', error);
+    res.status(500).send({ message: "Due to error recipe has not been updated" });
   }
 };
 
 const removeRecipe = async (req: Request, res: Response) => {
   try {
-    const id = req.body.id;
-    const recipe = await Recipe.findByPk(id);
-    if (!recipe || !recipe.img_data) {
-      await Recipe.destroy({ where: { id: id } });
-    } else {
-      const path = recipe.img_data;
-      await Recipe.destroy({ where: { id: id } });
-      fs.unlinkSync(path);
-    }
+    const RecipeId = req.body.id;
+    await Model.deleteRecipe(RecipeId);
+
+    console.log('Recipe successfully removed 🟢');
     res.status(200).send({ message: "Recipe has been successfully removed" });
-  } catch (err) {
-    console.log(err);
-    res
-      .status(500)
-      .send({ message: "Due to error recipe has not been created" });
+  } catch (error) {
+    console.log('recipeController, removeRecipe error 🔴', error);
+    res.status(500).send({ message: "Due to error recipe has not been removed" });
   }
 };
 
-const getAllRecipes = async (req: Request, res: Response) => {
+const getUserRecipes = async (req: Request, res: Response) => {
   try {
-    console.log("Session ", req.session);
+    // console.log("recipeController, getUserRecipes session: ", req.session);
     const UserId = req.session.sid;
-    const allRecipes = await Recipe.findAll({
-      where: { UserId },
-      include: ["Instructions", "Ingredients"],
-    });
-    console.log('These are the my recipes: ', allRecipes)
-    res.status(200).send(allRecipes);
-  } catch (err) {
-    console.log(err);
-    res
-      .status(500)
-      .send({ message: "Due to error recipes have not been received" });
+    const userRecipes = await Model.getUserRecipes(UserId);
+
+    console.log('Recipes successfully fetched 🟢', userRecipes);
+    res.status(200).send(userRecipes);
+  } catch (error) {
+    console.log('recipeController, getUserRecipes error 🔴', error);
+    res.status(500).send({ message: "Due to error recipes have not been received" });
   }
 };
 
-export default { createRecipe, removeRecipe, updateRecipe, getAllRecipes };
+export default { createRecipe, removeRecipe, updateRecipe, getUserRecipes };

@@ -1,5 +1,5 @@
 import sequelize from './'
-import User from '../types/User';
+import User from './types/User';
 import { DataTypes } from 'sequelize';
 import RecipeModel from './Recipe';
 import IngredientModel from './Ingredient';
