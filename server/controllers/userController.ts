@@ -1,16 +1,16 @@
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 
-import UserModel from "../models/User";
+import User from "../models/User";
 
 const createUser = async (req: Request, res: Response) => {
   try {
     const {name, email, password} = req.body
     const hashedPassword = bcrypt.hashSync(password, 10);
 
-    const isPresent = await UserModel.findOne({ where: { email } });
+    const isPresent = await User.findOne({ where: { email } });
     if (!isPresent) {
-      const user = await UserModel.create({
+      const user = await User.create({
         name,
         email, 
         password: hashedPassword,
@@ -29,7 +29,7 @@ const createUser = async (req: Request, res: Response) => {
 const loginUser = async (req: Request, res: Response) => {
   try {
     const {email, password} = req.body
-    let result = await UserModel.findOne({ where: { email } });
+    let result = await User.findOne({ where: { email } });
     //Get the actual values:
     const user = result?.dataValues;
 

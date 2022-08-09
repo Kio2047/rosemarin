@@ -3,11 +3,11 @@ import fs from "fs";
 
 import {Request, Response} from 'express'
 // import '../types/request'
-import RecipeModel from "../models/Recipe";
-import IngredientModel from "../models/Ingredient";
-import Instruction from "../types/Instruction";
-import Ingredient from "../types/Ingredient";
-import InstructionModel from "../models/Instruction";
+import Recipe from "../models/Recipe";
+import Ingredient from "../models/Ingredient";
+import InstructionType from "../types/Instruction";
+import IngredientType from "../types/Ingredient";
+import Instruction from "../models/Instruction";
 /// <reference> session.d.ts
 import * as express from '../types/request'
 
@@ -18,7 +18,7 @@ const createRecipe = async (req: Request, res: Response) => {
 
       const {ingredients, instructions, title, description, img_url, img_data, img_alt_text, total_time, id_tasty} = req.body
       const UserId = req.user.id;
-      const newRecipe = await RecipeModel.create({
+      const newRecipe = await Recipe.create({
         title,
         description,
         img_url,
@@ -29,8 +29,8 @@ const createRecipe = async (req: Request, res: Response) => {
         UserId,
       });
   
-      ingredients.forEach((ingredient: Ingredient) => {
-        IngredientModel.create({
+      ingredients.forEach((ingredient: IngredientType) => {
+        Ingredient.create({
           name: ingredient.name,
           unit: ingredient.unit,
           quantity: ingredient.quantity,
@@ -38,8 +38,8 @@ const createRecipe = async (req: Request, res: Response) => {
         });
       });
   
-      instructions.forEach((instruction: Instruction) => {
-        InstructionModel.create({
+      instructions.forEach((instruction: InstructionType) => {
+        Instruction.create({
           text: instruction.text,
           temperature: instruction.temperature,
           RecipeId: newRecipe.id,
@@ -64,9 +64,9 @@ const updateRecipe = async (req: Request, res: Response) => {
       const {ingredients, instructions, title, description, img_url, img_data, img_alt_text, total_time, id_tasty} = req.body
       const UserId = req.user.id;    
 
-      await RecipeModel.destroy({ where: { id: RecipeId } });
+      await Recipe.destroy({ where: { id: RecipeId } });
 
-      const updatedRecipe = await RecipeModel.create({
+      const updatedRecipe = await Recipe.create({
         title,
         description,
         img_url,
@@ -77,8 +77,8 @@ const updateRecipe = async (req: Request, res: Response) => {
         UserId,
       });
   
-      ingredients.forEach((ingredient: Ingredient) => {
-        IngredientModel.create({
+      ingredients.forEach((ingredient: IngredientType) => {
+        Ingredient.create({
           name: ingredient.name,
           unit: ingredient.unit,
           quantity: ingredient.quantity,
@@ -86,8 +86,8 @@ const updateRecipe = async (req: Request, res: Response) => {
         });
       });
   
-      instructions.forEach((instruction: Instruction) => {
-        InstructionModel.create({
+      instructions.forEach((instruction: InstructionType) => {
+        Instruction.create({
           text: instruction.text,
           temperature: instruction.temperature,
           RecipeId: updatedRecipe.id,
@@ -107,12 +107,12 @@ const updateRecipe = async (req: Request, res: Response) => {
 const removeRecipe = async (req: Request, res: Response) => {
   try {
     const id = req.body.id;
-    const recipe = await RecipeModel.findByPk(id);
+    const recipe = await Recipe.findByPk(id);
     if (!recipe || !recipe.img_data) {
-      await RecipeModel.destroy({ where: { id: id } });
+      await Recipe.destroy({ where: { id: id } });
     } else {
       const path = recipe.img_data;
-      await RecipeModel.destroy({ where: { id: id } });
+      await Recipe.destroy({ where: { id: id } });
       fs.unlinkSync(path);
     }
     res.status(200).send({ message: "Recipe has been successfully removed" });
@@ -128,7 +128,7 @@ const getAllRecipes = async (req: Request, res: Response) => {
   try {
     console.log("Session ", req.session);
     const UserId = req.session.sid;
-    const allRecipes = await RecipeModel.findAll({
+    const allRecipes = await Recipe.findAll({
       where: { UserId },
       include: ["Instructions", "Ingredients"],
     });

@@ -1,6 +1,6 @@
 import { Model, InferAttributes, InferCreationAttributes } from 'sequelize';
 
-export default interface ShoppingListItem extends Model<InferAttributes<ShoppingListItem>, InferCreationAttributes<ShoppingListItem>> {
+export default interface ShoppingListItemType extends Model<InferAttributes<ShoppingListItemType>, InferCreationAttributes<ShoppingListItemType>> {
   id?: number,
   UserId?: number,
   name: string,
