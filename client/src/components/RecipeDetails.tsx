@@ -4,16 +4,19 @@ import {useParams} from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { Icon, IconProp } from "@fortawesome/fontawesome-svg-core";
 import {getMyShoppingList, postItem} from "../Utils/apiDBServiceShoppingList";
-import { useAppSelector } from '../redux/hooks';
-import { RecipeDetailsProps } from '../types/propTypes';
-import { APIRecipe, APIRecipeSection, SavedRecipe, ShoppingListItem } from '../types/recipeTypes';
+import { useAppSelector, useAppDispatch } from '../redux/hooks';
+import { APIRecipe, APIRecipeSection, SavedRecipe } from '../types/recipeTypes';
+import type { ShoppingListItem } from '../types/propTypes';
+import { setItems } from '../redux/actions';
 
 
-const RecipeDetails = ({myRecipes, items, setItems}: RecipeDetailsProps) => {
+const RecipeDetails = () => {
 
-    console.log("myRecipes:", myRecipes);
+    const myRecipes = useAppSelector((state) => state.myRecipes);
+    const recipes = useAppSelector((state) => state.recipes);
+    const items = useAppSelector((state) => state.items);
 
-    const recipes = useAppSelector(state => state.recipes);
+    const dispatch = useAppDispatch();
 
     const [recipe, setRecipe] = useState<APIRecipe | undefined>();
     const [myRecipe, setMyRecipe] = useState<SavedRecipe | undefined>();
@@ -30,6 +33,10 @@ const RecipeDetails = ({myRecipes, items, setItems}: RecipeDetailsProps) => {
         setMyRecipe(result);
     }, []);
 
+    const itemsHelper = (items: ShoppingListItem[], res: ShoppingListItem) => {
+        return [...items, res]
+    }
+
     const addHandlerShoppingList = (data: ShoppingListItem) => {
         const newItem = {
             name: data.name,
@@ -37,7 +44,7 @@ const RecipeDetails = ({myRecipes, items, setItems}: RecipeDetailsProps) => {
             unit: data.unit,
         };
         postItem(newItem)
-            .then(res => setItems((prev) => [...prev, res]))
+            .then(res => dispatch(setItems(itemsHelper(items, res))))
             .catch(error => console.log(error));
     };
 

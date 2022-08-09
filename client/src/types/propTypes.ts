@@ -36,8 +36,6 @@ export type RecipesListProps = {
 
 export type HeartProps = {
   recipe: APIRecipe,
-  ids: IDs[],
-  setIds: React.Dispatch<React.SetStateAction<IDs[]>>
 }
 
 export type InstructionProps = {
@@ -47,32 +45,30 @@ export type InstructionProps = {
 export type RecipeProps = {
   recipe: APIRecipe,
   className: string,
-  setIds: React.Dispatch<React.SetStateAction<IDs[]>>,
-  ids: IDs[]
 }
 
-type ShoppingListItem = {
+export type ShoppingListItem = {
   name: string,
   unit: string,
   quantity: string,
-  UserId: number,
-  id: number
+  UserId?: number,
+  id?: number
 }
 
-export type ShoppingListProps = {
-  items: ShoppingListItem[],
-  setItems: React.Dispatch<React.SetStateAction<ShoppingListItem[]>>
-}
+// export type ShoppingListProps = {
+//   items: ShoppingListItem[],
+//   setItems: React.Dispatch<React.SetStateAction<ShoppingListItem[]>>
+// }
 
-export type MyRecipesProps = {
-  myRecipes: SavedRecipe[],
-  setMyRecipes: React.Dispatch<React.SetStateAction<SavedRecipe[]>>,
-  setIds: React.Dispatch<React.SetStateAction<IDs[]>>,
-  ids: IDs[]
-}
+// export type MyRecipesProps = {
+//   myRecipes: SavedRecipe[],
+//   setMyRecipes: React.Dispatch<React.SetStateAction<SavedRecipe[]>>,
+//   setIds: React.Dispatch<React.SetStateAction<IDs[]>>,
+//   ids: IDs[]
+// }
 
-export type RecipeDetailsProps = {
-  myRecipes: SavedRecipe[],
-  items: ShoppingListItem[],
-  setItems: React.Dispatch<React.SetStateAction<ShoppingListItem[]>>
-}
+// export type RecipeDetailsProps = {
+//   myRecipes: SavedRecipe[],
+//   items: ShoppingListItem[],
+//   setItems: React.Dispatch<React.SetStateAction<ShoppingListItem[]>>
+// }

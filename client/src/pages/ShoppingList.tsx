@@ -1,25 +1,31 @@
 import React, {useEffect} from 'react';
-import { ShoppingListProps } from '../types/propTypes';
+import { setItems } from '../redux/actions';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import type { ShoppingListItem } from '../types/propTypes';
 import {deleteItem, getMyShoppingList} from "../Utils/apiDBServiceShoppingList";
 
+const ShoppingList = () => {
 
-const ShoppingList = ({items, setItems}: ShoppingListProps) => {
+    const dispatch = useAppDispatch();
+    const items = useAppSelector((state) => state.items);
 
     useEffect(() => {
         getMyShoppingList()
             // .then(recipes => console.log(recipes))
-            .then(itemsSL => setItems(itemsSL))
+            .then(itemsSL => dispatch(setItems(itemsSL)))
             .catch(err => console.log.bind(err))
-    }, [])
+    }, []);
+
+    const delItemHelper = (items: ShoppingListItem[], id: number) => {
+        const filtered = items.filter(item => item.id !== id);
+        return [...filtered]
+    }
 
     const delItemHandler = (id: number) => {
         deleteItem({id})
             .then(res => console.log(res))
             .catch(err => console.log.bind(err))
-        setItems(prev => {
-            const filtered = prev.filter(item => item.id !== id);
-            return [...filtered]
-        })
+        dispatch(setItems(delItemHelper(items, id)));
     }
 
     return (
@@ -44,7 +50,7 @@ const ShoppingList = ({items, setItems}: ShoppingListProps) => {
                                 items?.map((item, i) =>
                                     <tr key={i}>
                                         <th className="text-orange-800 text-2xl cursor-pointer hover:text-black"
-                                            onClick={() => delItemHandler(item.id)}
+                                            onClick={() => delItemHandler(item.id!)}
                                         >X
                                         </th>
                                         <td>{item.name}</td>

@@ -3,16 +3,22 @@ import TopSection from "../components/TopSection";
 import SearchForm from "../components/SearchForm";
 import Recipe from "../components/Recipe";
 import {getMyRecipes} from "../Utils/apiDBRecipeService";
-import { MyRecipesProps } from '../types/propTypes';
 
-const MyRecipesList = ({myRecipes, setMyRecipes, setIds, ids}: MyRecipesProps) => {
+import { useAppSelector, useAppDispatch } from '../redux/hooks';
+import { setMyRecipes } from '../redux/actions';
+
+const MyRecipesList = () => {
+
+    const dispatch = useAppDispatch();
+    const myRecipes = useAppSelector((state) => state.myRecipes)
+    const ids = useAppSelector((state) => state.ids)
 
     useEffect(() => {
         getMyRecipes()
             // .then(recipes => console.log(recipes))
             .then(recipes => {
                 console.log('My recipes inside: ', recipes )
-                setMyRecipes(recipes || []);
+                dispatch(setMyRecipes(recipes || []));
             })
             .catch(err => console.log.bind(err))
     }, [ids])
@@ -33,22 +39,19 @@ const MyRecipesList = ({myRecipes, setMyRecipes, setIds, ids}: MyRecipesProps) =
                            recipe={recipe}
                            key={recipe.id}
                            className={"horizontal span-col-4 card bg-base-100 shadow-xl flex-row"}
-                           setIds={setIds}
-                           ids={ids}></Recipe>
+                           />
                    } else if (i % 5 === 0) {
                        return <Recipe
                            recipe={recipe}
                            key={recipe.id}
                            className={"vertical span-col-2 span-row-2 card bg-base-100 shadow-xl"}
-                           setIds={setIds}
-                           ids={ids}></Recipe>
+                           />
                    } else {
                        return <Recipe
                             recipe={recipe}
                             key={recipe.id}
                             className={"vertical card bg-base-100 shadow-xl"}
-                            setIds={setIds}
-                            ids={ids}></Recipe>
+                            />
                    }})}
             </ul>
         </div>

@@ -2,16 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { faHeart } from "@fortawesome/fontawesome-free-solid";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { deleteRecipe, getMyRecipes, postRecipe } from "../Utils/apiDBRecipeService";
-import { HeartProps } from '../types/propTypes';
+
+import { deleteRecipe, postRecipe } from "../Utils/apiDBRecipeService";
+import { HeartProps, IDs } from '../types/propTypes';
+import { useAppSelector, useAppDispatch } from '../redux/hooks';
+import { setIds } from '../redux/actions';
 
 
-const Heart = ({ recipe, setIds, ids }: HeartProps) => {
+const Heart = ({ recipe }: HeartProps) => {
 
     // console.log("Here's aaa recipe:", recipe);
 
     const [isFavorite, setIsFavorite] = useState(false);
     const [currentId, setCurrentId] = useState(0);
+
+    const ids = useAppSelector((state) => state.ids);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         ids.map(id => {
@@ -21,6 +27,15 @@ const Heart = ({ recipe, setIds, ids }: HeartProps) => {
             };
         });
     }, [ids]);
+
+    const favoriteHelper = (ids: IDs[]) => {
+       return ids = [...ids, {id: currentId, id_tasty: recipe.id}]
+    }
+
+    const unfavoriteHelper = (ids: IDs[]) => {
+        const filtered = ids.filter(id => id.id !== currentId);
+        return [...filtered]
+    }
 
     const isFavoriteHandler = () => {
         setIsFavorite(() => !isFavorite);
@@ -57,20 +72,16 @@ const Heart = ({ recipe, setIds, ids }: HeartProps) => {
                 .then(res => console.log(res))
                 .catch(error => console.log(error))
 
-            setIds(prev => [...prev, { id: currentId, id_tasty: recipe.id }]);
+            dispatch(setIds(favoriteHelper(ids)));
 
         } else {
             if (window.confirm("You are removing recipe. Are you sure?")) {
                 deleteRecipe({ id: currentId })
                     .then(res => console.log(res))
                     .catch(error => console.log(error))
-                setIds(prev => {
-                    const filtered = prev.filter(id => id.id !== currentId);
-                    return [...filtered]
-                })
+                dispatch(setIds(unfavoriteHelper(ids)));
             }
         }
-
     }
     return (
         (isFavorite) ?

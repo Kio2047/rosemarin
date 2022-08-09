@@ -19,20 +19,21 @@ import { getMyShoppingList } from "./Utils/apiDBServiceShoppingList";
 import Logout from "./pages/Logout";
 import SignIn from './pages/SignIn';
 import { useAppSelector, useAppDispatch } from './redux/hooks';
-import { toggleAuthenticate, setAuthenticate, setRecipes } from './redux/actions';
+import { toggleAuthenticate, setAuthenticate, setRecipes, setMyRecipes, setIds, setItems } from './redux/actions';
 
 function App() {
 
     const dispatch = useAppDispatch();
-    const [myRecipes, setMyRecipes] = useState([]);
-    const [ids, setIds] = useState([])
-    const [items, setItems] = useState([]);
+    // const [ids, setIds] = useState([])
+    const ids = useAppSelector((state) => state.ids);
+
+    // const [items, setItems] = useState([]);
 
     useEffect(() => {
       (async () => {
           const data = await getMyShoppingList()
         //   console.log("THE DATA IS:", data);
-          setItems(data)
+          dispatch(setItems(data));
       })();
     }, [])
 
@@ -47,16 +48,16 @@ function App() {
         })();
     }, []);
 
+    const idsHelper = (el, ids) => {
+        let id = el.id;
+        let id_tasty = el.id_tasty;
+        const filtered = ids.filter(e => e.id.tasty !== el.id_tasty);
+        return [...filtered, {id, id_tasty}]
+    }
 
     useEffect(() => {
         getMyRecipes()
-            .then(recipes => recipes.map(el => setIds(prev => {
-
-                let id = el.id;
-                let id_tasty = el.id_tasty;
-                const filtered = prev.filter(e => e.id_tasty !== el.id_tasty);
-                return [...filtered, {id, id_tasty}]
-            })))
+            .then(recipes => recipes.map(el => (dispatch(setIds(idsHelper(el, ids))))))
             .catch(err => console.log.bind(err))
     }, []);
 
@@ -72,7 +73,7 @@ function App() {
                    dispatch(toggleAuthenticate())
                 } */
                 console.log('Am i being called? ', recipes)
-                setMyRecipes(recipes || []);
+                dispatch(setMyRecipes(recipes || []));
             })
             .catch(err => console.log.bind(err))
     }, [ids])
@@ -90,17 +91,16 @@ function App() {
                     />
 
                     <Route exact path="/home"
-                           element={<RecipesList setIds={setIds}ids={ids}/>}></Route>
+                           element={<RecipesList />}></Route>
                     <Route exact path="/my_recipes"
-                           element={<MyRecipesList myRecipes={myRecipes} setMyRecipes={setMyRecipes} setIds={setIds}
-                                                   ids={ids}/>}></Route>
-                    <Route exact path="/recipes/:id" element={<RecipeDetails myRecipes={myRecipes} setItems={setItems} setIds={setIds} ids={ids}/>}></Route>
+                           element={<MyRecipesList />}></Route>
+                    <Route exact path="/recipes/:id" element={<RecipeDetails />}></Route>
                     <Route exact path="/create" element={<CreateRecipe/>}></Route>
                     <Route exact path="/menu" element={<Menu/>}></Route>
                     <Route exact path="/weekly_menu" element={<WeeklyMenu/>}></Route>
                 </Routes>
             </BrowserRouter>
-            <ShoppingList items={items} setItems={setItems}/>
+            <ShoppingList />
         </div>
     );
 }

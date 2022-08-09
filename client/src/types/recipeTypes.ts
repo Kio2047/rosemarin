@@ -68,4 +68,3 @@ type NewRecipeInstruction = {
   text: FormDataEntryValue
 }
 
-export type ShoppingListItem = NewRecipeIngredient

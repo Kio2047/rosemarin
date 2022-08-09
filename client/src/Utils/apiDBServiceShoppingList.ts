@@ -1,4 +1,4 @@
-import type { ShoppingListItem } from "../types/recipeTypes";
+import type { ShoppingListItem } from "../types/propTypes";
 
 export const baseDBUrl = 'http://localhost:3001/items';
 

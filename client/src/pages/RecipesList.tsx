@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { useAppSelector } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import Recipe from "../components/Recipe";
 import TopSection from "../components/TopSection";
 import SearchForm from "../components/SearchForm";
 import type { RecipesListProps } from '../types/propTypes';
 import type { APIRecipe } from '../types/recipeTypes';
 
-const RecipesList = ({ setIds, ids }: RecipesListProps) => {
+const RecipesList = () => {
 
-    const recipes = useAppSelector(state => state.recipes)
+    const recipes = useAppSelector((state) => state.recipes);
 
     return (
         <>
@@ -22,22 +22,16 @@ const RecipesList = ({ setIds, ids }: RecipesListProps) => {
                             recipe={recipe}
                             key={recipe.id}
                             className={"horizontal span-col-4 card bg-base-100 shadow-xl flex-row"}
-                            setIds={setIds}
-                            ids={ids}
                         ></Recipe> :
                         (i === 6 || i%10 === 6) ?
                             <Recipe
                                 recipe={recipe}
                                 key={recipe.id}
                                 className={"vertical span-col-2 span-row-2 card bg-base-100 shadow-xl"}
-                                setIds={setIds}
-                                ids={ids}
                             ></Recipe> :
                                 <Recipe
                                     recipe={recipe}
                                     key={recipe.id} className={"vertical card bg-base-100 shadow-xl"}
-                                    setIds={setIds}
-                                    ids={ids}
                                 ></Recipe>
                 )}
             </ul>
