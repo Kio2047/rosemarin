@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {faHeart} from "@fortawesome/fontawesome-free-solid";
+import React, { useEffect, useState } from 'react';
+import { faHeart } from "@fortawesome/fontawesome-free-solid";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {deleteRecipe, getMyRecipes, postRecipe} from "../Utils/apiDBRecipeService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { deleteRecipe, getMyRecipes, postRecipe } from "../Utils/apiDBRecipeService";
 import { HeartProps } from '../types/propTypes';
 
 
-const Heart = ({recipe, setIds, ids}: HeartProps) => {
+const Heart = ({ recipe, setIds, ids }: HeartProps) => {
 
     // console.log("Here's aaa recipe:", recipe);
 
@@ -28,7 +28,7 @@ const Heart = ({recipe, setIds, ids}: HeartProps) => {
             const instructions = recipe.instructions.map((el: any) => {
                 console.log("instructionnnnn:", el);
                 let text = el.display_text;
-                return {text};
+                return { text };
             })
             const ingredients = recipe.sections.map((el: any) => {
                 let final = [];
@@ -37,7 +37,7 @@ const Heart = ({recipe, setIds, ids}: HeartProps) => {
                     let name = comp.ingredient.name;
                     let unit = comp.measurements[0].unit.name;
                     let quantity = comp.measurements[0].quantity || null;
-                    return {name, unit, quantity};
+                    return { name, unit, quantity };
                 })
                 final.push(res);
                 return final.flat();
@@ -57,11 +57,11 @@ const Heart = ({recipe, setIds, ids}: HeartProps) => {
                 .then(res => console.log(res))
                 .catch(error => console.log(error))
 
-            setIds(prev => [...prev, {id: currentId, id_tasty: recipe.id}]);
+            setIds(prev => [...prev, { id: currentId, id_tasty: recipe.id }]);
 
         } else {
             if (window.confirm("You are removing recipe. Are you sure?")) {
-                deleteRecipe({id: currentId})
+                deleteRecipe({ id: currentId })
                     .then(res => console.log(res))
                     .catch(error => console.log(error))
                 setIds(prev => {
@@ -77,11 +77,11 @@ const Heart = ({recipe, setIds, ids}: HeartProps) => {
             <FontAwesomeIcon
                 onClick={isFavoriteHandler}
                 icon={faHeart as IconProp}
-                className="text-2xl self-center mr-3 link text-error cursor-pointer"/> :
+                className="text-2xl self-center mr-3 link text-error cursor-pointer" /> :
             <FontAwesomeIcon
                 onClick={isFavoriteHandler}
                 icon={faHeart as IconProp}
-                className="text-2xl self-center mr-3 link-secondary cursor-pointer"/>
+                className="text-2xl self-center mr-3 link-secondary cursor-pointer" />
     );
 };
 
