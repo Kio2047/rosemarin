@@ -4,7 +4,9 @@ export const baseDBUrl = 'http://localhost:3001/items';
 
 export const getMyShoppingList = async () => {
   try {
-    const response = await fetch(baseDBUrl)
+    const response = await fetch(baseDBUrl, {
+      credentials: 'include'
+    })
     return await response.json();
 
     } catch (error) {
@@ -18,6 +20,7 @@ export const postItem = async (recipe: ShoppingListItem ) => {
     const response = await fetch(baseDBUrl, {
     method: 'POST',
     headers: { 'Content-type': 'application/json' },
+    credentials: 'include',
     body: JSON.stringify(recipe)
     });
     return await response.json();
@@ -32,7 +35,8 @@ export const deleteItem = async ({id}: {id: number}) => {
     const response = await fetch(baseDBUrl, {
         method: 'DELETE',
         headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify(id)
+        credentials: 'include', 
+        body: JSON.stringify({id})
     });
     return await response.json()
 

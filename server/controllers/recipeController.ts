@@ -70,7 +70,7 @@ async function getUserRecipes (req: Request, res: Response) {
     const UserId = req.session.sid;
     const userRecipes = await Model.getUserRecipes(UserId);
 
-    console.log('Recipes successfully fetched 🟢', userRecipes);
+    console.log('Recipes successfully fetched 🟢');
     res.status(200).send(userRecipes);
   } catch (error) {
     console.log('recipeController, getUserRecipes error 🔴', error);

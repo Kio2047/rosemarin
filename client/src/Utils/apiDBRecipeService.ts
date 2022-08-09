@@ -37,7 +37,7 @@ export const deleteRecipe = async ({id}: {id: number}) => {
 			method: 'DELETE',
 			credentials: 'include',
 			headers: { 'Content-type': 'application/json' },
-			body: JSON.stringify(id)
+			body: JSON.stringify({id})
 		})
 		return await response.json()
 
