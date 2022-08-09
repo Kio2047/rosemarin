@@ -1,9 +1,12 @@
 import React, {useRef, useState} from "react";
-import TopSection from "../components/TopSection";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { Icon, IconProp } from "@fortawesome/fontawesome-svg-core";
+
+import TopSection from "../components/TopSection";
 import Instruction from "../components/Instruction";
 import Ingredient from "../components/Ingredient";
 import {postRecipe} from "../Utils/apiDBRecipeService";
+import { NewRecipe, NewRecipeIngredient } from "../types/recipeTypes";
 
 
 
@@ -11,13 +14,13 @@ function CreateRecipe() {
     const [ingredients, setIngredients] = useState(['1-ingredient']);
     const [instructions, setInstructions] = useState(['1-instruction']);
 
-    const form = useRef(null);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         let subInstructions = [];
         let tmpIngredients = [];
-        const formData = new FormData(form.current);
+        const form = event.target as HTMLFormElement
+        const formData = new FormData(form);
 
         for(let [key, value] of formData.entries()) {
             if(key.includes('instruction')) subInstructions.push({text: value});
@@ -37,7 +40,7 @@ function CreateRecipe() {
         }
 
         tmpIngredients = tmpIngredients.reduce((o, i) => {
-            if (!o.find(v => v.name == i.name)) {
+            if (!o.find((v: NewRecipeIngredient) => v.name == i.name)) {
                 o.push(i);
             }
             return o;
@@ -45,25 +48,27 @@ function CreateRecipe() {
 
         tmpIngredients.shift();
 
-        console.log(e.target)
+        console.log("tmpingredients:", tmpIngredients);
+        console.log("subinstructions:", subInstructions)
 
-        const newRecipe = {
-            title: e.target.title.value,
-            description: e.target.description.value,
-            img_url: e.target.url.value || URL.createObjectURL(e.target.file.files[0]),
+        const newRecipe: NewRecipe = {
+            title: form.recipeTitle.value,
+            description: form.description.value,
+            img_url: form.url.value || URL.createObjectURL(form.file.files[0]),
             // files: e.target[7].files[0] || null,
-            img_alt_text: e.target.title.value,
+            img_alt_text: form.recipeTitle.value,
             ingredients: tmpIngredients,
             instructions: subInstructions
         }
+
         postRecipe(newRecipe)
             .then(res => console.log(res))
             .catch(error => console.log(error))
 
-        e.target.title.value = '';
-        e.target.description.value = '';
-        e.target.url.value = '';
-        e.target.title = '';
+        form.recipeTitle.value = '';
+        form.description.value = '';
+        form.url.value = '';
+        form.title = '';
     }
 
 
@@ -102,12 +107,12 @@ function CreateRecipe() {
     return (
         <>
             <TopSection></TopSection>
-            <form ref={form} encType='multipart/form-data' onSubmit={handleSubmit} className='w-2/3 m-auto form-control prose lg:prose-xl mb-40'>
+            <form encType='multipart/form-data' onSubmit={handleSubmit} className='w-2/3 m-auto form-control prose lg:prose-xl mb-40'>
                 <h2 className="m-auto font-rufina-bold">Create your own recipe</h2>
                 <div>
                     <label className="label">Title</label>
                     <input type="text"
-                            name="title"
+                            name="recipeTitle"
                            placeholder="Type here title of your recipe..."
                            className="input input-bordered w-full hover:bg-slate-50"
                     />
@@ -125,12 +130,12 @@ function CreateRecipe() {
                 <div>
                     <label className="label justify-start mr-10">Ingredients
                         <FontAwesomeIcon
-                            icon="fa-solid fa-plus"
+                            icon={"fa-solid fa-plus" as IconProp}
                             className="text-warning transition-all hover:text-2xl ml-10"
                             onClick={addHandlerIngredient}
                         />
                         <FontAwesomeIcon
-                            icon="fa-solid fa-minus"
+                            icon={"fa-solid fa-minus" as IconProp}
                             className="text-warning transition-all hover:text-2xl cursor-pointer ml-10"
                             onClick={delHandlerIngredient}
                         />
@@ -145,12 +150,12 @@ function CreateRecipe() {
                 <div>
                     <label className="label justify-start mr-10">Instructions
                         <FontAwesomeIcon
-                            icon="fa-solid fa-plus"
+                            icon={"fa-solid fa-plus" as IconProp}
                             className="text-warning transition-all hover:text-2xl cursor-pointer ml-10"
                             onClick={addHandlerInstruction}
                         />
                         <FontAwesomeIcon
-                            icon="fa-solid fa-minus"
+                            icon={"fa-solid fa-minus" as IconProp}
                             className="text-warning transition-all hover:text-2xl cursor-pointer ml-10"
                             onClick={delHandlerInstruction}
                         />
@@ -182,7 +187,7 @@ function CreateRecipe() {
                        file:text-sm file:font-semibold
                        file:bg-fuchsia-50 file:text-accent-700
                        hover:file:bg-base-300 mb-10"
-                       onChange={(e) => {
+                       onChange={(event) => {
 
                        }}
                    />

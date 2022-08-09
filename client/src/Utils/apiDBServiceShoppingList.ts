@@ -27,7 +27,7 @@ export const postItem = async (recipe: ShoppingListItem ) => {
     }
 }
 
-export const deleteItem = async (id: number) => {
+export const deleteItem = async ({id}: {id: number}) => {
   try {
     const response = await fetch(baseDBUrl, {
         method: 'DELETE',
@@ -39,4 +39,4 @@ export const deleteItem = async (id: number) => {
     } catch (error) {
         console.log(error)
     }
-}
+};

@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
+import { ShoppingListProps } from '../types/propTypes';
 import {deleteItem, getMyShoppingList} from "../Utils/apiDBServiceShoppingList";
 
 
-const ShoppingList = ({items, setItems}) => {
+const ShoppingList = ({items, setItems}: ShoppingListProps) => {
 
     useEffect(() => {
         getMyShoppingList()
@@ -11,7 +12,7 @@ const ShoppingList = ({items, setItems}) => {
             .catch(err => console.log.bind(err))
     }, [])
 
-    const delItemHandler = (id) => {
+    const delItemHandler = (id: number) => {
         deleteItem({id})
             .then(res => console.log(res))
             .catch(err => console.log.bind(err))

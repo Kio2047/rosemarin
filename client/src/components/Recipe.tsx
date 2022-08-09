@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import { RecipeProps } from '../types/propTypes';
 
 import Heart from "./Heart";
 
-
-const Recipe = ({ recipe, className, setIds, ids }) => {
+const Recipe = ({ recipe, className, setIds, ids }: RecipeProps) => {
     return (
         <li className={className}>
             <figure><img  src={ recipe.thumbnail_url || recipe.img_url || recipe.img_data } alt={ recipe.name || recipe.title }/></figure>

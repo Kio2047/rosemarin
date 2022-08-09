@@ -1,8 +1,19 @@
 export type APIRecipe = any;
 
+export type APIRecipeSection = {
+  components: APIRecipeSectionComponent[],
+  name: string,
+  position: number
+}
+
+export type APIRecipeSectionComponent = {
+  ingredient: { name: string },
+  measurements: { quantity: string, unit: {name: string }}[]
+}
+
 export type SavedRecipe = {
-  ingredients: SavedRecipeIngredient[],
-  instructions: SavedRecipeInstruction[],
+  Ingredients: SavedRecipeIngredient[],
+  Instructions: SavedRecipeInstruction[],
   UserId: number,
   createdAt: string,
   description: string,
@@ -41,20 +52,20 @@ export type NewRecipe = {
   img_url: string,
   img_alt_text: string,
   ingredients: NewRecipeIngredient[],
-  instructions: NewRecipeInstruction,
+  instructions: NewRecipeInstruction[],
   total_time?: null,
+  id?: number,
   id_tasty?: number
 }
 
-type NewRecipeIngredient = {
+export type NewRecipeIngredient = {
   name: string,
   quantity: string,
   unit: string
 }
 
 type NewRecipeInstruction = {
-  text: string
+  text: FormDataEntryValue
 }
 
 export type ShoppingListItem = NewRecipeIngredient
-

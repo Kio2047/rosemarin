@@ -31,6 +31,7 @@ function App() {
     useEffect(() => {
       (async () => {
           const data = await getMyShoppingList()
+        //   console.log("THE DATA IS:", data);
           setItems(data)
       })();
     }, [])
@@ -41,7 +42,7 @@ function App() {
                 dispatch(setAuthenticate(true));
             }
             const data = await getRandomRecipe()
-            console.log('List of random recipes: ', data.results)
+            // console.log('List of random recipes: ', data.results)
             dispatch(setRecipes(data.results))
         })();
     }, []);
@@ -71,12 +72,12 @@ function App() {
                    dispatch(toggleAuthenticate())
                 } */
                 console.log('Am i being called? ', recipes)
-                setMyRecipes(recipes)
+                setMyRecipes(recipes || []);
             })
             .catch(err => console.log.bind(err))
     }, [ids])
 
-    console.log("here kio kio:", ids);
+    // console.log("here kio kio:", ids);
     return (
         <div className="font-oxy-regular">
             <BrowserRouter>
