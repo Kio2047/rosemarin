@@ -24,27 +24,23 @@ import { toggleAuthenticate, setAuthenticate, setRecipes, setMyRecipes, setIds, 
 function App() {
 
     const dispatch = useAppDispatch();
-    // const [ids, setIds] = useState([])
     const ids = useAppSelector((state) => state.ids);
     const isAuthenticated = useAppSelector((state) => state.isAuthenticated);
 
-    // const [items, setItems] = useState([]);
+    if (document.cookie) {
+        dispatch(setAuthenticate(true));
+    };
 
     useEffect(() => {
       (async () => {
           const data = await getMyShoppingList()
-        //   console.log("THE DATA IS:", data);
           dispatch(setItems(data));
       })();
     }, [])
 
     useEffect(() => {
         (async () => {
-            // if (document.cookie) {
-            //     dispatch(setAuthenticate(true));
-            // }
             const data = await getRandomRecipe ()
-            // console.log('List of random recipes: ', data.results)
             dispatch(setRecipes(data.results))
         })();
     }, []);
@@ -70,23 +66,19 @@ function App() {
             //THIS WAS CAUSING THE ISSUE:
             //everytime ids change, toggleAuthenticate was called if the cookie was active
 
-            /*     if (document.cookie) {
-                   dispatch(toggleAuthenticate())
-                } */
                 console.log('Am i being called? ', recipes)
                 dispatch(setMyRecipes(recipes || []));
             })
             .catch(err => console.log.bind(err))
     }, [ids])
 
-    // console.log("here kio kio:", ids);
     return (
         <div className="font-oxy-regular">
             <BrowserRouter>
                 <Navbar />
 
                 <Routes>
-                    {document.cookie ?
+                    {isAuthenticated ?
                     <>
                         <Route exact path="/" element={<RecipesList />}></Route>
                         <Route path="/logout" element={<Logout />}></Route>
