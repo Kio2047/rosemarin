@@ -46,7 +46,7 @@ function App() {
             const data = await getRandomRecipe();
             const filteredData = data.results.filter((recipe) => !recipe["video_url"]);
             console.log("random recipes:", filteredData);
-            dispatch(setRecipes(filteredData));
+            dispatch(setRecipes(filteredData)); 
         })();
     }, []);
 
