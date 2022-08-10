@@ -20,17 +20,25 @@ const Logout = () => {
         handleLogout();
     };
  */
-    const handleLogout = (shouldLogout: Boolean) => {
-        if (shouldLogout) {
-            logout()
-            .then(res => console.log("here's the response::::::", res))
-            .catch(error => console.log(error));
-            dispatch(toggleAuthenticate());
-            auth.logout(() => navigate("../", {replace: true}));
-        } else {
-            navigate(-1 as To, {replace: true})
-        }
-    };
+
+  const handleLogout = (shouldLogout: Boolean) => {
+    if (shouldLogout) {
+      (async() => {
+        try {
+
+          const data = await logout()
+          console.log("here's the response:", data)
+        } catch (error) {
+          console.log(error)
+        } 
+      })();
+      dispatch(toggleAuthenticate());
+      auth.logout(() => navigate("../", {replace: true}));
+    } else {
+      navigate(-1 as To, {replace: true})
+    }
+    
+  };
 
 
     return (
