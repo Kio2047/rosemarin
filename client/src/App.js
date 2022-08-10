@@ -54,24 +54,46 @@ function App() {
         return [...filtered, {id, id_tasty}]
     }
 
-    useEffect(() => {
-        getMyRecipes()
-            .then(recipes => recipes.map(el => (dispatch(setIds(idsHelper(el, ids))))))
-            .catch(err => console.log.bind(err))
-    }, []);
+    // useEffect(() => {
+    //     getMyRecipes()
+    //         .then(recipes => recipes.map(el => (dispatch(setIds(idsHelper(el, ids))))))
+    //         .catch(err => console.log.bind(err))
+    // }, []);
 
     useEffect(() => {
-        getMyRecipes()
-            // .then(recipes => console.log(recipes))
-            .then(recipes => {
+        (async () => {
+        try {
+            const recipes = await getMyRecipes()
+            const newIds = recipes.map(el => (dispatch(setIds(idsHelper(el, ids)))))
+        } catch (error) {
+            console.log(error)
+        }})()
+    }, [])
 
-            //THIS WAS CAUSING THE ISSUE:
-            //everytime ids change, toggleAuthenticate was called if the cookie was active
+    // useEffect(() => {
+    //     getMyRecipes()
+    //         // .then(recipes => console.log(recipes))
+    //         .then(recipes => {
 
-                console.log('Am i being called? ', recipes)
-                dispatch(setMyRecipes(recipes || []));
-            })
-            .catch(err => console.log.bind(err))
+    //         //THIS WAS CAUSING THE ISSUE:
+    //         //everytime ids change, toggleAuthenticate was called if the cookie was active
+
+    //             console.log('Am i being called? ', recipes)
+    //             dispatch(setMyRecipes(recipes || []));
+    //         })
+    //         .catch(err => console.log.bind(err))
+    // }, [ids])
+
+    useEffect(() => {
+      (async () => {
+        try {
+          const recipes = await getMyRecipes();
+          console.log('Am i being called? ', recipes)
+          dispatch(setMyRecipes(recipes || []))
+          } catch (error) {
+            console.log(error)
+          }
+        })()
     }, [ids])
 
     return (
