@@ -40,8 +40,10 @@ function App() {
 
     useEffect(() => {
         (async () => {
-            const data = await getRandomRecipe ()
-            dispatch(setRecipes(data.results))
+            const data = await getRandomRecipe();
+            const filteredData = data.results.filter((recipe) => !recipe["video_url"]);
+            console.log("random recipes:", filteredData);
+            dispatch(setRecipes(filteredData));
         })();
     }, []);
 

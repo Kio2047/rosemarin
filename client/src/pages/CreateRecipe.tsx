@@ -54,11 +54,30 @@ function CreateRecipe() {
         const newRecipe: NewRecipe = {
             title: form.recipeTitle.value,
             description: form.description.value,
-            img_url: form.url.value || URL.createObjectURL(form.file.files[0]),
+            img_url: form.url.value,
+            // || URL.createObjectURL(form.file.files[0]),
             // files: e.target[7].files[0] || null,
             img_alt_text: form.recipeTitle.value,
             ingredients: tmpIngredients,
             instructions: subInstructions
+        }
+
+        for (let field in newRecipe) {
+            console.log(newRecipe[field]);
+            if (typeof newRecipe[field] === "string" && (newRecipe[field]).match(/[\w]/) === null) {
+                window.alert("Please fill all the required fields");
+                return ;
+            }
+            if (typeof newRecipe[field] === "object") {
+                for (let subField in newRecipe[field]) {
+                    for (let subsubField in newRecipe[field][subField]) {
+                        if (newRecipe[field][subField][subsubField].match(/[\w]/) === null) {
+                            window.alert("Please fill all the required fields");
+                            return;
+                        }
+                    }
+                }
+            }
         }
 
         postRecipe(newRecipe)
@@ -177,6 +196,9 @@ function CreateRecipe() {
                            placeholder="Type here URL if needed.."
                            className="input input-bordered w-full hover:bg-slate-50"
                     />
+                </div>
+                <div className="text-lg mt-4">
+                    OR
                 </div>
 
                 <div>
