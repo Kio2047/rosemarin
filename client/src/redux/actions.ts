@@ -20,10 +20,13 @@ export const setHasAccount = (status: boolean) => ({
   payload: status
 });
 
-export const setRecipes = (payload: APIRecipe[]) => ({
-  type: 'SET_RECIPES',
-  payload
-})
+export const setRecipes = (payload: APIRecipe[]) => {
+  console.log("action payload in action", payload);
+  return {
+    type: 'SET_RECIPES',
+    payload
+  }
+}
 
 export const setMyRecipes = (payload: SavedRecipe[]) => ({
   type: 'SET_MY_RECIPES',

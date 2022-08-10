@@ -29,6 +29,8 @@ export const hasAccount = (state: Boolean = true, action: AnyAction): Boolean =>
 
 export const recipes = (state: APIRecipe[] = [], action: AnyAction): APIRecipe[] => {
   if (action.type === 'SET_RECIPES'){
+    console.log("action type:", action.type);
+    console.log("action payload in reducer:", action.payload);
     return action.payload
   }
   return state;

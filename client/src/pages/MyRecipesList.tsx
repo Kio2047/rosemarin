@@ -13,7 +13,7 @@ const MyRecipesList = () => {
     const myRecipes = useAppSelector((state) => state.myRecipes)
     const ids = useAppSelector((state) => state.ids)
 
- 
+
 
     useEffect(() => {
       (async () => {
@@ -31,10 +31,10 @@ const MyRecipesList = () => {
     return (
         <div className="mb-20">
             <TopSection />
-            <div className="prose lg:prose-xl  m-auto mb-10 text-center">
-                <h2 className="m-auto font-rufina-bold ">List of favourite recipes</h2>
+            <div className="prose lg:prose-xl  m-auto mb-10 text-center mt-4">
+                <h2 className="m-auto font-rufina-bold">List of favourite recipes</h2>
             </div>
-            <SearchForm />
+            {/* <SearchForm /> */}
 
             <ul className="bg-transparent container-grid max-w-7xl mx-auto pr-5 pl-5">
                 {myRecipes.map((recipe, i) => {
