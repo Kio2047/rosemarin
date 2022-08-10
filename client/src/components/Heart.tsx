@@ -87,6 +87,7 @@ const Heart = ({ recipe }: HeartProps) => {
         } else {
             if (window.confirm("You are removing recipe. Are you sure?")) {
                 // console.log('Recipe id to use for removal: ', recipe.id)
+                setIsFavorite(() => !isFavorite);
                 (async () => {
                     const result = await deleteRecipe({ id_tasty: recipe.id })
                     console.log(result)
