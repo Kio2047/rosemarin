@@ -36,7 +36,15 @@ const Heart = ({ recipe }: HeartProps) => {
     }
 
     const unfavoriteHelper = (ids: IDs[]) => {
-        const filtered = ids.filter(id => id.id !== currentId);
+        // console.log('Before filtering ids: ', ids)
+        const filtered = ids.filter(id => {
+            if (recipe.title) {
+                return id.id_tasty !== recipe.id_tasty;
+            } else {
+                return id.id_tasty !== recipe.id;
+            }
+        });
+        // console.log('After filtering ids: ', [...filtered])
         return [...filtered]
     }
 
@@ -44,14 +52,14 @@ const Heart = ({ recipe }: HeartProps) => {
         setIsFavorite(() => !isFavorite);
         if (!isFavorite) {
             const instructions = recipe.instructions.map((el: any) => {
-                console.log("instructionnnnn:", el);
+                // console.log("instructionnnnn:", el);
                 let text = el.display_text;
                 return { text };
             })
             const ingredients = recipe.sections.map((el: any) => {
                 let final = [];
                 let res = el.components.map((comp: any) => {
-                    console.log("componentssss:", comp);
+                    // console.log("componentssss:", comp);
                     let name = comp.ingredient.name;
                     let unit = comp.measurements[0].unit.name;
                     let quantity = comp.measurements[0].quantity || null;
@@ -71,18 +79,19 @@ const Heart = ({ recipe }: HeartProps) => {
                 ingredients: ingredients.flat(),
                 instructions: instructions
             }
-            console.log('Recipe prop: ', recipe, '\nNewRecipe: ', newRecipe)
+            // console.log('Recipe prop: ', recipe, '\nNewRecipe: ', newRecipe)
             postRecipe(newRecipe)
 
             dispatch(setIds(favoriteHelper(ids)));
 
         } else {
             if (window.confirm("You are removing recipe. Are you sure?")) {
-                console.log('Recipe id to use for removal: ', recipe.id)
-                deleteRecipe({ id_tasty: recipe.id })
-                    .then(res => console.log(res))
-                    .catch(error => console.log(error))
-                dispatch(setIds(unfavoriteHelper(ids)));
+                // console.log('Recipe id to use for removal: ', recipe.id)
+                (async () => {
+                    const result = await deleteRecipe({ id_tasty: recipe.id })
+                    console.log(result)
+                    dispatch(setIds(unfavoriteHelper(ids)));
+                })();
             }
         }
     }
