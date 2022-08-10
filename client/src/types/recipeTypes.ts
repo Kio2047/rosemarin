@@ -47,6 +47,7 @@ type SavedRecipeInstruction = {
 }
 
 export type NewRecipe = {
+  [key: string]: any,
   title: string,
   description: string,
   img_url: string,

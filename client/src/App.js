@@ -43,8 +43,10 @@ function App() {
 
     useEffect(() => {
         (async () => {
-            const data = await getRandomRecipe()
-            dispatch(setRecipes(data.results))
+            const data = await getRandomRecipe();
+            const filteredData = data.results.filter((recipe) => !recipe["video_url"]);
+            console.log("random recipes:", filteredData);
+            dispatch(setRecipes(filteredData));
         })();
     }, []);
 
@@ -55,28 +57,46 @@ function App() {
         return [...filtered, {id: recipe.id, id_tasty: recipe.id_tasty}]
     }
 
+    // useEffect(() => {
+    //     getMyRecipes()
+    //         .then(recipes => recipes.map(el => (dispatch(setIds(idsHelper(el, ids))))))
+    //         .catch(err => console.log.bind(err))
+    // }, []);
+
     useEffect(() => {
         (async () => {
+        try {
             const recipes = await getMyRecipes()
-            recipes.forEach(recipe => {
-                const newIds = idsHelper(recipe, ids)
-                dispatch(setIds(newIds))
-            })
-        })()
-    }, []);
+            const newIds = recipes.map(el => (dispatch(setIds(idsHelper(el, ids)))))
+        } catch (error) {
+            console.log(error)
+        }})()
+    }, [])
+
+    // useEffect(() => {
+    //     getMyRecipes()
+    //         // .then(recipes => console.log(recipes))
+    //         .then(recipes => {
+
+    //         //THIS WAS CAUSING THE ISSUE:
+    //         //everytime ids change, toggleAuthenticate was called if the cookie was active
+
+    //             console.log('Am i being called? ', recipes)
+    //             dispatch(setMyRecipes(recipes || []));
+    //         })
+    //         .catch(err => console.log.bind(err))
+    // }, [ids])
 
     useEffect(() => {
-        getMyRecipes()
-            // .then(recipes => console.log(recipes))
-            .then(recipes => {
-
-            //THIS WAS CAUSING THE ISSUE:
-            //everytime ids change, toggleAuthenticate was called if the cookie was active
-
-                console.log('Am i being called? ', recipes)
-                dispatch(setMyRecipes(recipes || []));
-            })
-            .catch(err => console.log.bind(err))
+      (async () => {
+        try {
+          const recipes = await getMyRecipes();
+          console.log('Am i being called? ', recipes)
+          dispatch(setMyRecipes(recipes || []))
+          } catch (error) {
+            console.log(error)
+          }
+        })()
     }, [ids])
 
     return (
