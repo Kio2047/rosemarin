@@ -10,11 +10,15 @@ const ShoppingList = () => {
     const items = useAppSelector((state) => state.items);
 
     useEffect(() => {
-        getMyShoppingList()
-            // .then(recipes => console.log(recipes))
-            .then(itemsSL => dispatch(setItems(itemsSL)))
-            .catch(err => console.log.bind(err))
-    }, []);
+      (async () => {
+        try {
+          const itemsSL = await getMyShoppingList()
+          dispatch(setItems(itemsSL))
+        } catch (error) {
+          console.log(error)
+        }
+      })()
+    }, [])
 
     const delItemHelper = (items: ShoppingListItem[], id: number) => {
         const filtered = items.filter(item => item.id !== id);
@@ -22,11 +26,18 @@ const ShoppingList = () => {
     }
 
     const delItemHandler = (id: number) => {
-        deleteItem({id})
-            .then(res => console.log(res))
-            .catch(err => console.log.bind(err))
-        dispatch(setItems(delItemHelper(items, id)));
+      (async () => {
+        try {
+          const data = await deleteItem({id})
+          console.log(data)
+        } catch (error) {
+          console.log(error)
+        }
+      })()
+      dispatch(setItems(delItemHelper(items, id)))
     }
+
+
 
     return (
         <div>
