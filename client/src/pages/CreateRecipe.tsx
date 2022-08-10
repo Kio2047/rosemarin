@@ -69,6 +69,8 @@ function CreateRecipe() {
         form.description.value = '';
         form.url.value = '';
         form.title = '';
+        setIngredients(['']);
+        setInstructions(['']);
     }
 
 

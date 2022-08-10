@@ -9,11 +9,13 @@ const Ingredient = ({ingredient}: IngredientProps) => {
                    name={"name-"+ingredient}
                    placeholder="Type here ingredient.."
                    className="input input-bordered w-1/3 hover:bg-slate-50"
+                   
             />
             <input type="text"
                    name={"quantity-"+ingredient}
                    placeholder="quantity.."
                    className="input input-bordered w-1/4 mr-3 mr-3 hover:bg-slate-50"
+                   
             />
             <input type="text"
                    name={"unit-"+ingredient}
