@@ -29,7 +29,10 @@ const Heart = ({ recipe }: HeartProps) => {
     }, [ids]);
 
     const favoriteHelper = (ids: IDs[]) => {
-       return ids = [...ids, {id: currentId, id_tasty: recipe.id}]
+        console.log('Old ids ', ids)
+        const newIds = [...ids, { id: currentId, id_tasty: recipe.id }]
+        console.log('New ids ', newIds)
+        return newIds
     }
 
     const unfavoriteHelper = (ids: IDs[]) => {
@@ -68,9 +71,8 @@ const Heart = ({ recipe }: HeartProps) => {
                 ingredients: ingredients.flat(),
                 instructions: instructions
             }
+            console.log('Recipe prop: ', recipe, '\nNewRecipe: ', newRecipe)
             postRecipe(newRecipe)
-                .then(res => console.log(res))
-                .catch(error => console.log(error))
 
             dispatch(setIds(favoriteHelper(ids)));
 
