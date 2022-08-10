@@ -56,7 +56,7 @@ export const logout = async () => {
             method: 'GET',
             credentials: 'include'
         })
-        return await response.json();
+        return response.ok;
 
     } catch (err) {
         console.log(err);
