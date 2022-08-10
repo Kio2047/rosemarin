@@ -13,14 +13,18 @@ const MyRecipesList = () => {
     const myRecipes = useAppSelector((state) => state.myRecipes)
     const ids = useAppSelector((state) => state.ids)
 
+ 
+
     useEffect(() => {
-        getMyRecipes()
-            // .then(recipes => console.log(recipes))
-            .then(recipes => {
-                console.log('My recipes inside: ', recipes)
-                dispatch(setMyRecipes(recipes || []));
-            })
-            .catch(err => console.log.bind(err))
+      (async () => {
+        try {
+          const data = await getMyRecipes()
+          console.log('My recipes inside: ', data )
+          dispatch(setMyRecipes(data || []))
+        } catch (error) {
+          console.log(error)
+        }
+      })()
     }, [])
 
 
