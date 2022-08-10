@@ -36,19 +36,7 @@ function App() {
           const data = await getMyShoppingList()
           dispatch(setItems(data));
       })();
-      if (document.cookie) {
-        dispatch(setAuthenticate(true));
-    };
     }, [])
-
-    useEffect(() => {
-        (async () => {
-            const data = await getRandomRecipe();
-            console.log("hello:", data);
-            // const filteredData = data.results.filter((recipe) => !recipe["video_url"]);
-            dispatch(setRecipes(data)); 
-        })();
-    }, []);
 
     const idsHelper = (recipe, ids) => {
         console.log('Ids: ', ids)
