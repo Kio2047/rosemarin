@@ -15,7 +15,6 @@ import Menu from "./pages/Menu";
 import WeeklyMenu from "./pages/WeeklyMenu";
 import RecipeDetails from "./components/RecipeDetails";
 import { getMyRecipes } from "./Utils/apiDBRecipeService";
-import { getMyShoppingList } from "./Utils/apiDBServiceShoppingList";
 import Logout from "./pages/Logout";
 import SignIn from './pages/SignIn';
 import { useAppSelector, useAppDispatch } from './redux/hooks';
@@ -31,13 +30,6 @@ function App() {
         dispatch(setAuthenticate(true));
     };
 
-    useEffect(() => {
-      (async () => {
-          const data = await getMyShoppingList()
-          dispatch(setItems(data));
-      })();
-    }, [])
-
     const idsHelper = (recipe, ids) => {
         console.log('Ids: ', ids)
         const filtered = ids.filter(id => id.id_tasty !== recipe.id_tasty);
@@ -45,35 +37,15 @@ function App() {
         return [...filtered, {id: recipe.id, id_tasty: recipe.id_tasty}]
     }
 
-    // useEffect(() => {
-    //     getMyRecipes()
-    //         .then(recipes => recipes.map(el => (dispatch(setIds(idsHelper(el, ids))))))
-    //         .catch(err => console.log.bind(err))
-    // }, []);
-
     useEffect(() => {
         (async () => {
         try {
             const recipes = await getMyRecipes()
-            const newIds = recipes.map(el => (dispatch(setIds(idsHelper(el, ids)))))
+            recipes.map(el => (dispatch(setIds(idsHelper(el, ids)))))
         } catch (error) {
             console.log(error)
         }})()
     }, [])
-
-    // useEffect(() => {
-    //     getMyRecipes()
-    //         // .then(recipes => console.log(recipes))
-    //         .then(recipes => {
-
-    //         //THIS WAS CAUSING THE ISSUE:
-    //         //everytime ids change, toggleAuthenticate was called if the cookie was active
-
-    //             console.log('Am i being called? ', recipes)
-    //             dispatch(setMyRecipes(recipes || []));
-    //         })
-    //         .catch(err => console.log.bind(err))
-    // }, [ids])
 
     useEffect(() => {
       (async () => {
