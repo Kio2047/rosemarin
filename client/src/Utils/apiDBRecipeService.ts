@@ -30,14 +30,14 @@ export const postRecipe = async (recipe: NewRecipe) => {
 	}
 }
 
-export const deleteRecipe = async ({id}: {id: number}) => {
+export const deleteRecipe = async ({id_tasty}: {id_tasty: number}) => {
 	try {
 		const response = await fetch(
 			baseDBUrl, {
 			method: 'DELETE',
 			credentials: 'include',
 			headers: { 'Content-type': 'application/json' },
-			body: JSON.stringify({id})
+			body: JSON.stringify({id_tasty})
 		})
 		return await response.json()
 

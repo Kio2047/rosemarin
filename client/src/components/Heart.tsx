@@ -78,7 +78,8 @@ const Heart = ({ recipe }: HeartProps) => {
 
         } else {
             if (window.confirm("You are removing recipe. Are you sure?")) {
-                deleteRecipe({ id: currentId })
+                console.log('Recipe id to use for removal: ', recipe.id)
+                deleteRecipe({ id_tasty: recipe.id })
                     .then(res => console.log(res))
                     .catch(error => console.log(error))
                 dispatch(setIds(unfavoriteHelper(ids)));

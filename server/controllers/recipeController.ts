@@ -53,9 +53,11 @@ async function updateRecipe (req: Request, res: Response) {
 
 async function removeRecipe (req: Request, res: Response) {
   try {
-    const RecipeId = req.body.id;
-    await Model.deleteRecipe(RecipeId);
+    console.log('Req body: ', req.body)
+    const id_tasty = req.body.id_tasty;
+    const result = await Model.deleteRecipe(id_tasty);
 
+    console.log('Result of recipeDestruction: ', result)
     console.log('Recipe successfully removed 🟢');
     res.status(200).send({ message: "Recipe has been successfully removed" });
   } catch (error) {

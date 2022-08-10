@@ -19,7 +19,7 @@ import { getMyShoppingList } from "./Utils/apiDBServiceShoppingList";
 import Logout from "./pages/Logout";
 import SignIn from './pages/SignIn';
 import { useAppSelector, useAppDispatch } from './redux/hooks';
-import { toggleAuthenticate, setAuthenticate, setRecipes, setMyRecipes, setIds, setItems } from './redux/actions';
+import { setAuthenticate, setRecipes, setMyRecipes, setIds, setItems } from './redux/actions';
 
 function App() {
 
@@ -36,26 +36,33 @@ function App() {
           const data = await getMyShoppingList()
           dispatch(setItems(data));
       })();
+      if (document.cookie) {
+        dispatch(setAuthenticate(true));
+    };
     }, [])
 
     useEffect(() => {
         (async () => {
-            const data = await getRandomRecipe ()
+            const data = await getRandomRecipe()
             dispatch(setRecipes(data.results))
         })();
     }, []);
 
-    const idsHelper = (el, ids) => {
-        let id = el.id;
-        let id_tasty = el.id_tasty;
-        const filtered = ids.filter(e => e.id.tasty !== el.id_tasty);
-        return [...filtered, {id, id_tasty}]
+    const idsHelper = (recipe, ids) => {
+        console.log('Ids: ', ids)
+        const filtered = ids.filter(id => id.id_tasty !== recipe.id_tasty);
+        console.log('Filtered ids: ', filtered)
+        return [...filtered, {id: recipe.id, id_tasty: recipe.id_tasty}]
     }
 
     useEffect(() => {
-        getMyRecipes()
-            .then(recipes => recipes.map(el => (dispatch(setIds(idsHelper(el, ids))))))
-            .catch(err => console.log.bind(err))
+        (async () => {
+            const recipes = await getMyRecipes()
+            recipes.forEach(recipe => {
+                const newIds = idsHelper(recipe, ids)
+                dispatch(setIds(newIds))
+            })
+        })()
     }, []);
 
     useEffect(() => {

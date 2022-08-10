@@ -30,18 +30,33 @@ async function createInstructions(instructions: InstructionType[], RecipeId: num
   })
 }
 
-async function deleteRecipe(RecipeId: number | undefined) {
-  const recipe = await findRecipe(RecipeId)
-  if (recipe && recipe.img_data) {
-    fs.unlinkSync(recipe.img_data);
+async function deleteRecipe(id: number | undefined) {
+
+  //checking if recipe to delete is from homepage
+  const recipeFromHomepage = await Recipe.findOne({where: {id_tasty: id}})
+  if (!recipeFromHomepage) {
+     
+    //checking if id is from a recipe stored from db
+    const recipeFromDb = await findRecipe(id)
+    if (recipeFromDb){
+     const res = await Recipe.destroy({where: {id}})
+     return res;
+    } else {
+      throw new Error(`Recipe could not be found [recipe id used: ${id}]`)
+    }
   }
-  await Recipe.destroy({where: {id: RecipeId}})
+/*   if (recipe && recipe.img_data) {
+    fs.unlinkSync(recipe.img_data);
+  } */
+  const res = await Recipe.destroy({where: {id_tasty: id}})
+  return res;
 }
 
 async function findRecipe(RecipeId: number | undefined) {
   const recipe = await Recipe.findByPk(RecipeId);
   return recipe;
 }
+
 
 async function getUserRecipes(UserId: number|undefined) {
   const userRecipes = await Recipe.findAll({
