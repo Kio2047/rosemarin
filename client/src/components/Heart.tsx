@@ -49,8 +49,8 @@ const Heart = ({ recipe }: HeartProps) => {
     }
 
     const isFavoriteHandler = () => {
-        setIsFavorite(() => !isFavorite);
         if (!isFavorite) {
+            setIsFavorite(() => !isFavorite);
             const instructions = recipe.instructions.map((el: any) => {
                 // console.log("instructionnnnn:", el);
                 let text = el.display_text;
