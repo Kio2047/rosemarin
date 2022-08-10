@@ -14,9 +14,8 @@ const SearchForm = () => {
     function searchHandler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         (async () => {
-            console.log("YOU'RE THE ONE I WANT:", (event.target as HTMLFormElement).search.value);
-           const taggedRecipes = await getRandomRecipe((event.target as HTMLFormElement).search.value);
-            dispatch(setRecipes(taggedRecipes.results));
+            const taggedRecipes = await getRandomRecipe((event.target as HTMLFormElement).search.value);
+            dispatch(setRecipes(taggedRecipes));
             navigate("../home", { replace: true });
         })();
     }

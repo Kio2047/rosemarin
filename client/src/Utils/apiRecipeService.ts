@@ -1,4 +1,5 @@
 import { recipeCache } from "../data";
+import { APIRecipe } from "../types/recipeTypes";
 
 const API_KEY_TASTY = process.env.REACT_APP_API_KEY_TASTY;
 
@@ -15,7 +16,9 @@ export const getRandomRecipe = async (tag?: string) => {
 		const response = await fetch(`${baseURL}${tagURL}`, {
 			headers
 		})
-		return await response.json();
+		const parsedData = await response.json();
+		const filteredData = parsedData.results.filter((recipe: APIRecipe) => !recipe["video_url"]);
+		return filteredData;
 
 	} catch (error) {
 		console.log(error)
