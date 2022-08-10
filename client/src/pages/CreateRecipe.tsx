@@ -80,9 +80,16 @@ function CreateRecipe() {
             }
         }
 
-        postRecipe(newRecipe)
-            .then(res => console.log(res))
-            .catch(error => console.log(error))
+        
+        (async () => {
+          try {
+            const data = await postRecipe(newRecipe)
+            console.log(data)
+          } catch (error) {
+            console.log(error)
+          }
+        })()
+     
 
         form.recipeTitle.value = '';
         form.description.value = '';

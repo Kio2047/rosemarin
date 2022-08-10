@@ -43,9 +43,16 @@ const RecipeDetails = () => {
             quantity: data.quantity,
             unit: data.unit,
         };
-        postItem(newItem)
-            .then(res => dispatch(setItems(itemsHelper(items, res))))
-            .catch(error => console.log(error));
+        
+        (async () => {
+          try {
+            const data = await postItem(newItem);
+            const newItems = itemsHelper(items, data)
+            dispatch(setItems(newItems))
+          } catch (error) {
+            console.log(error)
+          }
+        })()
     };
 
     if (recipe || myRecipe) return (
