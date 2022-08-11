@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { BrowserRouter } from 'react-router-dom';
 import {renderWithProvider} from './renderWithProvider'
@@ -35,29 +35,49 @@ describe('Sign in form', () => {
   });
   
   test('should allow the user to submit their credentials', () => {
-   
-    render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <SignInForm/>
-      </BrowserRouter>
-     
-    </Provider>
-  )
-  
+    //check the output/ui changes after clicking submit 
+    const onSubmit = jest.fn();
     const emailAddress = screen.getByPlaceholderText(/Email address/i);
     const password = screen.getByPlaceholderText(/Password/i);
-    const submitButton = screen.getByRole('button', { name: /Login/i });;
-  
-    userEvent.type(emailAddress, 'ching@gmail.com');
-    userEvent.type(password, '1234');
-    userEvent.click(submitButton);
-  
-    expect(onSubmit).toHaveBeenCalledWith({
-      emailAddress: 'ching@gmail.com',
-      password: '1234'
-    })
-  
+    const submitButton = screen.getByRole('button', { name: /Login/i });
+
+    fireEvent.change(emailAddress, {target: {value: emailAddress}});
+    fireEvent.change(password, {target: {value: password}});
+    fireEvent.click(submitButton);
+
+    expect(onSubmit).toHaveBeenCalledWith(emailAddress, password)
+
+  })
+
+  // test("should submit the form with username, password, and remember", async () => {
+  //   const onSubmit = jest.fn();
+  //   const { findByTestId } = renderLoginForm({
+  //     onSubmit,
+  //     shouldRemember: false
+  //   });
+  //   const username = await findByTestId("username");
+  //   const password = await findByTestId("password");
+  //   const remember = await findByTestId("remember");
+  //   const submit = await findByTestId("submit");
+
+  //   fireEvent.change(username, { target: { value: "test" } });
+  //   fireEvent.change(password, { target: { value: "password" } });
+  //   fireEvent.click(remember);
+  //   fireEvent.click(submit);
+
+  //   expect(onSubmit).toHaveBeenCalledWith("test", "password", true);
+  // });
+
+  test('should set setAuthenticate to true when the user successfully logs in', () => {
+    
+  })
+
+  test('should redirect the user to /home when logged in', () => {
+
+  })
+
+  test('should redirect the user to register form if no account is found', () => {
+
   })
 
 })
