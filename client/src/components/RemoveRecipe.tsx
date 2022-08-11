@@ -2,28 +2,24 @@ import React, { useState, useEffect } from "react"
 import { Button, Modal } from "react-daisyui"
 
 
-function RemoveRecipe(props: { toggleVisible: any }) {
-  const [visible, setVisible] = useState<boolean>(false)
-
-  const toggleVisible = () => {
-    setVisible(!visible)
-  }
+function RemoveRecipe(props: { toggleVisible: any, visible: boolean }) {
+  const { toggleVisible, visible } = props
 
   return (
     <div className="font-sans">
-      <Button onClick={() => toggleVisible()}>Open Modal</Button>
       <Modal open={visible}>
         <Modal.Header className="font-bold">
-          Congratulations random Interner user!
+          Are you sure?
         </Modal.Header>
 
         <Modal.Body>
-          You've been selected for a chance to get one year of subscription to
-          use Wikipedia for free!
+          You are removing a recipe. <br />
+          If you created it yourself, it will be irreversible.
         </Modal.Body>
 
         <Modal.Actions>
-          <Button onClick={toggleVisible}>Yay!</Button>
+          <Button onClick={() => toggleVisible('remove')}>Remove</Button>
+          <Button onClick={() => toggleVisible('keep')}>Keep</Button>
         </Modal.Actions>
       </Modal>
     </div>

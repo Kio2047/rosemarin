@@ -93,13 +93,6 @@ const Heart = ({ recipe }: HeartProps) => {
         }
     }
 
-    async function removeFromFavorites() {
-        setRemove(true);
-        setIsFavorite(() => !isFavorite);
-        const result = await deleteRecipe({ id_tasty: recipe.id })
-        console.log(result)
-        dispatch(setIds(unfavoriteHelper(ids)));
-    }
 
     const [visible, setVisible] = useState<boolean>(false)
     const [remove, setRemove] = useState<boolean>()
@@ -111,6 +104,13 @@ const Heart = ({ recipe }: HeartProps) => {
         }
     }
 
+    async function removeFromFavorites() {
+        setRemove(true);
+        setIsFavorite(() => !isFavorite);
+        const result = await deleteRecipe({ id_tasty: recipe.id })
+        console.log(result)
+        dispatch(setIds(unfavoriteHelper(ids)));
+    }
 
     return (
         <>
@@ -125,23 +125,7 @@ const Heart = ({ recipe }: HeartProps) => {
                         icon={faHeart as IconProp}
                         className="text-2xl self-center mr-3 link-secondary cursor-pointer" />}
             </>
-            {visible ? <div className="font-sans">
-                <Modal open={visible}>
-                    <Modal.Header className="font-bold">
-                        Are you sure?
-                    </Modal.Header>
-
-                    <Modal.Body>
-                        You are removing a recipe. <br />
-                        If you created it yourself, it will be irreversible.
-                    </Modal.Body>
-
-                    <Modal.Actions>
-                        <Button onClick={() => toggleVisible('remove')}>Remove</Button>
-                        <Button onClick={() => toggleVisible('keep')}>Keep</Button>
-                    </Modal.Actions>
-                </Modal>
-            </div> : null}
+            {visible ? <RemoveRecipe visible={visible} toggleVisible={toggleVisible} /> : null}
         </>
     );
 };
