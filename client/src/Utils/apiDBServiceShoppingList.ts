@@ -38,7 +38,7 @@ export const deleteItem = async ({id}: {id: number}) => {
         credentials: 'include', 
         body: JSON.stringify({id})
     });
-    return await response.json()
+    return response.ok 
 
     } catch (error) {
         console.log(error)
