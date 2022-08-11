@@ -7,6 +7,8 @@ import { deleteRecipe, postRecipe } from "../Utils/apiDBRecipeService";
 import { HeartProps, IDs } from '../types/propTypes';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
 import { setIds } from '../redux/actions';
+import RemoveRecipe from './RemoveRecipe';
+import { Button, Modal } from 'react-daisyui';
 
 
 const Heart = ({ recipe }: HeartProps) => {
@@ -48,6 +50,7 @@ const Heart = ({ recipe }: HeartProps) => {
         return [...filtered]
     }
 
+
     const isFavoriteHandler = () => {
         if (!isFavorite) {
             setIsFavorite(() => !isFavorite);
@@ -85,27 +88,45 @@ const Heart = ({ recipe }: HeartProps) => {
             dispatch(setIds(favoriteHelper(ids)));
 
         } else {
-            if (window.confirm("You are removing recipe. Are you sure?")) {
-                // console.log('Recipe id to use for removal: ', recipe.id)
-                setIsFavorite(() => !isFavorite);
-                (async () => {
-                    const result = await deleteRecipe({ id_tasty: recipe.id })
-                    console.log(result)
-                    dispatch(setIds(unfavoriteHelper(ids)));
-                })();
-            }
+            //open modal and let user choose what to do.
+            toggleVisible()
         }
     }
+
+
+    const [visible, setVisible] = useState<boolean>(false)
+    const [remove, setRemove] = useState<boolean>()
+
+    const toggleVisible = (flag?: string) => {
+        setVisible(!visible)
+        if (flag == 'remove') {
+            removeFromFavorites();
+        }
+    }
+
+    async function removeFromFavorites() {
+        setRemove(true);
+        setIsFavorite(() => !isFavorite);
+        const result = await deleteRecipe({ id_tasty: recipe.id })
+        console.log(result)
+        dispatch(setIds(unfavoriteHelper(ids)));
+    }
+
     return (
-        (isFavorite) ?
-            <FontAwesomeIcon
-                onClick={isFavoriteHandler}
-                icon={faHeart as IconProp}
-                className="text-2xl self-center mr-3 link text-error cursor-pointer" /> :
-            <FontAwesomeIcon
-                onClick={isFavoriteHandler}
-                icon={faHeart as IconProp}
-                className="text-2xl self-center mr-3 link-secondary cursor-pointer" />
+        <>
+            <>
+                {isFavorite ?
+                    <FontAwesomeIcon
+                        onClick={isFavoriteHandler}
+                        icon={faHeart as IconProp}
+                        className="text-2xl self-center mr-3 link text-error cursor-pointer" /> :
+                    <FontAwesomeIcon
+                        onClick={isFavoriteHandler}
+                        icon={faHeart as IconProp}
+                        className="text-2xl self-center mr-3 link-secondary cursor-pointer" />}
+            </>
+            {visible ? <RemoveRecipe visible={visible} toggleVisible={toggleVisible} /> : null}
+        </>
     );
 };
 
