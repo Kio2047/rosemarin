@@ -21,6 +21,7 @@ const RecipeDetails = () => {
     const [myRecipe, setMyRecipe] = useState<SavedRecipe | undefined>();
 
     const {id} = useParams();
+    console.log("hello:", id);
 
     useEffect(() => {
         const result = recipes.find(res=> +id! === res.id);

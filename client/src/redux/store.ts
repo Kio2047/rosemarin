@@ -16,14 +16,5 @@ export const store = configureStore({
   }
 });
 
-export const setupTestStore = function(preloadedState: RootState) {
-  return configureStore({
-    reducer: {
-      ...reducers
-    },
-    preloadedState
-  });
-};
-
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
