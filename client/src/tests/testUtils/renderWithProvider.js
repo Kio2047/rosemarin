@@ -3,7 +3,7 @@ import { render } from '@testing-library/react'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 // As a basic setup, import your same slice reducers
-import * as reducers from '../redux/reducers';
+import * as reducers from '../../redux/reducers';
 
 export default function renderWithProvider(
   ui,

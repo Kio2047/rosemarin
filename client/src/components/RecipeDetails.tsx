@@ -1,14 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react';
-
 import {useParams} from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { Icon, IconProp } from "@fortawesome/fontawesome-svg-core";
-import {getMyShoppingList, postItem} from "../Utils/apiDBServiceShoppingList";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+
+import { postItem} from "../Utils/apiDBServiceShoppingList";
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
 import { APIRecipe, APIRecipeSection, SavedRecipe } from '../types/recipeTypes';
 import type { ShoppingListItem } from '../types/propTypes';
 import { setItems } from '../redux/actions';
-
 
 const RecipeDetails = () => {
 
