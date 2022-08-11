@@ -6,6 +6,10 @@ import { BrowserRouter } from 'react-router-dom';
 import RecipesList from '../pages/RecipesList';
 import SignIn from '../pages/SignIn';
 
+
+const handleLogout = jest.fn()
+
+
 describe('Logout', () => {
 
   it('should render logout page', () => {
@@ -34,11 +38,20 @@ describe('Logout', () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
-        <SignIn/>
+        <Logout/>
         </BrowserRouter>
 
       </Provider>
     )
+    
+    const logOutButton = screen.getByText('Yes');
+
+    fireEvent.click(logOutButton);
+
+    expect(handleLogout).toHaveBeenCalled();
+    
+
+
 
   })
 
