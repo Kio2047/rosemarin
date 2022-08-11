@@ -54,21 +54,3 @@ export type ShoppingListItem = {
   UserId?: number,
   id?: number
 }
-
-// export type ShoppingListProps = {
-//   items: ShoppingListItem[],
-//   setItems: React.Dispatch<React.SetStateAction<ShoppingListItem[]>>
-// }
-
-// export type MyRecipesProps = {
-//   myRecipes: SavedRecipe[],
-//   setMyRecipes: React.Dispatch<React.SetStateAction<SavedRecipe[]>>,
-//   setIds: React.Dispatch<React.SetStateAction<IDs[]>>,
-//   ids: IDs[]
-// }
-
-// export type RecipeDetailsProps = {
-//   myRecipes: SavedRecipe[],
-//   items: ShoppingListItem[],
-//   setItems: React.Dispatch<React.SetStateAction<ShoppingListItem[]>>
-// }

@@ -5,7 +5,9 @@ import Recipe from "../components/Recipe";
 import { getMyRecipes } from "../Utils/apiDBRecipeService";
 
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
-import { setMyRecipes } from '../redux/actions';
+import { setMyRecipes, setIds } from '../redux/actions';
+import { SavedRecipe } from '../types/recipeTypes';
+import { IDs } from '../types/propTypes';
 
 const MyRecipesList = () => {
 
@@ -13,20 +15,44 @@ const MyRecipesList = () => {
     const myRecipes = useAppSelector((state) => state.myRecipes)
     const ids = useAppSelector((state) => state.ids)
 
+    // useEffect(() => {
+    //   (async () => {
+    //     try {
+    //       const data = await getMyRecipes()
+    //       console.log('My recipes inside: ', data )
+    //       dispatch(setMyRecipes(data || []))
+    //     } catch (error) {
+    //       console.log(error)
+    //     }
+    //   })()
+    // }, [])
 
+    const idsHelper = (recipe: SavedRecipe, ids: IDs[]) => {
+        const filtered = ids.filter(id => id.id_tasty !== recipe.id_tasty);
+        return [...filtered, {id: recipe.id, id_tasty: recipe.id_tasty}]
+    }
+
+    useEffect(() => {
+        (async () => {
+        try {
+            const recipes = await getMyRecipes()
+            if (recipes) recipes.map(el => (dispatch(setIds(idsHelper(el, ids)))))
+        } catch (error) {
+            console.log(error)
+        }})()
+    }, [])
 
     useEffect(() => {
       (async () => {
         try {
-          const data = await getMyRecipes()
-          console.log('My recipes inside: ', data )
-          dispatch(setMyRecipes(data || []))
-        } catch (error) {
-          console.log(error)
-        }
-      })()
-    }, [])
-
+          const recipes = await getMyRecipes();
+          console.log('Am i being called? ', recipes)
+          dispatch(setMyRecipes(recipes || []))
+          } catch (error) {
+            console.log(error)
+          }
+        })()
+    }, [ids])
 
     return (
         <div className="mb-20">

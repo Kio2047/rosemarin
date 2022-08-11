@@ -158,6 +158,9 @@ const RecipeDetails = () => {
             </div>
         </>
     );
+    else return (
+        <div>Recipe not found!</div>
+    )
 };
 
 export default RecipeDetails;

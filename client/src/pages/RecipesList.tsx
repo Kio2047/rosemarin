@@ -1,15 +1,24 @@
-import React from 'react';
+import { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { setRecipes } from '../redux/actions';
 import Recipe from "../components/Recipe";
 import TopSection from "../components/TopSection";
 import SearchForm from "../components/SearchForm";
-import type { RecipesListProps } from '../types/propTypes';
 import type { APIRecipe } from '../types/recipeTypes';
+import { getRandomRecipe } from '../Utils/apiRecipeService';
 
 const RecipesList = () => {
 
+    const dispatch = useAppDispatch();
     const recipes = useAppSelector((state) => state.recipes);
+
+    useEffect(() => {
+        (async () => {
+            const data = await getRandomRecipe();
+            dispatch(setRecipes(data));
+        })();
+    }, []);
 
     return (
         <>
