@@ -63,7 +63,7 @@ export default function SignInForm() {
     try {
       let response = hasAccount ? await login(formState as LoginForm) : await register(formState as RegisterForm);
       if (!response) {
-        hasAccount ? setErrorMessage('Incorrect login information.') : setErrorMessage('Account already exists. Please try again.');
+        hasAccount ? setErrorMessage('Incorrect login information') : setErrorMessage('Account already exists. Please try again');
       }
       else {
         dispatch(setAuthenticate(true));
@@ -88,7 +88,7 @@ export default function SignInForm() {
   };
 
   return(
-    <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+    <form  data-cy="sign-in-form" className="mt-8 space-y-6" onSubmit={handleSubmit}>
         <div className="">
             {
                 formFields.map((field)=>

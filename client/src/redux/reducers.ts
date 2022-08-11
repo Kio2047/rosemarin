@@ -8,7 +8,6 @@ import type { IDs } from '../types/propTypes';
 // import { store } from './store';
 
 export const isAuthenticated = (state: Boolean = false, action: AnyAction): Boolean => {
-  console.log(state);
   if (action.type === 'TOGGLE_AUTHENTICATE') {
     return !state;
   } else if (action.type === 'SET_AUTHENTICATE'){
@@ -29,8 +28,6 @@ export const hasAccount = (state: Boolean = true, action: AnyAction): Boolean =>
 
 export const recipes = (state: APIRecipe[] = [], action: AnyAction): APIRecipe[] => {
   if (action.type === 'SET_RECIPES'){
-    console.log("action type:", action.type);
-    console.log("action payload in reducer:", action.payload);
     return action.payload
   }
   return state;

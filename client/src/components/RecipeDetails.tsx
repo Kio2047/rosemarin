@@ -1,15 +1,14 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Icon, IconProp } from "@fortawesome/fontawesome-svg-core";
-import { getMyShoppingList, deleteItem, postItem } from "../Utils/apiDBServiceShoppingList";
+import { deleteItem, postItem } from "../Utils/apiDBServiceShoppingList";
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
 import { APIRecipe, APIRecipeSection, SavedRecipe } from '../types/recipeTypes';
 import type { ShoppingListItem } from '../types/propTypes';
 import { setItems } from '../redux/actions';
 import ItemCheckbox from './ItemCheckbox';
-
 
 const RecipeDetails = () => {
 

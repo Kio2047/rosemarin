@@ -34,7 +34,7 @@ export default function SignIn () {
                     </h2>
                     <p className="text-center text-sm text-gray-600 mt-5">
                         {hasAccount ? "Don't have an account yet?" : "Already have an account?"} {' '}
-                        <button onClick={() => dispatch(toggleHasAccount())} className="font-medium text-purple-600 hover:text-purple-500 cursor-pointer">
+                        <button data-cy="toggle-sign-in-form" onClick={() => dispatch(toggleHasAccount())} className="font-medium text-purple-600 hover:text-purple-500 cursor-pointer">
                             {hasAccount ? "Sign up" : "Log in"}
                         </button>
                     </p>
