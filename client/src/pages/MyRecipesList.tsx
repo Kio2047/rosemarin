@@ -15,42 +15,33 @@ const MyRecipesList = () => {
     const myRecipes = useAppSelector((state) => state.myRecipes)
     const ids = useAppSelector((state) => state.ids)
 
-    // useEffect(() => {
-    //   (async () => {
-    //     try {
-    //       const data = await getMyRecipes()
-    //       console.log('My recipes inside: ', data )
-    //       dispatch(setMyRecipes(data || []))
-    //     } catch (error) {
-    //       console.log(error)
-    //     }
-    //   })()
-    // }, [])
+
 
     const idsHelper = (recipe: SavedRecipe, ids: IDs[]) => {
         const filtered = ids.filter(id => id.id_tasty !== recipe.id_tasty);
-        return [...filtered, {id: recipe.id, id_tasty: recipe.id_tasty}]
+        return [...filtered, { id: recipe.id, id_tasty: recipe.id_tasty }]
     }
 
     useEffect(() => {
         (async () => {
-        try {
-            const recipes = await getMyRecipes()
-            if (recipes) recipes.map(el => (dispatch(setIds(idsHelper(el, ids)))))
-        } catch (error) {
-            console.log(error)
-        }})()
+            try {
+                const recipes = await getMyRecipes()
+                if (recipes) recipes.map(el => (dispatch(setIds(idsHelper(el, ids)))))
+            } catch (error) {
+                console.log(error)
+            }
+        })()
     }, [])
 
     useEffect(() => {
-      (async () => {
-        try {
-          const recipes = await getMyRecipes();
-          console.log('Am i being called? ', recipes)
-          dispatch(setMyRecipes(recipes || []))
-          } catch (error) {
-            console.log(error)
-          }
+        (async () => {
+            try {
+                const recipes = await getMyRecipes();
+                console.log('Am i being called? ', recipes)
+                dispatch(setMyRecipes(recipes || []))
+            } catch (error) {
+                console.log(error)
+            }
         })()
     }, [ids])
 
@@ -63,27 +54,24 @@ const MyRecipesList = () => {
             {/* <SearchForm /> */}
 
             <ul className="bg-transparent container-grid max-w-7xl mx-auto pr-5 pl-5">
-                {myRecipes.map((recipe, i) => {
-                    if (i % 6 === 0) {
-                        return <Recipe
+                {myRecipes.map((recipe, i) =>
+                    (i === 4 || i % 10 === 4) ?
+                        <Recipe
                             recipe={recipe}
                             key={recipe.id}
                             className={"horizontal span-col-4 card bg-base-100 shadow-xl flex-row"}
-                        />
-                    } else if (i % 5 === 0) {
-                        return <Recipe
-                            recipe={recipe}
-                            key={recipe.id}
-                            className={"vertical span-col-2 span-row-2 card bg-base-100 shadow-xl"}
-                        />
-                    } else {
-                        return <Recipe
-                            recipe={recipe}
-                            key={recipe.id}
-                            className={"vertical card bg-base-100 shadow-xl"}
-                        />
-                    }
-                })}
+                        ></Recipe> :
+                        (i === 6 || i % 10 === 6) ?
+                            <Recipe
+                                recipe={recipe}
+                                key={recipe.id}
+                                className={"vertical span-col-2 span-row-2 card bg-base-100 shadow-xl"}
+                            ></Recipe> :
+                            <Recipe
+                                recipe={recipe}
+                                key={recipe.id} className={"vertical card bg-base-100 shadow-xl"}
+                            ></Recipe>
+                )}
             </ul>
         </div>
     );
