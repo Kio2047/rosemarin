@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import { BrowserRouter } from 'react-router-dom';
 import RecipesList from '../pages/RecipesList';
-import SignIn from '../pages/SignIn';
+
 
 
 const handleLogout = jest.fn()
@@ -21,6 +21,12 @@ describe('Logout', () => {
       
     </Provider>
     )
+
+    const yesButton = screen.getByRole('button', { name: /Yes/i });
+    const noButton = screen.getByRole('button', { name: /No/i });
+
+    expect(yesButton).toBeInTheDocument();
+    expect(noButton).toBeInTheDocument();
   })
 
   it('should redirect the user to /home when they click no', () => {
